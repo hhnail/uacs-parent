@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jmu.uacs</groupId>
+	<artifactId>uacs-common</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>uacs-common</name>
+	<description>公共模块-存放项目公共内容</description>
+
+	<dependencies>
+		<!-- lombok,简化javabean的开发。 -->
+		<!-- 如果继承了springboot，会默认集成，所以不用声明版本号。 -->
+		<!-- 但是common没有继承springboot，没有继承到版本号，需要声明 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+
+		<!-- druid数据源 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.12</version>
+		</dependency>
+
+		<!-- swagger接口工具 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<!-- swagger接口工具ui界面 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+	</dependencies>
+</project>
