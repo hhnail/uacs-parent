@@ -12,4 +12,5 @@ public class UacsRegisterApplication {
 		SpringApplication.run(UacsRegisterApplication.class, args);
 	}
 
+	// TODO: 2021/9/21  项目入口——注册中心
 }

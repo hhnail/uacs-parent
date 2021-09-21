@@ -1,7 +1,10 @@
 package com.jmu.uacs.user.bean;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class User {
     private Integer id;
 
@@ -21,11 +24,19 @@ public class User {
 
     private String phone;
 
+    private String wechat;
+
     private String qq;
 
     private String headUrl;
 
+    private String state;
+
+    private Integer canDel;
+
     private Integer classId;
+
+    private Integer isDel;
 
     public Integer getId() {
         return id;
@@ -99,6 +110,14 @@ public class User {
         this.phone = phone == null ? null : phone.trim();
     }
 
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat == null ? null : wechat.trim();
+    }
+
     public String getQq() {
         return qq;
     }
@@ -115,11 +134,35 @@ public class User {
         this.headUrl = headUrl == null ? null : headUrl.trim();
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
+    }
+
+    public Integer getCanDel() {
+        return canDel;
+    }
+
+    public void setCanDel(Integer canDel) {
+        this.canDel = canDel;
+    }
+
     public Integer getClassId() {
         return classId;
     }
 
     public void setClassId(Integer classId) {
         this.classId = classId;
+    }
+
+    public Integer getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Integer isDel) {
+        this.isDel = isDel;
     }
 }

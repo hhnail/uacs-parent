@@ -8,7 +8,8 @@ public enum UserExceptionEnum {
 	USER_SAVE_ERROR(3,"用户保存失败"),
 	USER_UNEXIST(4,"用户不存在"),
 	USER_PASSWORD_ERROR(5,"用户密码错误"),
-	USER_TOKEN_INVALID(6,"用户token不合法");
+	USER_TOKEN_INVALID(6,"用户token不合法"),
+	USER_CLOSE(7,"用户为关闭状态");
 	
 	
 	private int code;

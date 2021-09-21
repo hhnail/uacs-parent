@@ -113,17 +113,18 @@ public class UserController {
 
 
     @ApiOperation(value = "用户登陆") // swagger-ui
-    @ApiImplicitParams(value = {@ApiImplicitParam(value = "登陆账号（学号）", name = "userId"),
-            @ApiImplicitParam(value = "用户密码", name = "password")}) // swagger-ui
-    @PostMapping("/login")//mapping
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(value = "登陆账号（学号）", name = "userId"),
+            @ApiImplicitParam(value = "用户密码", name = "password")})// swagger-ui
+    @PostMapping("/login") //mapping
     public AppResponse<UserResponseVo> login(@RequestParam("userId") String userId,
                                              @RequestParam("password") String password) {
         // 接口必须要把异常try...catch... 不允许把异常抛出去
         try {
             // 生产环境不要打印密码
-            log.debug("登录表单数据userId-{}", userId);
+//            log.debug("登录表单数据userId-{}", userId);
             UserResponseVo vo = userService.login(userId, password);
-//            log.debug("登录成功-{}", userId);
+            log.debug("登录成功-{}", userId);
 //            log.debug("respVo-{}", vo);
             return AppResponse.ok(vo);
         } catch (Exception e) {
@@ -152,7 +153,7 @@ public class UserController {
             return AppResponse.ok(vo);
         } catch (Exception e) {
             e.printStackTrace();
-            log.debug("获取个人信息-{}-{}", accessToken, e.getMessage());
+            log.debug("获取个人信息失败-token{}-报错信息{}", accessToken, e.getMessage());
             AppResponse<UserInfoVo> resp = AppResponse.fail(null);
             resp.setMsg(e.getMessage());
             return resp;
@@ -194,7 +195,7 @@ public class UserController {
     }
 
     /**
-     * 通过用户userId批量获取用户信息
+     * 通过用户userIdList批量获取用户信息
      * 用于例如社团管理员的个人信息的查询（一个社团有多个社团管理员）
      *
      * @param userIdList

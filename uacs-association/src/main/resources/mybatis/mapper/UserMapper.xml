@@ -367,4 +367,6 @@
       class_id = #{classId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--听说会追加？-->
 </mapper>
+<!--听说会追加？-->

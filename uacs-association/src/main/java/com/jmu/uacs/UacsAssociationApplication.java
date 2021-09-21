@@ -18,4 +18,5 @@ public class UacsAssociationApplication {
 		SpringApplication.run(UacsAssociationApplication.class, args);
 	}
 
+	// TODO: 2021/9/21  项目入口——社团模块
 }

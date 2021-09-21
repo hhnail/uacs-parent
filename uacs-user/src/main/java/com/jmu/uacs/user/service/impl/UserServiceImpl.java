@@ -4,6 +4,7 @@ import com.jmu.uacs.user.bean.Class;
 import com.jmu.uacs.user.bean.User;
 import com.jmu.uacs.user.bean.UserExample;
 import com.jmu.uacs.user.enums.UserExceptionEnum;
+import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
 import com.jmu.uacs.user.mapper.ClassMapper;
 import com.jmu.uacs.user.mapper.UserMapper;
@@ -62,7 +63,6 @@ public class UserServiceImpl implements UserService {
     public int saveUser(UserRegistVo vo) {
 
 
-
         try {
             log.debug("后端服务-serviceImpl-注册，接收用户信息={}", vo);
             //VO 对拷 DO对象中 对拷的字段属性是区分大小写的 VO里的userId对应DO中的userid
@@ -101,11 +101,18 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andUserIdEqualTo(userId);
         List<User> list = userMapper.selectByExample(example);
 
+        // 如果查出来的数据条数 ！= 1
         if (!MyCollectionUtils.hasOneEle(list)) {
             throw new UserException(UserExceptionEnum.USER_UNEXIST);
         }
+
         // 若该账号用户存在
         User dbUser = list.get(0);
+
+        // 如果该用户状态为CLOSE
+        if (UserStateEnum.CLOSE.getState().equals(dbUser.getState())) {
+            throw new UserException(UserExceptionEnum.USER_CLOSE);
+        }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         // 密码验证。encoder每次加密的结果不一样，需要调用match
@@ -116,7 +123,7 @@ public class UserServiceImpl implements UserService {
         log.debug("DO-dbUser in Service={}", dbUser);
 
         // 若密码输入正确，赋予accessToken
-        // 以UUID作为访问令牌，但是里可能有“-”,把他去掉
+        // 以UUID作为访问令牌，但是里可能有"-",把"-"去掉
         String accessToken = UUID.randomUUID().toString().replaceAll("-", "");
         UserResponseVo responseVo = new UserResponseVo();
         BeanUtils.copyProperties(dbUser, responseVo);// 对拷
@@ -238,7 +245,7 @@ public class UserServiceImpl implements UserService {
         List<UserInfoVo> voList = new ArrayList<>();
         List<User> userList = userMapper.selectByExample(example);
         for (User user : userList) {
-            BeanUtils.copyProperties(user,vo);
+            BeanUtils.copyProperties(user, vo);
             voList.add(vo);
         }
         return voList;

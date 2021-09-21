@@ -11,9 +11,13 @@
     <result column="nation" jdbcType="VARCHAR" property="nation" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="qq" jdbcType="VARCHAR" property="qq" />
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="can_del" jdbcType="INTEGER" property="canDel" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,8 +78,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, password, name, gender, birthday, nation, email, phone, qq, head_url, 
-    class_id
+    id, user_id, password, name, gender, birthday, nation, email, phone, wechat, qq, 
+    head_url, state, can_del, class_id, is_del
   </sql>
   <select id="selectByExample" parameterType="com.jmu.uacs.user.bean.UserExample" resultMap="BaseResultMap">
     select
@@ -111,13 +115,15 @@
     insert into user (id, user_id, password, 
       name, gender, birthday, 
       nation, email, phone, 
-      qq, head_url, class_id
-      )
+      wechat, qq, head_url, 
+      state, can_del, class_id, 
+      is_del)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{nation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{qq,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER}
-      )
+      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{canDel,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, 
+      #{isDel,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.user.bean.User">
     insert into user
@@ -149,14 +155,26 @@
       <if test="phone != null">
         phone,
       </if>
+      <if test="wechat != null">
+        wechat,
+      </if>
       <if test="qq != null">
         qq,
       </if>
       <if test="headUrl != null">
         head_url,
       </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="canDel != null">
+        can_del,
+      </if>
       <if test="classId != null">
         class_id,
+      </if>
+      <if test="isDel != null">
+        is_del,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -187,14 +205,26 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
       </if>
       <if test="headUrl != null">
         #{headUrl,jdbcType=VARCHAR},
       </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="canDel != null">
+        #{canDel,jdbcType=INTEGER},
+      </if>
       <if test="classId != null">
         #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -234,14 +264,26 @@
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
+      <if test="record.wechat != null">
+        wechat = #{record.wechat,jdbcType=VARCHAR},
+      </if>
       <if test="record.qq != null">
         qq = #{record.qq,jdbcType=VARCHAR},
       </if>
       <if test="record.headUrl != null">
         head_url = #{record.headUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canDel != null">
+        can_del = #{record.canDel,jdbcType=INTEGER},
+      </if>
       <if test="record.classId != null">
         class_id = #{record.classId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -259,9 +301,13 @@
       nation = #{record.nation,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
+      wechat = #{record.wechat,jdbcType=VARCHAR},
       qq = #{record.qq,jdbcType=VARCHAR},
       head_url = #{record.headUrl,jdbcType=VARCHAR},
-      class_id = #{record.classId,jdbcType=INTEGER}
+      state = #{record.state,jdbcType=VARCHAR},
+      can_del = #{record.canDel,jdbcType=INTEGER},
+      class_id = #{record.classId,jdbcType=INTEGER},
+      is_del = #{record.isDel,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,14 +339,26 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
       <if test="qq != null">
         qq = #{qq,jdbcType=VARCHAR},
       </if>
       <if test="headUrl != null">
         head_url = #{headUrl,jdbcType=VARCHAR},
       </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="canDel != null">
+        can_del = #{canDel,jdbcType=INTEGER},
+      </if>
       <if test="classId != null">
         class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -315,9 +373,13 @@
       nation = #{nation,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
       head_url = #{headUrl,jdbcType=VARCHAR},
-      class_id = #{classId,jdbcType=INTEGER}
+      state = #{state,jdbcType=VARCHAR},
+      can_del = #{canDel,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

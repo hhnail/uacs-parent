@@ -32,7 +32,7 @@ public class ClassController {
      * 供user填写个人简历选择班级时使用
      * 系统管理员可以CURD相关信息
      */
-    @ApiOperation("获取学院-专业-班级信息")
+    @ApiOperation("获取所有学院专业班级（带包含结构）")
     @ResponseBody
     @GetMapping("/getCascaderClass")
     public AppResponse<List<CascaderClassVo>> getCascaderClass() {

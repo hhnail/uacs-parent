@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="uacs-association" />
         <module name="uacs-common" />
-        <module name="uacs-user" />
         <module name="uacs-register" />
+        <module name="uacs-user" />
         <module name="uacs-bulletin" />
       </profile>
     </annotationProcessing>
