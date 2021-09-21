@@ -21,7 +21,7 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @ApiOperation("select 权限列表")
+    @ApiOperation("查询权限列表（带层次结构）")
     @GetMapping("/getPermissionList")
     public AppResponse<List<PermissionVo>> getPermissionList() {
         try {

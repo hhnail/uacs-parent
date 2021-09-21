@@ -62,6 +62,7 @@ com\jmu\uacs\user\bean\College.class
 com\jmu\uacs\user\bean\UserTagExample.class
 com\jmu\uacs\user\service\UserService.class
 com\jmu\uacs\user\mapper\ClassMapper.class
+com\jmu\uacs\user\enums\UserStateEnum.class
 com\jmu\uacs\user\exception\UserException.class
 com\jmu\uacs\user\bean\TagExample$Criteria.class
 com\jmu\uacs\user\bean\PermissionExample$GeneratedCriteria.class

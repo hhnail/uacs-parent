@@ -7,6 +7,7 @@ import com.jmu.uacs.user.enums.UserExceptionEnum;
 import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
 import com.jmu.uacs.user.mapper.ClassMapper;
+import com.jmu.uacs.user.mapper.PermissionMapper;
 import com.jmu.uacs.user.mapper.UserMapper;
 import com.jmu.uacs.user.service.UserService;
 import com.jmu.uacs.util.MyCollectionUtils;
@@ -42,6 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     ClassMapper classMapper;
+
+    @Autowired
+    PermissionMapper permissionMapper;
+
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -152,16 +157,22 @@ public class UserServiceImpl implements UserService {
         UserInfoVo infoVo = new UserInfoVo();
         BeanUtils.copyProperties(user, infoVo);
         infoVo.setAccessToken(accessToken);
-        //格式化生日的日期格式
+        // 格式化生日的日期格式
         Date dateBirthday = user.getBirthday();
         if (dateBirthday != null) {
             infoVo.setBirthday(MyDateUtil.parseToFormatTime(dateBirthday));
         }
-        //获取班级信息
+        // 获取班级信息
         Class classInfo = classMapper.selectByPrimaryKey(user.getClassId());
         if (classInfo != null) {
             BeanUtils.copyProperties(classInfo, infoVo);
         }
+        // 获取权限路径列表
+        List<String> pmsList = permissionMapper.getPermissionRoutePathListByUserId(user.getUserId());
+        log.debug("权限路径列表={}", pmsList);
+        log.debug("权限路径列表={}", pmsList.getClass());
+        // set不进去，项目编译不通过，原因？
+//        infoVo.setPermissionRoutePathList(pmsList);
         return infoVo;
     }
 
@@ -169,7 +180,8 @@ public class UserServiceImpl implements UserService {
      * 私有方法！供本类其他方法调用
      * 用accessToken获取数据库中获取DO对象
      * 注意！！ 这个DO只有本类信息和外键，其他相关内容未注入
-     * <p>
+     *
+     *
      * 看网上说service之间最好不用相互调用。但是又有该方法的需求
      * 下面紧接着提供一个方法 getUserIdByToken
      *

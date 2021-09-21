@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @ToString
@@ -35,4 +37,8 @@ public class UserInfoVo implements Serializable {
 
     private String className;
 
+    private String className2;
+
+    @ApiModelProperty(value="权限路径集合")
+    private List<String> permissionRoutePathList = new ArrayList<>();
 }

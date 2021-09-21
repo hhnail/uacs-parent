@@ -18,7 +18,15 @@ public interface PermissionMapper {
 
     List<Permission> selectByExample(PermissionExample example);
 
+    Permission selectByPrimaryKey(Integer permissionId);
+
     int updateByExampleSelective(@Param("record") Permission record, @Param("example") PermissionExample example);
 
     int updateByExample(@Param("record") Permission record, @Param("example") PermissionExample example);
+
+    int updateByPrimaryKeySelective(Permission record);
+
+    int updateByPrimaryKey(Permission record);
+
+    List<String> getPermissionRoutePathListByUserId(@Param("userId") String userId);
 }
