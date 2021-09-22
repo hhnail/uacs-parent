@@ -12,15 +12,15 @@
     </resultMap>
     <!--List<String>getPermissionRoutePathListByUserId(@Param("userId")StringuserId);-->
     <select id="getPermissionRoutePathListByUserId" parameterType="java.lang.String" resultType="java.lang.String">
-  SELECT tp.route_path
-	FROM permission tp
-	WHERE tp.permission_id
-    in(	SELECT trp.permission_id
-          FROM role_permission trp
-          WHERE trp.role_id
-          in (SELECT tur.role_id
-                FROM user_role tur
-                WHERE tur.user_id = ${userId}))
+      SELECT tp.route_path
+        FROM permission tp
+        WHERE tp.permission_id
+        in(	SELECT trp.permission_id
+              FROM role_permission trp
+              WHERE trp.role_id
+              in (SELECT tur.role_id
+                    FROM user_role tur
+                    WHERE tur.user_id = ${userId}))
     </select>
 
     <!--MBG  -->

@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
         log.debug("权限路径列表={}", pmsList);
         log.debug("权限路径列表={}", pmsList.getClass());
         // set不进去，项目编译不通过，原因？
-//        infoVo.setPermissionRoutePathList(pmsList);
+        infoVo.setPermissionRoutePathList(pmsList);
         return infoVo;
     }
 

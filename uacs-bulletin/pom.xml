@@ -7,12 +7,13 @@
 		<groupId>com.jmu.uacs</groupId>
 		<artifactId>uacs-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath/>
+		<!--        <relativePath>../pom.xml</relativePath>-->
 	</parent>
 	
 	<artifactId>uacs-bulletin</artifactId>
+
 	<name>uacs-bulletin</name>
-	
 	<description>论坛模块-社团活动、经历分享、交流等</description>
 	
 	<properties>
