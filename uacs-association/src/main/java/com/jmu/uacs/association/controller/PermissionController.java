@@ -21,13 +21,27 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    // TODO 接口重构（根据用户id）返回权限列表
-    @ApiOperation("查询权限列表（带层次结构）")
-    @GetMapping("/getPermissionList/{userId}")
-    public AppResponse<List<PermissionVo>> getPermissionList(@PathVariable(name = "userId") String userId) {
+    @ApiOperation("查询某userId拥有的权限列表（带层次结构）")
+    @GetMapping("/getPermissionListByUserId/{userId}")
+    public AppResponse<List<PermissionVo>> getPermissionListByUserId(@PathVariable(name = "userId") String userId) {
         try {
             log.debug("=1=C= userId", userId);
-            List<PermissionVo> permissionList = permissionService.getPermissionList(userId);
+            List<PermissionVo> permissionList = permissionService.getPermissionListByUserId(userId);
+            AppResponse<List<PermissionVo>> resp = AppResponse.ok(permissionList);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<List<PermissionVo>> fail = AppResponse.fail(null);
+            fail.setMsg("获取权限列表失败");
+            return fail;
+        }
+    }
+
+    @ApiOperation("查询所有权限列表（带层次结构）")
+    @GetMapping("/getPermissionList")
+    public AppResponse<List<PermissionVo>> getPermissionList() {
+        try {
+            List<PermissionVo> permissionList = permissionService.getPermissionList();
             AppResponse<List<PermissionVo>> resp = AppResponse.ok(permissionList);
             return resp;
         } catch (Exception e) {

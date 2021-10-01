@@ -24,7 +24,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 
     @Override
-    public List<PermissionVo> getPermissionList(String userId) {
+    public List<PermissionVo> getPermissionListByUserId(String userId) {
         // 为一级菜单准备vo
         List<PermissionVo> firstVoList = new ArrayList<>();
         // 查询一级菜单
@@ -39,7 +39,31 @@ public class PermissionServiceImpl implements PermissionService {
             firstVo.setKey(pms.getPermissionId());
             firstVoList.add(firstVo);
             // 2 根据一级菜单的id获取其子菜单
-            List<Permission> secondDoList = permissionMapper.getChildrenByPid(userId, pms.getPermissionId());
+            List<Permission> secondDoList = permissionMapper.getChildrenByPUserId(userId, pms.getPermissionId());
+            for (Permission secondPsm : secondDoList) {
+                PermissionVo secondVo = new PermissionVo();
+                BeanUtils.copyProperties(secondPsm, secondVo);
+                secondVo.setKey(secondPsm.getPermissionId());
+                firstVo.getChildren().add(secondVo);
+            }
+        }
+        return firstVoList;
+    }
+
+    @Override
+    public List<PermissionVo> getPermissionList() {
+        // 为一级菜单准备vo
+        List<PermissionVo> firstVoList = new ArrayList<>();
+        // 查询一级菜单
+        List<Permission> firstDoList = permissionMapper.getPermissionListByGrade(1);
+        log.debug("==1 一级菜单列表 firstDoList={}", firstDoList);
+
+        for (Permission pms : firstDoList) {
+            PermissionVo firstVo = new PermissionVo();
+            BeanUtils.copyProperties(pms, firstVo);
+            firstVo.setKey(pms.getPermissionId());
+            firstVoList.add(firstVo);
+            List<Permission> secondDoList = permissionMapper.getChildrenByPid(pms.getPermissionId());
             for (Permission secondPsm : secondDoList) {
                 PermissionVo secondVo = new PermissionVo();
                 BeanUtils.copyProperties(secondPsm, secondVo);

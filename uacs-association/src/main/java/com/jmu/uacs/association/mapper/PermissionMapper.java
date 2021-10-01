@@ -42,5 +42,8 @@ public interface PermissionMapper {
      * @param permissionId 此处permissionId也是pId，即父菜单id为pId的二级菜单列表
      * @return
      */
-    List<Permission> getChildrenByPid(@Param("userId") String userId, @Param("pId") Integer permissionId);
+    List<Permission> getChildrenByPUserId(@Param("userId") String userId, @Param("pId") Integer permissionId);
+
+    List<Permission> getChildrenByPid(@Param("permissionId") Integer permissionId);
+
 }
