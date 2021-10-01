@@ -30,13 +30,18 @@
     <!--
         List<Permission> getChildrenByPid(@Param("permissionId")Integer permissionId);
     -->
-    <select id="getChildrenByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM
-        permission
-        where
-        p_id = #{permissionId} and is_del = 0
+    <select id="getChildrenByPid" resultMap="BaseResultMap">
+        SELECT tp.* FROM role tr
+            INNER JOIN role_permission trp
+                ON tr.role_id = trp.role_id
+            INNER JOIN user_role tur
+                ON tur.role_id = tr.role_id
+            RIGHT JOIN permission tp
+                ON trp.permission_id = tp.permission_id
+            WHERE
+                tur.user_id = #{userId}
+                AND tp.p_id = #{pId}
+                and tp.is_del = 0
     </select>
 
     <!--  MBG-->

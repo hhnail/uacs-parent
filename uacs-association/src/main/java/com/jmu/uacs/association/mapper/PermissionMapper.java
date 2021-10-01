@@ -29,7 +29,18 @@ public interface PermissionMapper {
 
     int updateByPrimaryKey(Permission record);
 
+    /**
+     * 根据菜单（权限）级别获取单层权限列表
+     * @param grade 菜单级别 1 为一级菜单 2为二级菜单。。。以此类推
+     * @return
+     */
     List<Permission> getPermissionListByGrade(@Param("grade") Integer grade);
 
-    List<Permission> getChildrenByPid(@Param("permissionId") Integer permissionId);
+    /**
+     * 查询用户id拥有的二级权限权限列表
+     * @param userId
+     * @param permissionId 此处permissionId也是pId，即父菜单id为pId的二级菜单列表
+     * @return
+     */
+    List<Permission> getChildrenByPid(@Param("userId") String userId, @Param("pId") Integer permissionId);
 }

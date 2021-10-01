@@ -24,19 +24,22 @@ public class PermissionServiceImpl implements PermissionService {
 
 
     @Override
-    public List<PermissionVo> getPermissionList() {
+    public List<PermissionVo> getPermissionList(String userId) {
         // 为一级菜单准备vo
         List<PermissionVo> firstVoList = new ArrayList<>();
         // 查询一级菜单
         List<Permission> firstDoList = permissionMapper.getPermissionListByGrade(1);
         log.debug("==1 一级菜单列表 firstDoList={}", firstDoList);
 
+        // 转化VO 并 注入子菜单
         for (Permission pms : firstDoList) {
             PermissionVo firstVo = new PermissionVo();
+            // 1 转化vo
             BeanUtils.copyProperties(pms, firstVo);
             firstVo.setKey(pms.getPermissionId());
             firstVoList.add(firstVo);
-            List<Permission> secondDoList = permissionMapper.getChildrenByPid(pms.getPermissionId());
+            // 2 根据一级菜单的id获取其子菜单
+            List<Permission> secondDoList = permissionMapper.getChildrenByPid(userId, pms.getPermissionId());
             for (Permission secondPsm : secondDoList) {
                 PermissionVo secondVo = new PermissionVo();
                 BeanUtils.copyProperties(secondPsm, secondVo);

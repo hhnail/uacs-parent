@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface PermissionService {
 
-    List<PermissionVo> getPermissionList();
+    List<PermissionVo> getPermissionList(String userId);
 
     Integer deletePermissionById(Integer permissionId);
 

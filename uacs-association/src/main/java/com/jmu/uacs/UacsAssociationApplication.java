@@ -14,9 +14,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class UacsAssociationApplication {
 
+	// TODO: 2021/9/21  项目入口——社团模块
 	public static void main(String[] args) {
 		SpringApplication.run(UacsAssociationApplication.class, args);
 	}
 
-	// TODO: 2021/9/21  项目入口——社团模块
+
 }
