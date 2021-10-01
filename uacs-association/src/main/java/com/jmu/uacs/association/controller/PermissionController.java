@@ -21,11 +21,13 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
+    // TODO 接口重构（根据用户id）返回权限列表
     @ApiOperation("查询权限列表（带层次结构）")
-    @GetMapping("/getPermissionList")
-    public AppResponse<List<PermissionVo>> getPermissionList() {
+    @GetMapping("/getPermissionList/{userId}")
+    public AppResponse<List<PermissionVo>> getPermissionList(@PathVariable(name = "userId") String userId) {
         try {
-            List<PermissionVo> permissionList = permissionService.getPermissionList();
+            log.debug("=1=C= userId", userId);
+            List<PermissionVo> permissionList = permissionService.getPermissionList(userId);
             AppResponse<List<PermissionVo>> resp = AppResponse.ok(permissionList);
             return resp;
         } catch (Exception e) {
@@ -38,7 +40,7 @@ public class PermissionController {
 
     @ApiOperation("根据权限ID删除权限")
     @GetMapping("/deletePermissionById/{key}")
-    public AppResponse<String> getPermissionList(@PathVariable(name = "key") Integer permissionId) {
+    public AppResponse<String> deletePermissionById(@PathVariable(name = "key") Integer permissionId) {
         try {
             log.debug("==101 根据权限ID删除权限 key（permissionId）={}", permissionId);
             Integer affectedRows = permissionService.deletePermissionById(permissionId);

@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="uacs-common" />
+        <module name="uacs-register" />
+        <module name="uacs-user" />
         <module name="uacs-association" />
         <module name="uacs-bulletin" />
-        <module name="uacs-user" />
-        <module name="uacs-register" />
       </profile>
     </annotationProcessing>
   </component>
