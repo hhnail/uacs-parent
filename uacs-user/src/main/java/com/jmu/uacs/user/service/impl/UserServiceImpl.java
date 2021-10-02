@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
         responseVo.setAccessToken(accessToken);// 设置accessToken
 
         // 将accessToken存储到redis中
-        stringRedisTemplate.opsForValue().set(accessToken, dbUser.getUserId().toString(), 30, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(accessToken, dbUser.getUserId().toString(), 2, TimeUnit.HOURS);
 
         // 转码
         // String name = new String(responseVo.getName().getBytes(""),"UTF-8");

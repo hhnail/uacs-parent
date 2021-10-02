@@ -60,6 +60,7 @@
         <!--        <table tableName="role_permission"></table>-->
         <!--        <table tableName="user"></table>-->
 <!--        <table tableName="user_association"></table>-->
+        <table tableName="recruitment"></table>
 
     </context>
 </generatorConfiguration> 
