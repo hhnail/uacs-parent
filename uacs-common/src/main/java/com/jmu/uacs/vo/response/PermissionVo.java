@@ -34,5 +34,5 @@ public class PermissionVo implements Serializable {
     private Integer pId;
 
     @ApiModelProperty(value="子菜单列表")
-    private List<PermissionVo> children = new ArrayList<>();
+    private List<PermissionVo> children = new ArrayList<PermissionVo>();
 }

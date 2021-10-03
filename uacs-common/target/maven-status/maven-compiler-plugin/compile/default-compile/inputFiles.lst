@@ -23,6 +23,7 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\MyCollectionUtils.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\AssociationAdminResponseVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\AssociationRequestVo.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\AddRecruitmentRequestVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\RoleRespVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\PermissionUpdateVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\UserRegistVo.java

@@ -19,5 +19,5 @@ public class ReGrantPermissions2RoleReqVo implements Serializable {
     private Integer roleId;
 
     @ApiModelProperty("授予的权限ID列表")
-    private List<Integer> permissionIds = new ArrayList<>();
+    private List<Integer> permissionIds = new ArrayList<Integer>();
 }
