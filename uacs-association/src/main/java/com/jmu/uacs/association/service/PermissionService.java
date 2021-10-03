@@ -4,7 +4,6 @@ import com.jmu.uacs.vo.request.PermissionUpdateVo;
 import com.jmu.uacs.vo.response.PermissionVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PermissionService {
 
