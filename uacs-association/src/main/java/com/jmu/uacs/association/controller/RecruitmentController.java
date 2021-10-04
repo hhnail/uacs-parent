@@ -25,7 +25,7 @@ public class RecruitmentController {
     @PostMapping("/addRecruitment")
     public AppResponse<Integer> addRecruitment(@RequestBody AddRecruitmentRequestVo reqVo) {
         try {
-            log.debug("==1 纳新C == reqVo", reqVo);
+            log.debug("==1 纳新C == reqVo={}", reqVo);
             int affectNum = recruitmentService.addRecruitment(reqVo);
             AppResponse<Integer> resp = AppResponse.ok(affectNum);
             resp.setMsg("保存成功！");

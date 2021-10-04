@@ -1,7 +1,10 @@
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\PermissionMapper.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\UserAssociationMapper.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\UserAssociationExample.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\UserRoleMapper.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\service\impl\TagServiceImpl.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\exception\UserException.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\UserAssociation.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\RoleExample.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\config\AppSwaggerConfig.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\MajorExample.java

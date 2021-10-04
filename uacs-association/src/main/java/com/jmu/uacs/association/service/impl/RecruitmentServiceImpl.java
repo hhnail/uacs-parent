@@ -3,11 +3,15 @@ package com.jmu.uacs.association.service.impl;
 import com.jmu.uacs.association.bean.Recruitment;
 import com.jmu.uacs.association.mapper.RecruitmentMapper;
 import com.jmu.uacs.association.service.RecruitmentService;
+import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AddRecruitmentRequestVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RecruitmentServiceImpl implements RecruitmentService {
 
@@ -18,9 +22,19 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public int addRecruitment(AddRecruitmentRequestVo reqVo) {
         Recruitment record = new Recruitment();
-        BeanUtils.copyProperties(reqVo,record);
-//        record.setEndTime();
-        recruitmentMapper.insertSelective(record);
-        return 0;
+        BeanUtils.copyProperties(reqVo, record);
+
+        record.setStartTime(StringUtils.parseString2Date(reqVo.getStartTime(), DateTemplate.yyyyMMdd));
+        record.setEndTime(StringUtils.parseString2Date(reqVo.getEndTime(), DateTemplate.yyyyMMdd));
+        record.setView(0); // 默认浏览量 0
+
+        log.debug("==24 纳新S 开始时间：{}", reqVo);
+        log.debug("==24 纳新S 开始时间：{}", StringUtils.formatDate2String(record.getStartTime(), DateTemplate.yyyyMMdd));
+        log.debug("==24 纳新S 结束时间：{}", StringUtils.formatDate2String(record.getEndTime(), DateTemplate.yyyyMMdd));
+        log.debug("==24 纳新S record ={}", record);
+
+
+        int affectedNum = recruitmentMapper.insertSelective(record);
+        return affectedNum;
     }
 }

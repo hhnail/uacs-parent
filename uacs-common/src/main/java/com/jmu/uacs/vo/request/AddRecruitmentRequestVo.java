@@ -22,9 +22,9 @@ public class AddRecruitmentRequestVo implements Serializable {
 
     private String state;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private Integer userId;
 
