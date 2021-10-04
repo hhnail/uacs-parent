@@ -29,5 +29,5 @@ public interface AssociationMapper {
 
     int updateByPrimaryKey(Association record);
 
-    List<Association> getAssociationByUserId(@Param("userId")Integer userId);
+    List<Association> getAssociationByUserId(@Param("userId") Integer userId, @Param("roleIds") Integer[] roleIds);
 }

@@ -20,6 +20,8 @@ public class UserResponseVo implements Serializable{
 	
 	@ApiModelProperty(value="用户姓名")
 	private String name;
-	
+
+	@ApiModelProperty(value="所属社团ID")
+	private String associationId;
 	
 }

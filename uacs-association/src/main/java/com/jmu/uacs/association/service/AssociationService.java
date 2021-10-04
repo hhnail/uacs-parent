@@ -16,5 +16,5 @@ public interface AssociationService {
 
     List<String> getAssociationAdminIdList(Integer associationId);
 
-    List<UserAssociationVo> getAssociationByUserId(Integer userId);
+    List<UserAssociationVo> getAssociationByUserId(Integer userId,Integer[] roleIds);
 }

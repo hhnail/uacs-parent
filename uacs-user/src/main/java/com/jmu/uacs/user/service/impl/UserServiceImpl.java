@@ -1,13 +1,13 @@
 package com.jmu.uacs.user.service.impl;
 
+import com.jmu.uacs.user.bean.*;
 import com.jmu.uacs.user.bean.Class;
-import com.jmu.uacs.user.bean.User;
-import com.jmu.uacs.user.bean.UserExample;
 import com.jmu.uacs.user.enums.UserExceptionEnum;
 import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
 import com.jmu.uacs.user.mapper.ClassMapper;
 import com.jmu.uacs.user.mapper.PermissionMapper;
+import com.jmu.uacs.user.mapper.UserAssociationMapper;
 import com.jmu.uacs.user.mapper.UserMapper;
 import com.jmu.uacs.user.service.UserService;
 import com.jmu.uacs.util.MyCollectionUtils;
@@ -46,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PermissionMapper permissionMapper;
+
+    @Autowired
+    UserAssociationMapper userAssociationMapper;
 
 
     @Autowired
@@ -142,6 +145,12 @@ public class UserServiceImpl implements UserService {
         // String name = new String(responseVo.getName().getBytes(""),"UTF-8");
         // responseVo.setName();
 
+
+        // 查询其所在社团
+//        UserAssociationExample uaExp = new UserAssociationExample();
+//        uaExp.createCriteria().andUserIdEqualTo(userId);
+//        List<UserAssociation> uaRecords = userAssociationMapper.selectByExample(uaExp);
+
         return responseVo;
     }
 
@@ -180,8 +189,8 @@ public class UserServiceImpl implements UserService {
      * 私有方法！供本类其他方法调用
      * 用accessToken获取数据库中获取DO对象
      * 注意！！ 这个DO只有本类信息和外键，其他相关内容未注入
-     *
-     *
+     * <p>
+     * <p>
      * 看网上说service之间最好不用相互调用。但是又有该方法的需求
      * 下面紧接着提供一个方法 getUserIdByToken
      *

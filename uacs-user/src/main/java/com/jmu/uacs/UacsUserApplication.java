@@ -17,5 +17,4 @@ public class UacsUserApplication {
 		SpringApplication.run(UacsUserApplication.class, args);
 	}
 
-	// TODO: 2021/9/21  项目入口——用户模块
 }

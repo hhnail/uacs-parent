@@ -1,5 +1,6 @@
 package com.jmu.uacs.vo.request;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -10,10 +11,9 @@ import java.util.Date;
 @ToString
 public class AddRecruitmentRequestVo implements Serializable {
 
-    private Integer recruitmentId;
-
     private String title;
 
+    @ApiModelProperty("纳新人数")
     private Integer newNum;
 
     private String description;
@@ -25,8 +25,6 @@ public class AddRecruitmentRequestVo implements Serializable {
     private Date startTime;
 
     private Date endTime;
-
-    private Integer view;
 
     private Integer userId;
 

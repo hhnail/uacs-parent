@@ -119,17 +119,19 @@ public class UserController {
     @PostMapping("/login") //mapping
     public AppResponse<UserResponseVo> login(@RequestParam("userId") String userId,
                                              @RequestParam("password") String password) {
-        // 接口必须要把异常try...catch... 不允许把异常抛出去
-        try {
-            // 生产环境不要打印密码
-//            log.debug("登录表单数据userId-{}", userId);
+        try { // 接口必须要把异常try...catch... 不允许把异常抛出去
+            log.debug("登录表单数据userId-{}", userId); // 生产环境不要打印密码
+
+
             UserResponseVo vo = userService.login(userId, password);
+
+
             log.debug("登录成功-{}", userId);
-//            log.debug("respVo-{}", vo);
+            log.debug("respVo-{}", vo);
             return AppResponse.ok(vo);
         } catch (Exception e) {
             e.printStackTrace();
-//            log.debug("登录失败-{}-{}", userId, e.getMessage());
+            log.debug("登录失败-{}-{}", userId, e.getMessage());
             AppResponse resp = AppResponse.fail(null);
             resp.setMsg(e.getMessage());
             return resp;

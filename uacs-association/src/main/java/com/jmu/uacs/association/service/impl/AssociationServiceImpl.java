@@ -10,9 +10,11 @@ import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.MyDateUtil;
+import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
 import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import com.jmu.uacs.vo.response.UserAssociationVo;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,12 +132,14 @@ public class AssociationServiceImpl implements AssociationService {
     }
 
     @Override
-    public List<UserAssociationVo> getAssociationByUserId(Integer userId) {
+    public List<UserAssociationVo> getAssociationByUserId(Integer userId, Integer[] roleIds) {
 
-        List<Association> associationDOList = associationMapper.getAssociationByUserId(userId);
+
+        List<Association> associationDOList = associationMapper.getAssociationByUserId(userId, roleIds);
 
         List<UserAssociationVo> voList = new ArrayList<>();
 
+        // do 2 vo
         Iterator<Association> iterator = associationDOList.iterator();
         while (iterator.hasNext()){
             UserAssociationVo vo = new UserAssociationVo();

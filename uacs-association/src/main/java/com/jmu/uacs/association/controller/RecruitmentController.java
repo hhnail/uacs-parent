@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +23,19 @@ public class RecruitmentController {
 
     @ApiOperation("添加社团纳新信息")
     @PostMapping("/addRecruitment")
-    public AppResponse<Integer> addRecruitment(AddRecruitmentRequestVo reqVo){
-
-        int affectNum = recruitmentService.addRecruitment(reqVo);
-
-        return null;
+    public AppResponse<Integer> addRecruitment(@RequestBody AddRecruitmentRequestVo reqVo) {
+        try {
+            log.debug("==1 纳新C == reqVo", reqVo);
+            int affectNum = recruitmentService.addRecruitment(reqVo);
+            AppResponse<Integer> resp = AppResponse.ok(affectNum);
+            resp.setMsg("保存成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<Integer> fail = AppResponse.fail(null);
+            fail.setMsg("保存失败");
+            return fail;
+        }
     }
 
 

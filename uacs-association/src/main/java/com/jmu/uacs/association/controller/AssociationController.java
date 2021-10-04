@@ -116,7 +116,7 @@ public class AssociationController {
     @ApiOperation(value = "查询社团管理员")
     @GetMapping("/getAssociationAdmin")
     AppResponse<List<UserInfoVo>> getAssociationAdmin(@RequestParam Integer associationId) {
-        log.debug("==40 查询社团管理员-社团id={}",associationId);
+        log.debug("==40 查询社团管理员-社团id={}", associationId);
 
         //根据社团ID获取对应社团的管理员
         List<String> userIdList = associationService.getAssociationAdminIdList(associationId);
@@ -127,16 +127,20 @@ public class AssociationController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "查询某用户加入的社团")
+    @ApiOperation(value = "查询某用户加入或管理的社团")
     @PostMapping("/getAssociationByUserId")
-    AppResponse<List<UserAssociationVo>> getAssociationByUserId(@RequestParam Integer userId) {
-        log.debug("==40 查询社团管理员-社团id={}",userId);
+    AppResponse<List<UserAssociationVo>> getAssociationByUserId(
+            @RequestParam Integer userId,
+            @RequestParam Integer[] roleIds
+    ) {
 
-        List<UserAssociationVo> associationList = associationService.getAssociationByUserId(userId);
+        log.debug("==40 社团Impl 查询某用户加入或管理的社团-社团id={}", userId);
+        log.debug("==40 查询某用户加入或管理的社团-roleId={}", roleIds);
+
+        List<UserAssociationVo> associationList = associationService.getAssociationByUserId(userId, roleIds);
         AppResponse<List<UserAssociationVo>> resp = AppResponse.ok(associationList);
         return resp;
     }
-
 
 
 }

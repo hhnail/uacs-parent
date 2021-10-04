@@ -1,282 +1,286 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmu.uacs.association.mapper.AssociationMapper">
-  <resultMap id="BaseResultMap" type="com.jmu.uacs.association.bean.Association">
-    <id column="association_id" jdbcType="INTEGER" property="associationId" />
-    <result column="association_name" jdbcType="VARCHAR" property="associationName" />
-    <result column="admin_unit" jdbcType="VARCHAR" property="adminUnit" />
-    <result column="request_time" jdbcType="DATE" property="requestTime" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
-    <result column="state" jdbcType="VARCHAR" property="state" />
-    <result column="info" jdbcType="VARCHAR" property="info" />
-    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
-  </resultMap>
-<!--List<Association> getAssociationByUserId(@Param("record")Integer userId);-->
-  <select id="getAssociationByUserId" resultType="com.jmu.uacs.vo.response.UserAssociationVo">
-    select
-    ta.association_id as associationId,
-    ta.association_name as associationName,
-    ta.admin_unit as adminUnit,
-    ta.info as info
-    from
-    association ta
-    where
-    state = 1
-    and
-    ta.association_id in(
-    select
-    tua.association_id
-    from
-    user_association tua
-    where
-    tua.user_id = #{userId})
-  </select>
+    <resultMap id="BaseResultMap" type="com.jmu.uacs.association.bean.Association">
+        <id column="association_id" jdbcType="INTEGER" property="associationId"/>
+        <result column="association_name" jdbcType="VARCHAR" property="associationName"/>
+        <result column="admin_unit" jdbcType="VARCHAR" property="adminUnit"/>
+        <result column="request_time" jdbcType="DATE" property="requestTime"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+    </resultMap>
+    <!--     List<Association> getAssociationByUserId(@Param("userId") Integer userId, @Param("roleIds") Integer[] roleIds);  -->
+    <select id="getAssociationByUserId" resultType="com.jmu.uacs.association.bean.Association">
+        SELECT ta.association_id   as associationId,
+               ta.association_name as associationName,
+               ta.admin_unit       as adminUnit,
+               ta.info             as info
+        FROM association ta
+        WHERE ta.state = 1
+          and ta.association_id
+            in (
+                  select tur.association_id
+                  from user_role tur
+                  where tur.user_id = #{userId}
+                    AND tur.role_id IN
+        <foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+              )
+    </select>
 
 
-
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    association_id, association_name, admin_unit, request_time, create_time, state, info, 
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        association_id
+        , association_name, admin_unit, request_time, create_time, state, info,
     img_url
-  </sql>
-  <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from association
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from association
-    where association_id = #{associationId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from association
-    where association_id = #{associationId,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample">
-    delete from association
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.jmu.uacs.association.bean.Association">
-    insert into association (association_id, association_name, admin_unit, 
-      request_time, create_time, state, 
-      info, img_url)
-    values (#{associationId,jdbcType=INTEGER}, #{associationName,jdbcType=VARCHAR}, #{adminUnit,jdbcType=VARCHAR}, 
-      #{requestTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR}, 
-      #{info,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Association">
-    insert into association
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="associationId != null">
-        association_id,
-      </if>
-      <if test="associationName != null">
-        association_name,
-      </if>
-      <if test="adminUnit != null">
-        admin_unit,
-      </if>
-      <if test="requestTime != null">
-        request_time,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="state != null">
-        state,
-      </if>
-      <if test="info != null">
-        info,
-      </if>
-      <if test="imgUrl != null">
-        img_url,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="associationId != null">
-        #{associationId,jdbcType=INTEGER},
-      </if>
-      <if test="associationName != null">
-        #{associationName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminUnit != null">
-        #{adminUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="requestTime != null">
-        #{requestTime,jdbcType=DATE},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=DATE},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=VARCHAR},
-      </if>
-      <if test="info != null">
-        #{info,jdbcType=VARCHAR},
-      </if>
-      <if test="imgUrl != null">
-        #{imgUrl,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample" resultType="java.lang.Long">
-    select count(*) from association
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update association
-    <set>
-      <if test="record.associationId != null">
-        association_id = #{record.associationId,jdbcType=INTEGER},
-      </if>
-      <if test="record.associationName != null">
+    </sql>
+    <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from association
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from association
+        where association_id = #{associationId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from association
+        where association_id = #{associationId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample">
+        delete from association
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.jmu.uacs.association.bean.Association">
+        insert into association (association_id, association_name, admin_unit,
+                                 request_time, create_time, state,
+                                 info, img_url)
+        values (#{associationId,jdbcType=INTEGER}, #{associationName,jdbcType=VARCHAR}, #{adminUnit,jdbcType=VARCHAR},
+                #{requestTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR},
+                #{info,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Association">
+        insert into association
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="associationId != null">
+                association_id,
+            </if>
+            <if test="associationName != null">
+                association_name,
+            </if>
+            <if test="adminUnit != null">
+                admin_unit,
+            </if>
+            <if test="requestTime != null">
+                request_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="associationId != null">
+                #{associationId,jdbcType=INTEGER},
+            </if>
+            <if test="associationName != null">
+                #{associationName,jdbcType=VARCHAR},
+            </if>
+            <if test="adminUnit != null">
+                #{adminUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="requestTime != null">
+                #{requestTime,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample"
+            resultType="java.lang.Long">
+        select count(*) from association
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update association
+        <set>
+            <if test="record.associationId != null">
+                association_id = #{record.associationId,jdbcType=INTEGER},
+            </if>
+            <if test="record.associationName != null">
+                association_name = #{record.associationName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminUnit != null">
+                admin_unit = #{record.adminUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="record.requestTime != null">
+                request_time = #{record.requestTime,jdbcType=DATE},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=DATE},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state,jdbcType=VARCHAR},
+            </if>
+            <if test="record.info != null">
+                info = #{record.info,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imgUrl != null">
+                img_url = #{record.imgUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update association
+        set association_id = #{record.associationId,jdbcType=INTEGER},
         association_name = #{record.associationName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminUnit != null">
         admin_unit = #{record.adminUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="record.requestTime != null">
         request_time = #{record.requestTime,jdbcType=DATE},
-      </if>
-      <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=DATE},
-      </if>
-      <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
-      </if>
-      <if test="record.info != null">
         info = #{record.info,jdbcType=VARCHAR},
-      </if>
-      <if test="record.imgUrl != null">
-        img_url = #{record.imgUrl,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update association
-    set association_id = #{record.associationId,jdbcType=INTEGER},
-      association_name = #{record.associationName,jdbcType=VARCHAR},
-      admin_unit = #{record.adminUnit,jdbcType=VARCHAR},
-      request_time = #{record.requestTime,jdbcType=DATE},
-      create_time = #{record.createTime,jdbcType=DATE},
-      state = #{record.state,jdbcType=VARCHAR},
-      info = #{record.info,jdbcType=VARCHAR},
-      img_url = #{record.imgUrl,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jmu.uacs.association.bean.Association">
-    update association
-    <set>
-      <if test="associationName != null">
-        association_name = #{associationName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminUnit != null">
-        admin_unit = #{adminUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="requestTime != null">
-        request_time = #{requestTime,jdbcType=DATE},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=DATE},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=VARCHAR},
-      </if>
-      <if test="info != null">
-        info = #{info,jdbcType=VARCHAR},
-      </if>
-      <if test="imgUrl != null">
-        img_url = #{imgUrl,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where association_id = #{associationId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.association.bean.Association">
-    update association
-    set association_name = #{associationName,jdbcType=VARCHAR},
-      admin_unit = #{adminUnit,jdbcType=VARCHAR},
-      request_time = #{requestTime,jdbcType=DATE},
-      create_time = #{createTime,jdbcType=DATE},
-      state = #{state,jdbcType=VARCHAR},
-      info = #{info,jdbcType=VARCHAR},
-      img_url = #{imgUrl,jdbcType=VARCHAR}
-    where association_id = #{associationId,jdbcType=INTEGER}
-  </update>
+        img_url = #{record.imgUrl,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jmu.uacs.association.bean.Association">
+        update association
+        <set>
+            <if test="associationName != null">
+                association_name = #{associationName,jdbcType=VARCHAR},
+            </if>
+            <if test="adminUnit != null">
+                admin_unit = #{adminUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="requestTime != null">
+                request_time = #{requestTime,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where association_id = #{associationId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.association.bean.Association">
+        update association
+        set association_name = #{associationName,jdbcType=VARCHAR},
+            admin_unit       = #{adminUnit,jdbcType=VARCHAR},
+            request_time     = #{requestTime,jdbcType=DATE},
+            create_time      = #{createTime,jdbcType=DATE},
+            state            = #{state,jdbcType=VARCHAR},
+            info             = #{info,jdbcType=VARCHAR},
+            img_url          = #{imgUrl,jdbcType=VARCHAR}
+        where association_id = #{associationId,jdbcType=INTEGER}
+    </update>
 </mapper>
