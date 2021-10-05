@@ -26,7 +26,7 @@ public class AddRecruitmentRequestVo implements Serializable {
 
     private String endTime;
 
-    private Integer userId;
+    private String userId;
 
     private Integer associationId;
 

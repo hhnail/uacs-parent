@@ -2,7 +2,10 @@ package com.jmu.uacs.association.mapper;
 
 import com.jmu.uacs.association.bean.Recruitment;
 import com.jmu.uacs.association.bean.RecruitmentExample;
+
 import java.util.List;
+
+import com.jmu.uacs.vo.response.RecruitmentRespVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface RecruitmentMapper {
@@ -27,4 +30,6 @@ public interface RecruitmentMapper {
     int updateByPrimaryKeySelective(Recruitment record);
 
     int updateByPrimaryKey(Recruitment record);
+
+    List<RecruitmentRespVo> getRecruitment(@Param("userId") String userId);
 }

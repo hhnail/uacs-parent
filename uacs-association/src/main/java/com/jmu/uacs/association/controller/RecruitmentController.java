@@ -2,15 +2,16 @@ package com.jmu.uacs.association.controller;
 
 import com.jmu.uacs.association.service.RecruitmentService;
 import com.jmu.uacs.vo.request.AddRecruitmentRequestVo;
+import com.jmu.uacs.vo.request.RecruitmentReqVo;
 import com.jmu.uacs.vo.response.AppResponse;
+import com.jmu.uacs.vo.response.RecruitmentRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api(tags = "社团模块--纳新")
@@ -34,6 +35,40 @@ public class RecruitmentController {
             e.printStackTrace();
             AppResponse<Integer> fail = AppResponse.fail(null);
             fail.setMsg("保存失败");
+            return fail;
+        }
+    }
+
+    @ApiOperation("查询社团纳新信息")
+    @PostMapping("/getRecruitment")
+    public AppResponse<List<RecruitmentRespVo>> getRecruitment(@RequestBody RecruitmentReqVo requestVo) {
+        try {
+            log.debug("==1 纳新列表C == requestVo={}", requestVo);
+            List<RecruitmentRespVo> respList = recruitmentService.getRecruitment(requestVo);
+            AppResponse<List<RecruitmentRespVo>> resp = AppResponse.ok(respList);
+            resp.setMsg("查询成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<List<RecruitmentRespVo>> fail = AppResponse.fail(null);
+            fail.setMsg("查询失败");
+            return fail;
+        }
+    }
+
+    @ApiOperation("查询某条纳新信息")
+    @GetMapping("/getRecruitmentById/{recruitmentId}")
+    public AppResponse<RecruitmentRespVo> getRecruitmentById(@PathVariable("recruitmentId") Integer recruitmentId) {
+        try {
+            log.debug("==1 查询某条纳新信息C == recruitmentId={}", recruitmentId);
+            RecruitmentRespVo data = recruitmentService.getRecruitmentById(recruitmentId);
+            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(data);
+            resp.setMsg("查询成功！id：" + recruitmentId);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
+            fail.setMsg("查询失败，id：" + recruitmentId);
             return fail;
         }
     }

@@ -6,10 +6,14 @@ import com.jmu.uacs.association.service.RecruitmentService;
 import com.jmu.uacs.enums.DateTemplate;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AddRecruitmentRequestVo;
+import com.jmu.uacs.vo.request.RecruitmentReqVo;
+import com.jmu.uacs.vo.response.RecruitmentRespVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -36,5 +40,16 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
         int affectedNum = recruitmentMapper.insertSelective(record);
         return affectedNum;
+    }
+
+    @Override
+    public List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo) {
+        List<RecruitmentRespVo> respList = recruitmentMapper.getRecruitment(requestVo.getUserId());
+        return respList;
+    }
+
+    @Override
+    public RecruitmentRespVo getRecruitmentById(Integer recruitmentId) {
+        return null;
     }
 }

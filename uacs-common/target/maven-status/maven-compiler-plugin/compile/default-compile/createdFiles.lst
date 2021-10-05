@@ -15,7 +15,9 @@ com\jmu\uacs\vo\response\RoleRespVo.class
 com\jmu\uacs\vo\response\UserAssociationVo.class
 com\jmu\uacs\util\MyDateUtil.class
 com\jmu\uacs\vo\request\UserInfoReqVo.class
+com\jmu\uacs\vo\response\RecruitmentRespVo.class
 com\jmu\uacs\vo\response\TagRespVo.class
+com\jmu\uacs\vo\request\RecruitmentReqVo.class
 com\jmu\uacs\enums\DateTemplate.class
 com\jmu\uacs\vo\request\ApplicationRequestVo.class
 com\jmu\uacs\vo\response\UserResponseVo.class
