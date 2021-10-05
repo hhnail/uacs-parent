@@ -44,12 +44,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo) {
-        List<RecruitmentRespVo> respList = recruitmentMapper.getRecruitment(requestVo.getUserId());
+        List<RecruitmentRespVo> respList = recruitmentMapper.getRecruitment(requestVo);
         return respList;
-    }
-
-    @Override
-    public RecruitmentRespVo getRecruitmentById(Integer recruitmentId) {
-        return null;
     }
 }

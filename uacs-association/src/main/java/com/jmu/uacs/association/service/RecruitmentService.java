@@ -11,5 +11,4 @@ public interface RecruitmentService {
 
     List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo);
 
-    RecruitmentRespVo getRecruitmentById(Integer recruitmentId);
 }

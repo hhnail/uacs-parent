@@ -57,14 +57,20 @@ public class RecruitmentController {
     }
 
     @ApiOperation("查询某条纳新信息")
-    @GetMapping("/getRecruitmentById/{recruitmentId}")
+    @GetMapping("/listRecruitment/view/{recruitmentId}")
     public AppResponse<RecruitmentRespVo> getRecruitmentById(@PathVariable("recruitmentId") Integer recruitmentId) {
+
         try {
             log.debug("==1 查询某条纳新信息C == recruitmentId={}", recruitmentId);
-            RecruitmentRespVo data = recruitmentService.getRecruitmentById(recruitmentId);
-            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(data);
+
+            RecruitmentReqVo queryVo = new RecruitmentReqVo();
+            queryVo.setRecruitmentId(recruitmentId);
+            List<RecruitmentRespVo> data = recruitmentService.getRecruitment(queryVo);
+            // 封装返回类型
+            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(data.get(0));
             resp.setMsg("查询成功！id：" + recruitmentId);
             return resp;
+
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);

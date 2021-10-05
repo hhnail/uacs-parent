@@ -17,8 +17,8 @@
         <result column="association_id" jdbcType="INTEGER" property="associationId"/>
     </resultMap>
 
-    <!--  List<RecruitmentRespVo> getRecruitment(@Param("userId") String userId);  -->
-    <select id="getRecruitment" parameterType="java.lang.String" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
+    <!--      List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);  -->
+    <select id="getRecruitment" parameterType="com.jmu.uacs.vo.request.RecruitmentReqVo" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
         SELECT tr.*,
                tr.recruitment_id as recruitmentId,
                tr.new_num        as newNum,
@@ -35,7 +35,12 @@
                             ON tu.user_id = tr.user_id
                  INNER JOIN association ta
                             ON ta.association_id = tr.association_id
-        WHERE tr.user_id = #{userId}
+        <if test="option.userId != null">
+            WHERE tr.user_id = #{option.userId}
+        </if>
+        <if test="option.recruitmentId != null">
+            WHERE tr.recruitment_id = #{option.recruitmentId}
+        </if>
     </select>
 
     <sql id="Example_Where_Clause">

@@ -12,4 +12,6 @@ public class RecruitmentReqVo {
 
     private String state;
 
+    private Integer recruitmentId;
+
 }

@@ -46,18 +46,30 @@ public class RecruitmentRespVo {
     private String associationName;
 
     public String getStartTime() {
+        if (startTime == null) {
+            return StringUtils.formatDate2String(new Date(), DateTemplate.yyyyMMdd);
+        }
         return StringUtils.formatDate2String(startTime, DateTemplate.yyyyMMdd);
     }
 
     public String getEndTime() {
+        if (endTime == null) {
+            return StringUtils.formatDate2String(new Date(), DateTemplate.yyyyMMdd);
+        }
         return StringUtils.formatDate2String(endTime, DateTemplate.yyyyMMdd);
     }
 
     public String getCreateTime() {
+        if (createTime == null) {
+            return StringUtils.formatDate2String(new Date(), DateTemplate.yyyyMMdd);
+        }
         return StringUtils.formatDate2String(createTime, DateTemplate.yyyyMMdd);
     }
 
     public String getUpdateTime() {
+        if (updateTime == null) {
+            return StringUtils.formatDate2String(new Date(), DateTemplate.yyyyMMdd);
+        }
         return StringUtils.formatDate2String(updateTime, DateTemplate.yyyyMMdd);
     }
 }

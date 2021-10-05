@@ -5,6 +5,7 @@ import com.jmu.uacs.association.bean.RecruitmentExample;
 
 import java.util.List;
 
+import com.jmu.uacs.vo.request.RecruitmentReqVo;
 import com.jmu.uacs.vo.response.RecruitmentRespVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,5 +32,5 @@ public interface RecruitmentMapper {
 
     int updateByPrimaryKey(Recruitment record);
 
-    List<RecruitmentRespVo> getRecruitment(@Param("userId") String userId);
+    List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);
 }
