@@ -35,11 +35,12 @@
                             ON tu.user_id = tr.user_id
                  INNER JOIN association ta
                             ON ta.association_id = tr.association_id
+        WHERE 1 = 1
         <if test="option.userId != null">
-            WHERE tr.user_id = #{option.userId}
+            AND tr.user_id = #{option.userId}
         </if>
         <if test="option.recruitmentId != null">
-            WHERE tr.recruitment_id = #{option.recruitmentId}
+            AND tr.recruitment_id = #{option.recruitmentId}
         </if>
     </select>
 

@@ -31,7 +31,7 @@
         List<Permission> getChildrenByPUserId(@Param("userId") String userId, @Param("pId") Integer permissionId);
     -->
     <select id="getChildrenByPUserId" resultMap="BaseResultMap">
-        SELECT tp.* FROM role tr
+        SELECT DISTINCT tp.* FROM role tr
             INNER JOIN role_permission trp
                 ON tr.role_id = trp.role_id
             INNER JOIN user_role tur

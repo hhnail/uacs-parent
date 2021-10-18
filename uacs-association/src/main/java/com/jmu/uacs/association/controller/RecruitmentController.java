@@ -40,7 +40,7 @@ public class RecruitmentController {
     }
 
     @ApiOperation("查询社团纳新信息")
-    @PostMapping("/getRecruitment")
+    @PostMapping("/listRecruitment")
     public AppResponse<List<RecruitmentRespVo>> getRecruitment(@RequestBody RecruitmentReqVo requestVo) {
         try {
             log.debug("==1 纳新列表C == requestVo={}", requestVo);
@@ -57,7 +57,7 @@ public class RecruitmentController {
     }
 
     @ApiOperation("查询某条纳新信息")
-    @GetMapping("/listRecruitment/view/{recruitmentId}")
+    @GetMapping("/listRecruitment/{recruitmentId}")
     public AppResponse<RecruitmentRespVo> getRecruitmentById(@PathVariable("recruitmentId") Integer recruitmentId) {
 
         try {

@@ -7,6 +7,7 @@ com\jmu\uacs\user\bean\UserAssociationExample$GeneratedCriteria.class
 com\jmu\uacs\UacsUserApplication.class
 com\jmu\uacs\user\bean\UserRoleExample.class
 com\jmu\uacs\user\bean\CollegeExample$Criterion.class
+com\jmu\uacs\user\feign\AssociationServiceFeign.class
 com\jmu\uacs\user\mapper\UserRoleMapper.class
 com\jmu\uacs\user\bean\PermissionExample.class
 com\jmu\uacs\user\bean\UserExample$Criteria.class
@@ -18,6 +19,7 @@ com\jmu\uacs\user\bean\UserRoleExample$Criteria.class
 com\jmu\uacs\user\bean\UserExample$GeneratedCriteria.class
 com\jmu\uacs\user\util\HttpUtils$1.class
 com\jmu\uacs\user\bean\UserTagExample$Criteria.class
+com\jmu\uacs\user\feign\exception\AssociationServiceFeignHandleException.class
 com\jmu\uacs\user\mapper\MajorMapper.class
 com\jmu\uacs\user\bean\ClassExample.class
 com\jmu\uacs\user\bean\Class.class

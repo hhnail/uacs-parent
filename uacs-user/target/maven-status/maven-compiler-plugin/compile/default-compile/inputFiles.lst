@@ -1,3 +1,4 @@
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\feign\exception\AssociationServiceFeignHandleException.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\PermissionMapper.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\UserAssociationMapper.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\UserAssociationExample.java
@@ -17,6 +18,7 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\j
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\mapper\TagMapper.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\UserTagExample.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\Major.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\feign\AssociationServiceFeign.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\Tag.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\bean\UserExample.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-user\src\main\java\com\jmu\uacs\user\service\impl\UserServiceImpl.java

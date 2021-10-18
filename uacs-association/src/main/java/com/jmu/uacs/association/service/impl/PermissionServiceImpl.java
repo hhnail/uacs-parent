@@ -31,7 +31,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<Permission> firstDoList = permissionMapper.getPermissionListByGrade(1);
         log.debug("==1 一级菜单列表 firstDoList={}", firstDoList);
 
-        // 转化VO 并 注入子菜单
+        // 封装VO 并 注入子菜单
         for (Permission pms : firstDoList) {
             PermissionVo firstVo = new PermissionVo();
             // 1 转化vo

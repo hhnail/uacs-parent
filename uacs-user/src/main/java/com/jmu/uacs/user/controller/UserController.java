@@ -7,6 +7,7 @@ import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
+import com.jmu.uacs.vo.response.UserManageVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

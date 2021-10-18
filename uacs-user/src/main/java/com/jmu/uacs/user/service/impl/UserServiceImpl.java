@@ -5,6 +5,7 @@ import com.jmu.uacs.user.bean.Class;
 import com.jmu.uacs.user.enums.UserExceptionEnum;
 import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
+import com.jmu.uacs.user.feign.AssociationServiceFeign;
 import com.jmu.uacs.user.mapper.ClassMapper;
 import com.jmu.uacs.user.mapper.PermissionMapper;
 import com.jmu.uacs.user.mapper.UserAssociationMapper;
@@ -15,7 +16,9 @@ import com.jmu.uacs.util.MyDateUtil;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
+import com.jmu.uacs.vo.response.UserManageVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 @Transactional(readOnly = true) // 整个类的数据库操作——只读
 public class UserServiceImpl implements UserService {
 
+    // ============= 本模块接口 ============
     @Autowired
     UserMapper userMapper;
 
@@ -51,6 +55,12 @@ public class UserServiceImpl implements UserService {
     UserAssociationMapper userAssociationMapper;
 
 
+    // ============= 远程服务接口 ============
+    @Autowired
+    AssociationServiceFeign associationServiceFeign;
+
+
+    // ============= 其他接口（redis中间件） ============
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -151,6 +161,10 @@ public class UserServiceImpl implements UserService {
 //        uaExp.createCriteria().andUserIdEqualTo(userId);
 //        List<UserAssociation> uaRecords = userAssociationMapper.selectByExample(uaExp);
 
+        // 调用远程服务 查询角色列表
+        AppResponse<UserManageVo> userResponse = associationServiceFeign.getUserById(userId);
+        log.debug("调用远程接口 获取角色列表={}", userResponse.getData().getRoleList());
+        responseVo.setRoleList(userResponse.getData().getRoleList());
         return responseVo;
     }
 
