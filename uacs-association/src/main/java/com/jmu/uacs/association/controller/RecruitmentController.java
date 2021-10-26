@@ -79,5 +79,21 @@ public class RecruitmentController {
         }
     }
 
-
+    @ApiOperation("更新社团纳新信息状态")
+    @GetMapping("/updateRecruitmentState")
+    public AppResponse<Boolean> updateRecruitmentState(@RequestParam("recruitmentId") Integer recruitmentId,
+                                                       @RequestParam("state") String state) {
+        try {
+            log.debug("==C1 更新社团纳新信息状态 == recruitmentId={}", recruitmentId);
+            Boolean success = recruitmentService.updateRecruitmentState(recruitmentId, state);
+            AppResponse<Boolean> resp = AppResponse.ok(success);
+            resp.setMsg("社团纳新信息更新成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<Boolean> fail = AppResponse.fail(false);
+            fail.setMsg("社团纳新信息更新失败！");
+            return fail;
+        }
+    }
 }

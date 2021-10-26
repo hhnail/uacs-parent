@@ -11,4 +11,5 @@ public interface RecruitmentService {
 
     List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo);
 
+    Boolean updateRecruitmentState(Integer recruitmentId, String state);
 }

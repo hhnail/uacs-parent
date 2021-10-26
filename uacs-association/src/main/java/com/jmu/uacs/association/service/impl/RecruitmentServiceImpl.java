@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -46,5 +47,20 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo) {
         List<RecruitmentRespVo> respList = recruitmentMapper.getRecruitment(requestVo);
         return respList;
+    }
+
+    public Recruitment getRecruitmentById(Integer recruitmentId) {
+        return recruitmentMapper.selectByPrimaryKey(recruitmentId);
+    }
+
+    @Override
+    public Boolean updateRecruitmentState(Integer recruitmentId, String state) {
+        Recruitment recruitmentById = getRecruitmentById(recruitmentId);
+        Recruitment rec = new Recruitment();
+        BeanUtils.copyProperties(recruitmentById, rec);
+        rec.setState(state);
+        rec.setUpdateTime(new Date());
+        int affectedRow = recruitmentMapper.updateByPrimaryKey(rec);
+        return affectedRow > 0;
     }
 }
