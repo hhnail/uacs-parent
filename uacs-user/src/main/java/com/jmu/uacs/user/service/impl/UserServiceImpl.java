@@ -119,12 +119,9 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andUserIdEqualTo(userId);
         List<User> list = userMapper.selectByExample(example);
 
-        // 如果查出来的数据条数 ！= 1
         if (!MyCollectionUtils.hasOneEle(list)) {
             throw new UserException(UserExceptionEnum.USER_UNEXIST);
         }
-
-        // 若该账号用户存在
         User dbUser = list.get(0);
 
         // 如果该用户状态为CLOSE
@@ -144,7 +141,11 @@ public class UserServiceImpl implements UserService {
         // 以UUID作为访问令牌，但是里可能有"-",把"-"去掉
         String accessToken = UUID.randomUUID().toString().replaceAll("-", "");
         UserResponseVo responseVo = new UserResponseVo();
+
         BeanUtils.copyProperties(dbUser, responseVo);// 对拷
+
+        log.debug("responseVo in Service={}", responseVo);
+
         responseVo.setUserId(dbUser.getUserId());
         responseVo.setAccessToken(accessToken);// 设置accessToken
 

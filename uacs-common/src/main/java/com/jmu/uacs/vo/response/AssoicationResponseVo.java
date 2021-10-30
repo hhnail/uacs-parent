@@ -9,6 +9,7 @@ import java.util.Date;
 @ToString
 @Data
 public class AssoicationResponseVo implements Serializable {
+
 	private Integer associationId;
 
 	private String associationName;

@@ -17,4 +17,6 @@ public interface AssociationService {
     List<String> getAssociationAdminIdList(Integer associationId);
 
     List<UserAssociationVo> getAssociationByUserId(Integer userId,Integer[] roleIds);
+
+    AssoicationResponseVo getAssociationInfo(Integer associationId);
 }

@@ -25,4 +25,10 @@ public class UserResponseVo implements Serializable {
     @ApiModelProperty(value = "角色列表")
     private List<RoleRespVo> roleList;
 
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
+    @ApiModelProperty(value = "电话号码")
+    private String phone;
+
 }

@@ -96,4 +96,24 @@ public class RecruitmentController {
             return fail;
         }
     }
+
+
+    @ApiOperation("获取最近的社团纳新通知")
+    @GetMapping("/getRecentRecruitment/{associationId}/{size}")
+    public AppResponse<RecruitmentRespVo> getRecentRecruitment(@PathVariable("associationId") Integer associationId,
+                                                               @PathVariable("size") Integer size) {
+        try {
+            RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(associationId,size);
+            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
+            resp.setMsg("获取最近的社团纳新通知成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
+            fail.setMsg("获取最近的社团纳新通知失败！");
+            return fail;
+        }
+    }
+
+
 }

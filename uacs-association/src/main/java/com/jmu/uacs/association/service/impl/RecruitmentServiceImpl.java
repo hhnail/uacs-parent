@@ -63,4 +63,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         int affectedRow = recruitmentMapper.updateByPrimaryKey(rec);
         return affectedRow > 0;
     }
+
+    @Override
+    public RecruitmentRespVo getRecentRecruitment(Integer associationId, Integer size) {
+        RecruitmentRespVo vo = recruitmentMapper.getRecentRecruitment(associationId,size);
+        return vo;
+    }
 }

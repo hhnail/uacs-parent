@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.PathParam;
 import java.util.List;
 
 
@@ -50,11 +51,14 @@ public class AssociationController {
 
     @ResponseBody
     @ApiOperation(value = "查询某社团信息")
-    @GetMapping("/associationInfo")
-    public AppResponse<AssoicationResponseVo> associationInfo(String asId) {
+    @GetMapping("/associationInfo/{associationId}")
+    public AppResponse<AssoicationResponseVo> getAssociationInfo(@PathVariable("associationId") String associationId) {
         try {
-            //AssoicationResponseVo assVo = associationService.getAssociationInfo(asId);
-            AppResponse<AssoicationResponseVo> resp = AppResponse.ok(null);
+            log.debug("==社团控制器 associationId={}", associationId);
+            Integer associationId2 = Integer.parseInt(associationId);
+            log.debug("==社团控制器 associationId转化为字符串={}", associationId2);
+            AssoicationResponseVo assRespVo = associationService.getAssociationInfo(associationId2);
+            AppResponse<AssoicationResponseVo> resp = AppResponse.ok(assRespVo);
             return resp;
         } catch (Exception e) {
             AppResponse<AssoicationResponseVo> resp = AppResponse.fail(null);

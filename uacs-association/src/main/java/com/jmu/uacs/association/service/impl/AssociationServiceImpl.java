@@ -8,6 +8,7 @@ import com.jmu.uacs.association.mapper.RoleMapper;
 import com.jmu.uacs.association.mapper.UserRoleMapper;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
+import com.jmu.uacs.enums.DateTemplate;
 import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.MyDateUtil;
 import com.jmu.uacs.util.StringUtils;
@@ -147,5 +148,15 @@ public class AssociationServiceImpl implements AssociationService {
             voList.add(vo);
         }
         return voList;
+    }
+
+    @Override
+    public AssoicationResponseVo getAssociationInfo(Integer associationId) {
+        AssoicationResponseVo vo = new AssoicationResponseVo();
+        Association associationDO = associationMapper.selectByPrimaryKey(associationId);
+        BeanUtils.copyProperties(associationDO,vo);
+        vo.setCreateTime(StringUtils.formatDate2String(associationDO.getCreateTime(), DateTemplate.yyyyMMdd));
+        vo.setRequestTime(StringUtils.formatDate2String(associationDO.getRequestTime(), DateTemplate.yyyyMMdd));
+        return vo;
     }
 }

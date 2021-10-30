@@ -17,6 +17,24 @@
         <result column="association_id" jdbcType="INTEGER" property="associationId"/>
     </resultMap>
 
+    <select id="getRecentRecruitment" parameterType="java.lang.Integer" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
+        SELECT
+            r.*,
+            r.recruitment_id AS recruitmentId,
+            r.new_num AS newNum,
+            r.start_time AS startTime,
+            r.end_time AS endTime,
+            r.create_time AS createTime,
+            r.update_time AS updateTime
+        FROM
+            recruitment r
+                INNER JOIN association a ON r.association_id = a.association_id
+                AND a.association_id = #{associationId}
+        ORDER BY
+            r.create_time DESC
+            LIMIT #{size}
+    </select>
+
     <!--      List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);  -->
     <select id="getRecruitment" parameterType="com.jmu.uacs.vo.request.RecruitmentReqVo" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
         SELECT tr.*,

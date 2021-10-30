@@ -116,19 +116,14 @@ public class UserController {
     @ApiOperation(value = "用户登陆") // swagger-ui
     @ApiImplicitParams(value = {
             @ApiImplicitParam(value = "登陆账号（学号）", name = "userId"),
-            @ApiImplicitParam(value = "用户密码", name = "password")})// swagger-ui
-    @PostMapping("/login") //mapping
+            @ApiImplicitParam(value = "用户密码", name = "password")})
+    @PostMapping("/login")
     public AppResponse<UserResponseVo> login(@RequestParam("userId") String userId,
                                              @RequestParam("password") String password) {
-        try { // 接口必须要把异常try...catch... 不允许把异常抛出去
+        try {
             log.debug("登录表单数据userId-{}", userId); // 生产环境不要打印密码
-
-
             UserResponseVo vo = userService.login(userId, password);
-
-
-            log.debug("登录成功-{}", userId);
-            log.debug("respVo-{}", vo);
+            log.debug("login vo = {}", vo);
             return AppResponse.ok(vo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,13 +132,6 @@ public class UserController {
             resp.setMsg(e.getMessage());
             return resp;
         }
-    }
-
-    @ApiOperation(value = "重置密码")
-    @PostMapping("/reset")
-    public AppResponse<Object> reset() {
-
-        return AppResponse.ok("ok");
     }
 
     @ApiOperation(value = "获取个人信息")
@@ -211,5 +199,12 @@ public class UserController {
         List<UserInfoVo> voList = userService.getUserList(userIdList);
         AppResponse<List<UserInfoVo>> resp = AppResponse.ok(voList);
         return resp;
+    }
+
+    @ApiOperation(value = "更新个人设置")
+    @PostMapping("/reset")
+    public AppResponse<Object> reset() {
+
+        return AppResponse.ok("ok");
     }
 }

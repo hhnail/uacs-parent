@@ -33,4 +33,6 @@ public interface RecruitmentMapper {
     int updateByPrimaryKey(Recruitment record);
 
     List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);
+
+    RecruitmentRespVo getRecentRecruitment(@Param("associationId")Integer associationId, @Param("size")Integer size);
 }
