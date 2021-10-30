@@ -1,1 +1,3 @@
+com\jmu\uacs\config\AppDruidConfig.class
 com\jmu\uacs\UacsBulletinApplication.class
+com\jmu\uacs\config\AppSwaggerConfig.class
