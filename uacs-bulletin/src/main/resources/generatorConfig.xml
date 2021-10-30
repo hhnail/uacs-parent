@@ -15,7 +15,7 @@
         <!-- mvn mybatis-generator:generate 配置数据库位置 ，配置虚拟机上的mysql ip地址；不采用安全协议连接，否则无法逆向生成 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/uacs?useSSL=false"
-                        userId="root" password="">
+                        userId="root" password="root">
         </jdbcConnection>
 
 
@@ -47,7 +47,7 @@
         </javaClientGenerator>
 
         <!-- %通配所有表，类名根据表名自动生成了。 -->
-        <table tableName="recruitment"></table>
+        <table tableName="share"></table>
 
     </context>
 </generatorConfiguration> 

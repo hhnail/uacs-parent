@@ -41,6 +41,7 @@ com\jmu\uacs\user\service\impl\TagServiceImpl.class
 com\jmu\uacs\user\bean\CollegeExample$Criteria.class
 com\jmu\uacs\user\bean\RoleExample$GeneratedCriteria.class
 com\jmu\uacs\user\bean\User.class
+com\jmu\uacs\user\bean\UserTagExample$Criterion.class
 com\jmu\uacs\user\mapper\UserTagMapper.class
 com\jmu\uacs\user\service\TagService.class
 com\jmu\uacs\user\bean\MajorExample$Criteria.class

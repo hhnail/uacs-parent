@@ -4,6 +4,7 @@ com\jmu\uacs\vo\response\UserInfoVo.class
 com\jmu\uacs\enums\ResponseCodeEnume.class
 com\jmu\uacs\enums\UserTypeEnume.class
 com\jmu\uacs\enums\RoleTypeEnum.class
+com\jmu\uacs\vo\request\AddShareRequestVO.class
 com\jmu\uacs\vo\request\ReGrantPermissions2RoleReqVo.class
 com\jmu\uacs\enums\AssociationStateEnum.class
 com\jmu\uacs\bean\Permission.class
@@ -22,6 +23,7 @@ com\jmu\uacs\enums\DateTemplate.class
 com\jmu\uacs\vo\request\ApplicationRequestVo.class
 com\jmu\uacs\vo\response\UserResponseVo.class
 com\jmu\uacs\vo\request\PermissionUpdateVo.class
+com\jmu\uacs\vo\response\ShareResponseVo.class
 com\jmu\uacs\vo\request\UserRegistVo.class
 com\jmu\uacs\util\StringUtils.class
 com\jmu\uacs\vo\request\UserAddReqVo.class

@@ -3,7 +3,7 @@ spring:
     name: UACS-BULLETIN
   datasource:
     username: root
-    password:
+    password: root
     url: jdbc:mysql://localhost/uacs?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.jdbc.Driver
   redis:
