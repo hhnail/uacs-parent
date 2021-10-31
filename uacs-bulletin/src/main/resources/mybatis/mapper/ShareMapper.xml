@@ -4,8 +4,11 @@
   <resultMap id="BaseResultMap" type="com.jmu.uacs.bulletin.bean.Share">
     <id column="share_id" jdbcType="INTEGER" property="shareId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="share_time" jdbcType="TIMESTAMP" property="shareTime" />
+    <result column="short_description" jdbcType="VARCHAR" property="shortDescription" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="view" jdbcType="INTEGER" property="view" />
+    <result column="thumbs" jdbcType="INTEGER" property="thumbs" />
     <result column="refuse_reason" jdbcType="VARCHAR" property="refuseReason" />
     <result column="association_id" jdbcType="INTEGER" property="associationId" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
@@ -18,28 +21,31 @@
   <!--  List<ShareResponseVo> getShareList();-->
   <select id="getShareList" resultType="com.jmu.uacs.vo.response.ShareResponseVo" parameterType="java.lang.String">
     SELECT
-      s.share_id shareId,
-      s.title,
-      s.share_content shareContent,
-      s.state,
-      s.view,
-      s.refuse_reason refuseReason,
-      a.association_id associationId,
-      a.association_name associationName,
-      u.user_id userId,
-      u.name
-    FROM
-      `share` s
+        s.share_id shareId,
+        s.title,
+        s.share_content shareContent,
+        s.short_description shortDescription,
+        s.state,
+        s.share_time as shareTime,
+        s.view,
+        s.thumbs,
+        s.refuse_reason refuseReason,
+        a.association_id associationId,
+        a.association_name associationName,
+        s.user_id userId,
+        (SELECT u.name FROM `user` u WHERE u.user_id = s.user_id) `name`,
+        r.role_name roleName
+    FROM `share` s
         INNER JOIN association a ON s.association_id = a.association_id
-        INNER JOIN `user` u ON s.user_id = u.user_id
-    WHERE
-      1 = 1
-      AND s.is_del = 0
+        INNER JOIN user_role ur ON s.user_id = ur.user_id AND ur.association_id = a.association_id
+        INNER JOIN role r ON ur.role_id = r.role_id
+    WHERE 1 = 1
+        AND s.is_del = 0
     <if test="shareId != null">
-      AND s.share_id = #{shareId}
+        AND s.share_id = #{shareId}
     </if>
     <if test="associationId != null">
-      AND s.association_id = #{associationId}
+        AND s.association_id = #{associationId}
     </if>
   </select>
 
@@ -102,7 +108,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    share_id, title, state, view, refuse_reason, association_id, user_id, is_del
+    share_id, title, share_time, short_description, state, view, thumbs, refuse_reason, 
+    association_id, user_id, is_del
   </sql>
   <sql id="Blob_Column_List">
     share_content
@@ -156,12 +163,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jmu.uacs.bulletin.bean.Share">
-    insert into share (share_id, title, state, 
-      view, refuse_reason, association_id, 
+    insert into share (share_id, title, share_time, 
+      short_description, state, view, 
+      thumbs, refuse_reason, association_id, 
       user_id, is_del, share_content
       )
-    values (#{shareId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
-      #{view,jdbcType=INTEGER}, #{refuseReason,jdbcType=VARCHAR}, #{associationId,jdbcType=INTEGER}, 
+    values (#{shareId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{shareTime,jdbcType=TIMESTAMP}, 
+      #{shortDescription,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{view,jdbcType=INTEGER}, 
+      #{thumbs,jdbcType=INTEGER}, #{refuseReason,jdbcType=VARCHAR}, #{associationId,jdbcType=INTEGER}, 
       #{userId,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{shareContent,jdbcType=LONGVARBINARY}
       )
   </insert>
@@ -174,11 +183,20 @@
       <if test="title != null">
         title,
       </if>
+      <if test="shareTime != null">
+        share_time,
+      </if>
+      <if test="shortDescription != null">
+        short_description,
+      </if>
       <if test="state != null">
         state,
       </if>
       <if test="view != null">
         view,
+      </if>
+      <if test="thumbs != null">
+        thumbs,
       </if>
       <if test="refuseReason != null">
         refuse_reason,
@@ -203,11 +221,20 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="shareTime != null">
+        #{shareTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shortDescription != null">
+        #{shortDescription,jdbcType=VARCHAR},
+      </if>
       <if test="state != null">
         #{state,jdbcType=VARCHAR},
       </if>
       <if test="view != null">
         #{view,jdbcType=INTEGER},
+      </if>
+      <if test="thumbs != null">
+        #{thumbs,jdbcType=INTEGER},
       </if>
       <if test="refuseReason != null">
         #{refuseReason,jdbcType=VARCHAR},
@@ -241,11 +268,20 @@
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
+      <if test="record.shareTime != null">
+        share_time = #{record.shareTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shortDescription != null">
+        short_description = #{record.shortDescription,jdbcType=VARCHAR},
+      </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
       </if>
       <if test="record.view != null">
         view = #{record.view,jdbcType=INTEGER},
+      </if>
+      <if test="record.thumbs != null">
+        thumbs = #{record.thumbs,jdbcType=INTEGER},
       </if>
       <if test="record.refuseReason != null">
         refuse_reason = #{record.refuseReason,jdbcType=VARCHAR},
@@ -271,8 +307,11 @@
     update share
     set share_id = #{record.shareId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      share_time = #{record.shareTime,jdbcType=TIMESTAMP},
+      short_description = #{record.shortDescription,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=VARCHAR},
       view = #{record.view,jdbcType=INTEGER},
+      thumbs = #{record.thumbs,jdbcType=INTEGER},
       refuse_reason = #{record.refuseReason,jdbcType=VARCHAR},
       association_id = #{record.associationId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR},
@@ -286,8 +325,11 @@
     update share
     set share_id = #{record.shareId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
+      share_time = #{record.shareTime,jdbcType=TIMESTAMP},
+      short_description = #{record.shortDescription,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=VARCHAR},
       view = #{record.view,jdbcType=INTEGER},
+      thumbs = #{record.thumbs,jdbcType=INTEGER},
       refuse_reason = #{record.refuseReason,jdbcType=VARCHAR},
       association_id = #{record.associationId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR},
@@ -302,11 +344,20 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="shareTime != null">
+        share_time = #{shareTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shortDescription != null">
+        short_description = #{shortDescription,jdbcType=VARCHAR},
+      </if>
       <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
       </if>
       <if test="view != null">
         view = #{view,jdbcType=INTEGER},
+      </if>
+      <if test="thumbs != null">
+        thumbs = #{thumbs,jdbcType=INTEGER},
       </if>
       <if test="refuseReason != null">
         refuse_reason = #{refuseReason,jdbcType=VARCHAR},
@@ -329,8 +380,11 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jmu.uacs.bulletin.bean.Share">
     update share
     set title = #{title,jdbcType=VARCHAR},
+      share_time = #{shareTime,jdbcType=TIMESTAMP},
+      short_description = #{shortDescription,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
       view = #{view,jdbcType=INTEGER},
+      thumbs = #{thumbs,jdbcType=INTEGER},
       refuse_reason = #{refuseReason,jdbcType=VARCHAR},
       association_id = #{associationId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
@@ -341,8 +395,11 @@
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.bulletin.bean.Share">
     update share
     set title = #{title,jdbcType=VARCHAR},
+      share_time = #{shareTime,jdbcType=TIMESTAMP},
+      short_description = #{shortDescription,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
       view = #{view,jdbcType=INTEGER},
+      thumbs = #{thumbs,jdbcType=INTEGER},
       refuse_reason = #{refuseReason,jdbcType=VARCHAR},
       association_id = #{associationId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},

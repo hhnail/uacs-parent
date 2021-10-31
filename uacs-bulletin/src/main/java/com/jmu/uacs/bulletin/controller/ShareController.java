@@ -22,7 +22,7 @@ public class ShareController {
     @Autowired
     ShareService shareService;
 
-    @ApiOperation("查询社团分享列表")
+    @ApiOperation("查询所有社团分享列表")
     @GetMapping("/getShareList")
     public AppResponse<List<ShareResponseVo>> getShareList() {
         List<ShareResponseVo> voLists = shareService.getShareList();
@@ -40,7 +40,7 @@ public class ShareController {
         return resp;
     }
 
-    @ApiOperation("查询社团分享列表")
+    @ApiOperation("查询某条经历分享详情")
     @GetMapping("/getShareById/{shareId}")
     public AppResponse<ShareResponseVo> getShareById(@PathVariable("shareId") String shareId) {
         ShareResponseVo vo = shareService.getShareById(shareId);
@@ -48,7 +48,7 @@ public class ShareController {
         return resp;
     }
 
-    @ApiOperation("查询社团分享列表")
+    @ApiOperation("查询某社团的所有成员经历分享")
     @GetMapping("/getShareByAssociation/{associationId}")
     public AppResponse<List<ShareResponseVo>> getShareByAssociation(@PathVariable("associationId") String associationId) {
         List<ShareResponseVo> vo = shareService.getShareByAssociation(associationId);

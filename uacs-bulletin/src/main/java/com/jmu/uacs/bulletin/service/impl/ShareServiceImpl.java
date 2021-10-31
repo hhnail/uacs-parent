@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +31,7 @@ public class ShareServiceImpl implements ShareService {
         share.setShareContent(reqVO.getShareContent().getBytes());
         share.setIsDel(0);
         share.setView(0);
+        share.setShareTime(new Date());
         shareMapper.insert(share);
     }
 

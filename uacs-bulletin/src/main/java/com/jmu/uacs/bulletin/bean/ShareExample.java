@@ -1,6 +1,7 @@
 package com.jmu.uacs.bulletin.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ShareExample {
@@ -234,6 +235,136 @@ public class ShareExample {
             return (Criteria) this;
         }
 
+        public Criteria andShareTimeIsNull() {
+            addCriterion("share_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeIsNotNull() {
+            addCriterion("share_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeEqualTo(Date value) {
+            addCriterion("share_time =", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeNotEqualTo(Date value) {
+            addCriterion("share_time <>", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeGreaterThan(Date value) {
+            addCriterion("share_time >", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("share_time >=", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeLessThan(Date value) {
+            addCriterion("share_time <", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeLessThanOrEqualTo(Date value) {
+            addCriterion("share_time <=", value, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeIn(List<Date> values) {
+            addCriterion("share_time in", values, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeNotIn(List<Date> values) {
+            addCriterion("share_time not in", values, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeBetween(Date value1, Date value2) {
+            addCriterion("share_time between", value1, value2, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShareTimeNotBetween(Date value1, Date value2) {
+            addCriterion("share_time not between", value1, value2, "shareTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionIsNull() {
+            addCriterion("short_description is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionIsNotNull() {
+            addCriterion("short_description is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionEqualTo(String value) {
+            addCriterion("short_description =", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionNotEqualTo(String value) {
+            addCriterion("short_description <>", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionGreaterThan(String value) {
+            addCriterion("short_description >", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("short_description >=", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionLessThan(String value) {
+            addCriterion("short_description <", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("short_description <=", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionLike(String value) {
+            addCriterion("short_description like", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionNotLike(String value) {
+            addCriterion("short_description not like", value, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionIn(List<String> values) {
+            addCriterion("short_description in", values, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionNotIn(List<String> values) {
+            addCriterion("short_description not in", values, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionBetween(String value1, String value2) {
+            addCriterion("short_description between", value1, value2, "shortDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortDescriptionNotBetween(String value1, String value2) {
+            addCriterion("short_description not between", value1, value2, "shortDescription");
+            return (Criteria) this;
+        }
+
         public Criteria andStateIsNull() {
             addCriterion("state is null");
             return (Criteria) this;
@@ -361,6 +492,66 @@ public class ShareExample {
 
         public Criteria andViewNotBetween(Integer value1, Integer value2) {
             addCriterion("view not between", value1, value2, "view");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsIsNull() {
+            addCriterion("thumbs is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsIsNotNull() {
+            addCriterion("thumbs is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsEqualTo(Integer value) {
+            addCriterion("thumbs =", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsNotEqualTo(Integer value) {
+            addCriterion("thumbs <>", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsGreaterThan(Integer value) {
+            addCriterion("thumbs >", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("thumbs >=", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsLessThan(Integer value) {
+            addCriterion("thumbs <", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsLessThanOrEqualTo(Integer value) {
+            addCriterion("thumbs <=", value, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsIn(List<Integer> values) {
+            addCriterion("thumbs in", values, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsNotIn(List<Integer> values) {
+            addCriterion("thumbs not in", values, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsBetween(Integer value1, Integer value2) {
+            addCriterion("thumbs between", value1, value2, "thumbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andThumbsNotBetween(Integer value1, Integer value2) {
+            addCriterion("thumbs not between", value1, value2, "thumbs");
             return (Criteria) this;
         }
 

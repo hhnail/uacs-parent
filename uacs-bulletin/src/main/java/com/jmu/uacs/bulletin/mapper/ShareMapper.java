@@ -2,7 +2,6 @@ package com.jmu.uacs.bulletin.mapper;
 
 import com.jmu.uacs.bulletin.bean.Share;
 import com.jmu.uacs.bulletin.bean.ShareExample;
-
 import java.util.List;
 
 import com.jmu.uacs.vo.response.ShareResponseVo;
