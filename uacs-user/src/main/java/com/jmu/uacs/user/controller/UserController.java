@@ -179,9 +179,9 @@ public class UserController {
      */
     @ApiOperation(value = "验证访问令牌")
     @PostMapping("/getUserPrimaryKey")
-    public AppResponse<Integer> getUserPrimaryKey(@RequestParam("accessToken") String accessToken) {
-        Integer userId = userService.getUserIdByToken(accessToken);
-        AppResponse<Integer> resp = AppResponse.ok(userId);
+    public AppResponse<String> getUserPrimaryKey(@RequestParam("accessToken") String accessToken) {
+        String userId = userService.getUserIdByToken(accessToken);
+        AppResponse<String> resp = AppResponse.ok(userId);
         return resp;
     }
 

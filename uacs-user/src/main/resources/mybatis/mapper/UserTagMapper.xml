@@ -3,8 +3,8 @@
 <mapper namespace="com.jmu.uacs.user.mapper.UserTagMapper">
   <resultMap id="BaseResultMap" type="com.jmu.uacs.user.bean.UserTag">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="tag_id" jdbcType="INTEGER" property="tagId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, tag_id, user_id
+    id, user_id, tag_id
   </sql>
   <select id="selectByExample" parameterType="com.jmu.uacs.user.bean.UserTagExample" resultMap="BaseResultMap">
     select
@@ -98,9 +98,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jmu.uacs.user.bean.UserTag">
-    insert into user_tag (id, tag_id, user_id
+    insert into user_tag (id, user_id, tag_id
       )
-    values (#{id,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.user.bean.UserTag">
@@ -109,22 +109,22 @@
       <if test="id != null">
         id,
       </if>
-      <if test="tagId != null">
-        tag_id,
-      </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="tagId != null">
+        tag_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="tagId != null">
         #{tagId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -140,11 +140,11 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
       <if test="record.tagId != null">
         tag_id = #{record.tagId,jdbcType=INTEGER},
-      </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -154,8 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update user_tag
     set id = #{record.id,jdbcType=INTEGER},
-      tag_id = #{record.tagId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      tag_id = #{record.tagId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +163,19 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jmu.uacs.user.bean.UserTag">
     update user_tag
     <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
       <if test="tagId != null">
         tag_id = #{tagId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.user.bean.UserTag">
     update user_tag
-    set tag_id = #{tagId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+    set user_id = #{userId,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

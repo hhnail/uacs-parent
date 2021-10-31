@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface TagService {
 
-    List<TagRespVo> getUserTagById(Integer userId);
+    List<TagRespVo> getUserTagById(String userId);
 
     Map<String, List<TagRespVo>> getAllTags();
 }

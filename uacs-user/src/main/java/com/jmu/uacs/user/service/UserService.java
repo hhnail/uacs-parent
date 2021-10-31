@@ -15,7 +15,7 @@ public interface UserService {
 
     UserInfoVo getUserInfo(String accessToken);
 
-    Integer getUserIdByToken(String accessToken);
+    String getUserIdByToken(String accessToken);
 
     int updateUserInfo(UserInfoReqVo vo);
 

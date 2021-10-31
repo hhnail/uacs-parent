@@ -59,7 +59,7 @@ public class TagController {
         try {
             //因为service之间要避免相互调用，所以在Controller换取id
             log.debug("==23 后台服务-controller-获取兴趣爱好 accessToken={}", accessToken);
-            Integer userId = userService.getUserIdByToken(accessToken);
+            String userId = userService.getUserIdByToken(accessToken);
             log.debug("==24 后台服务-controller-获取兴趣爱好 userId={}", userId);
             List<TagRespVo> userTags = tagService.getUserTagById(userId);
             return AppResponse.ok(userTags);

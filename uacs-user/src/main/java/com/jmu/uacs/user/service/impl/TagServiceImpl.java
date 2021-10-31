@@ -32,7 +32,7 @@ public class TagServiceImpl implements TagService {
 //    UserService userService;
 
     @Override
-    public List<TagRespVo> getUserTagById(Integer userId) {
+    public List<TagRespVo> getUserTagById(String userId) {
         //根据userId获取用户的标签Id
         UserTagExample example = new UserTagExample();
         example.createCriteria().andUserIdEqualTo(userId);

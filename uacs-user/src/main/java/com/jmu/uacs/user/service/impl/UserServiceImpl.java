@@ -1,7 +1,8 @@
 package com.jmu.uacs.user.service.impl;
 
-import com.jmu.uacs.user.bean.*;
 import com.jmu.uacs.user.bean.Class;
+import com.jmu.uacs.user.bean.User;
+import com.jmu.uacs.user.bean.UserExample;
 import com.jmu.uacs.user.enums.UserExceptionEnum;
 import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
@@ -214,10 +215,10 @@ public class UserServiceImpl implements UserService {
      */
     private User getDBUserByToken(String accessToken) {
         //1 根据accessToken获取redis中存储的userId
-        Integer userId = getUserIdByToken(accessToken);
+        String userId = getUserIdByToken(accessToken);
         //2 根据userId获取用户信息
         UserExample example = new UserExample();
-        example.createCriteria().andUserIdEqualTo(userId + "");
+        example.createCriteria().andUserIdEqualTo(userId);
         List<User> userList = userMapper.selectByExample(example);
         //查询得到的用户数量非1，说明有错
         if (MyCollectionUtils.isEmpty(userList)) {
@@ -235,19 +236,13 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Integer getUserIdByToken(String accessToken) {
+    public String getUserIdByToken(String accessToken) {
         //1 根据accessToken获取redis中存储的userId
         String strUserId = stringRedisTemplate.opsForValue().get(accessToken);
         if (StringUtils.isEmpty(strUserId)) {
             throw new UserException(UserExceptionEnum.USER_TOKEN_INVALID);
         }
-        int userId = -1;
-        try {
-            userId = Integer.parseInt(strUserId);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return userId;
+        return strUserId;
     }
 
     /**

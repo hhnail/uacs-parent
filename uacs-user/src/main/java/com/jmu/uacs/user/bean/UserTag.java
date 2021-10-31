@@ -3,9 +3,9 @@ package com.jmu.uacs.user.bean;
 public class UserTag {
     private Integer id;
 
-    private Integer tagId;
+    private String userId;
 
-    private Integer userId;
+    private Integer tagId;
 
     public Integer getId() {
         return id;
@@ -15,19 +15,19 @@ public class UserTag {
         this.id = id;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
     public Integer getTagId() {
         return tagId;
     }
 
     public void setTagId(Integer tagId) {
         this.tagId = tagId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 }
