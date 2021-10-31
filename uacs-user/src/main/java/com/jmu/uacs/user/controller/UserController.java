@@ -1,10 +1,12 @@
 package com.jmu.uacs.user.controller;
 
+import com.jmu.uacs.user.bean.User;
 import com.jmu.uacs.user.service.UserService;
 import com.jmu.uacs.user.util.SmsTemplate;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
 import com.jmu.uacs.vo.response.UserManageVo;
@@ -14,8 +16,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -38,11 +43,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    // @GetMapping("/hello")
-    // public String hello(String name) {
-    // return "success!" + name;
-    // }
 
     @ApiOperation(value = "发送短信验证码")
     @PostMapping("/sendsms")
@@ -203,8 +203,31 @@ public class UserController {
 
     @ApiOperation(value = "更新个人设置")
     @PostMapping("/reset")
-    public AppResponse<Object> reset() {
+    public AppResponse<String> reset(@RequestBody UserSettingsUpdateReqVO reqVO) {
 
-        return AppResponse.ok("ok");
+        // 后端校验
+        User userById = userService.getUserById(reqVO.getUserId());
+        log.debug("==用户C 更新个人设置 前端User密码={}", reqVO.getPassword());
+        log.debug("==用户C 更新个人设置 后端User密码={}", userById.getPassword());
+
+        if (userById == null) {
+            throw new RuntimeException("用户不存在！");
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        // 验证密码
+        if (!encoder.matches(reqVO.getPassword(), userById.getPassword())) {
+            throw new RuntimeException("密码错误！");
+        }
+
+        // 如果有新密码，说明需要重置。但是如果没有，该项就不需要更新，置空即可
+        if (!StringUtils.isEmpty(reqVO.getNewPassword())) {
+            reqVO.setPassword(encoder.encode(reqVO.getNewPassword()));
+        } else {
+            reqVO.setPassword(null);
+        }
+
+        userService.reset(reqVO);
+        return AppResponse.ok("更新成功！");
     }
 }

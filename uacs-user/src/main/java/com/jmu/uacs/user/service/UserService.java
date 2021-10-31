@@ -1,7 +1,9 @@
 package com.jmu.uacs.user.service;
 
+import com.jmu.uacs.user.bean.User;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.UserInfoVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
 
@@ -20,4 +22,9 @@ public interface UserService {
     int updateUserInfo(UserInfoReqVo vo);
 
     List<UserInfoVo> getUserList(List<String> userIdList);
+
+    void reset(UserSettingsUpdateReqVO user);
+
+    User getUserById(String userId);
+
 }

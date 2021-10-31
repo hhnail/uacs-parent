@@ -17,6 +17,7 @@ import com.jmu.uacs.util.MyDateUtil;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
 import com.jmu.uacs.vo.response.UserManageVo;
@@ -64,6 +65,15 @@ public class UserServiceImpl implements UserService {
     // ============= 其他接口（redis中间件） ============
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+
+    @Override
+    public User getUserById(String userId) {
+        UserExample uExp = new UserExample();
+        uExp.createCriteria().andUserIdEqualTo(userId);
+        return userMapper.selectByExample(uExp).get(0);
+    }
+
 
     /**
      * 用户注册时，保存用户信息
@@ -284,13 +294,17 @@ public class UserServiceImpl implements UserService {
         //写法3：遍历userIdList，依次获取user信息
     }
 
-//    public void test(){
-//        UserExample example = new UserExample();
-//        example.createCriteria().andUserIdEqualTo("1");
-//        UserExample.Criteria c2 = example.createCriteria();
-//        c2.andUserIdEqualTo("2233");
-//        example.or(c2);
-//        userMapper.selectByExample(example);
-//    }
+    @Transactional
+    @Override
+    public void reset(UserSettingsUpdateReqVO reqVO) {
+        // 仅更新非空的内容
+        User user = new User();
+        BeanUtils.copyProperties(reqVO, user);
 
+        // 根据UserId更新
+        UserExample uExp = new UserExample();
+        uExp.createCriteria().andUserIdEqualTo(user.getUserId());
+
+        userMapper.updateByExampleSelective(user, uExp);
+    }
 }
