@@ -11,19 +11,21 @@ public class ShareResponseVo {
     private Integer shareId;
 
     private String title;
+    private String shortDescription;
+    private String shareContent;
+
+    private String userId;
+    private String name;
+    private String roleName;
+    private String shareTime;
 
     private String state;
-
-    private Integer view;
-
     private String refuseReason;
 
-    private Integer isDel;
-
-    private String shareContent;
+    private Integer view;
+    private Integer thumbs;
 
     private Integer associationId;
     private String associationName;
-    private String userId;
-    private String name;
+
 }

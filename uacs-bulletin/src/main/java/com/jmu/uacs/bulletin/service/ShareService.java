@@ -11,4 +11,6 @@ public interface ShareService {
     void addShare(AddShareRequestVO reqVO);
 
     ShareResponseVo getShareById(String shareId);
+
+    List<ShareResponseVo> getShareByAssociation(String associationId);
 }

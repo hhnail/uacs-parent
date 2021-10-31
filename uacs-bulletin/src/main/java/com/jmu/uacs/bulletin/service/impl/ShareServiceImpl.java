@@ -19,7 +19,7 @@ public class ShareServiceImpl implements ShareService {
 
     @Override
     public List<ShareResponseVo> getShareList() {
-        List<ShareResponseVo> shares = shareMapper.getShareList(null);
+        List<ShareResponseVo> shares = shareMapper.getShareList(null, null);
         return shares;
     }
 
@@ -35,7 +35,13 @@ public class ShareServiceImpl implements ShareService {
 
     @Override
     public ShareResponseVo getShareById(String shareId) {
-        List<ShareResponseVo> shares = shareMapper.getShareList(shareId);
+        List<ShareResponseVo> shares = shareMapper.getShareList(shareId, null);
         return shares.get(0);
+    }
+
+    @Override
+    public List<ShareResponseVo> getShareByAssociation(String associationId) {
+        List<ShareResponseVo> shares = shareMapper.getShareList(null, associationId);
+        return shares;
     }
 }

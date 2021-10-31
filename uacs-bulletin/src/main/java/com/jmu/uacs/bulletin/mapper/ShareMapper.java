@@ -2,6 +2,7 @@ package com.jmu.uacs.bulletin.mapper;
 
 import com.jmu.uacs.bulletin.bean.Share;
 import com.jmu.uacs.bulletin.bean.ShareExample;
+
 import java.util.List;
 
 import com.jmu.uacs.vo.response.ShareResponseVo;
@@ -36,11 +37,12 @@ public interface ShareMapper {
 
     int updateByPrimaryKey(Share record);
 
-    /**
-     * 查询社团内经历分享
+    /**查询社团内经历分享
+     *
      *
      * @param shareId 根据shareId进行查询，传入null则查询全部未删除记录
+     * @param associationId 根据associationId进行查询，传入null则查询全部未删除记录
      * @return
      */
-    List<ShareResponseVo> getShareList(String shareId);
+    List<ShareResponseVo> getShareList(String shareId, String associationId);
 }

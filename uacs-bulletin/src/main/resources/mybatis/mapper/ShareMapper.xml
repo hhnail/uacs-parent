@@ -38,6 +38,9 @@
     <if test="shareId != null">
       AND s.share_id = #{shareId}
     </if>
+    <if test="associationId != null">
+      AND s.association_id = #{associationId}
+    </if>
   </select>
 
   <sql id="Example_Where_Clause">

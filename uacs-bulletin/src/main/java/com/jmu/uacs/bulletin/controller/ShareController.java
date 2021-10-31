@@ -47,4 +47,12 @@ public class ShareController {
         AppResponse<ShareResponseVo> resp = AppResponse.ok(vo);
         return resp;
     }
+
+    @ApiOperation("查询社团分享列表")
+    @GetMapping("/getShareByAssociation/{associationId}")
+    public AppResponse<List<ShareResponseVo>> getShareByAssociation(@PathVariable("associationId") String associationId) {
+        List<ShareResponseVo> vo = shareService.getShareByAssociation(associationId);
+        AppResponse<List<ShareResponseVo>> resp = AppResponse.ok(vo);
+        return resp;
+    }
 }
