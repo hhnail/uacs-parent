@@ -32,5 +32,6 @@ com\jmu\uacs\vo\request\AddRecruitmentRequestVo.class
 com\jmu\uacs\vo\response\AssoicationResponseVo.class
 com\jmu\uacs\vo\request\UserSettingsUpdateReqVO.class
 com\jmu\uacs\enums\UserRoleEnum.class
+com\jmu\uacs\vo\response\ApplicationResponseVO.class
 com\jmu\uacs\vo\response\PermissionVo.class
 com\jmu\uacs\enums\ApplicationStateEnum.class

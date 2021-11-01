@@ -1,11 +1,13 @@
 package com.jmu.uacs.association.bean;
 
+import java.util.Date;
+
 public class Application {
     private Integer applicationId;
 
     private String photoUrl;
 
-    private String intentionDepartmentName;
+    private String intentionDepartment;
 
     private String selfProfile;
 
@@ -15,7 +17,15 @@ public class Application {
 
     private Integer state;
 
-    private Integer userId;
+    private Date applicationTime;
+
+    private Date interviewTime;
+
+    private String interviewAddress;
+
+    private String userId;
+
+    private Integer recruitmentId;
 
     public Integer getApplicationId() {
         return applicationId;
@@ -33,12 +43,12 @@ public class Application {
         this.photoUrl = photoUrl == null ? null : photoUrl.trim();
     }
 
-    public String getIntentionDepartmentName() {
-        return intentionDepartmentName;
+    public String getIntentionDepartment() {
+        return intentionDepartment;
     }
 
-    public void setIntentionDepartmentName(String intentionDepartmentName) {
-        this.intentionDepartmentName = intentionDepartmentName == null ? null : intentionDepartmentName.trim();
+    public void setIntentionDepartment(String intentionDepartment) {
+        this.intentionDepartment = intentionDepartment == null ? null : intentionDepartment.trim();
     }
 
     public String getSelfProfile() {
@@ -73,11 +83,43 @@ public class Application {
         this.state = state;
     }
 
-    public Integer getUserId() {
+    public Date getApplicationTime() {
+        return applicationTime;
+    }
+
+    public void setApplicationTime(Date applicationTime) {
+        this.applicationTime = applicationTime;
+    }
+
+    public Date getInterviewTime() {
+        return interviewTime;
+    }
+
+    public void setInterviewTime(Date interviewTime) {
+        this.interviewTime = interviewTime;
+    }
+
+    public String getInterviewAddress() {
+        return interviewAddress;
+    }
+
+    public void setInterviewAddress(String interviewAddress) {
+        this.interviewAddress = interviewAddress == null ? null : interviewAddress.trim();
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public Integer getRecruitmentId() {
+        return recruitmentId;
+    }
+
+    public void setRecruitmentId(Integer recruitmentId) {
+        this.recruitmentId = recruitmentId;
     }
 }

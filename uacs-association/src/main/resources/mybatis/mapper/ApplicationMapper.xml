@@ -11,6 +11,27 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
+<!--  List<ApplicationResponseVO> getApplicationList(Integer associationId);-->
+  <select id="getApplicationList" parameterType="java.lang.Integer" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
+    SELECT
+      a.application_id applicationId,
+      a.intention_department intentionDepartment,
+      a.self_profile selfProfile,
+      a.join_purpose joinPurpose,
+      a.view_of_association viewOfAssociation,
+      a.application_time applicationTime,
+      a.interview_time interviewTime,
+      a.interview_address interviewAddress,
+      a.user_id userId,
+      r.association_id associationId
+    FROM
+      application a
+        INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
+    WHERE
+      1 =1
+      AND r.association_id = #{associationId}
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
