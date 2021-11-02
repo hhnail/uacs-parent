@@ -30,5 +30,5 @@ public interface ApplicationMapper {
 
     int updateByPrimaryKey(Application record);
 
-    List<ApplicationResponseVO> getApplicationList(Integer associationId);
+    List<ApplicationResponseVO> getApplicationList(@Param("associationIds")Integer[] associationIds);
 }

@@ -25,8 +25,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<ApplicationResponseVO> getApplicationList(Integer associationId) {
-        List<ApplicationResponseVO> resList= applicationMapper.getApplicationList(associationId);
+    public List<ApplicationResponseVO> getApplicationList(Integer[] associationIds) {
+        List<ApplicationResponseVO> resList= applicationMapper.getApplicationList(associationIds);
         return resList;
     }
 }

@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,9 +31,9 @@ public class ApplicationController {
     @ApiOperation("查询申请表")
     @ResponseBody
     @PostMapping("/getApplicationList")
-    public AppResponse<List<ApplicationResponseVO>> getApplicationList(Integer associationId){
+    public AppResponse<List<ApplicationResponseVO>> getApplicationList(@RequestParam Integer[] associationIds){
         try {
-            List<ApplicationResponseVO> resList = applicationService.getApplicationList(associationId);
+            List<ApplicationResponseVO> resList = applicationService.getApplicationList(associationIds);
             AppResponse<List<ApplicationResponseVO>> resp = AppResponse.ok(resList);
             return resp;
         } catch (Exception e) {
