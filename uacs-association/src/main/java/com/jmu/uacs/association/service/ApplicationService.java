@@ -10,4 +10,6 @@ public interface ApplicationService {
     void saveApplication(ApplicationRequestVo vo);
 
     List<ApplicationResponseVO> getApplicationList(Integer[] associationIds);
+
+    ApplicationResponseVO getApplicationDetail(Integer applicationId);
 }

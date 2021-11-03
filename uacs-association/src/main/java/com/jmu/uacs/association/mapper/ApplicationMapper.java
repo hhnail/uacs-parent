@@ -2,6 +2,7 @@ package com.jmu.uacs.association.mapper;
 
 import com.jmu.uacs.association.bean.Application;
 import com.jmu.uacs.association.bean.ApplicationExample;
+
 import java.util.List;
 
 import com.jmu.uacs.vo.response.ApplicationResponseVO;
@@ -30,5 +31,7 @@ public interface ApplicationMapper {
 
     int updateByPrimaryKey(Application record);
 
-    List<ApplicationResponseVO> getApplicationList(@Param("associationIds")Integer[] associationIds);
+    List<ApplicationResponseVO> getApplicationList(@Param("associationIds") Integer[] associationIds);
+
+    ApplicationResponseVO getApplicationDetail(@Param("applicationId") Integer applicationId);
 }

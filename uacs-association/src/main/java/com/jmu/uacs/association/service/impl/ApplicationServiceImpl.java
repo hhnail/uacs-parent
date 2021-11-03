@@ -7,6 +7,7 @@ import com.jmu.uacs.vo.request.ApplicationRequestVo;
 import com.jmu.uacs.vo.response.ApplicationResponseVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<ApplicationResponseVO> getApplicationList(Integer[] associationIds) {
         List<ApplicationResponseVO> resList= applicationMapper.getApplicationList(associationIds);
         return resList;
+    }
+
+    @Override
+    public ApplicationResponseVO getApplicationDetail(Integer applicationId) {
+        return applicationMapper.getApplicationDetail(applicationId);
     }
 }

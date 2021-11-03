@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +32,7 @@ public class ApplicationController {
     @ApiOperation("查询申请表")
     @ResponseBody
     @PostMapping("/getApplicationList")
-    public AppResponse<List<ApplicationResponseVO>> getApplicationList(@RequestParam Integer[] associationIds){
+    public AppResponse<List<ApplicationResponseVO>> getApplicationList(@RequestParam Integer[] associationIds) {
         try {
             List<ApplicationResponseVO> resList = applicationService.getApplicationList(associationIds);
             AppResponse<List<ApplicationResponseVO>> resp = AppResponse.ok(resList);
@@ -55,6 +56,23 @@ public class ApplicationController {
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<String> resp = AppResponse.fail(null);
+            resp.setMsg(ResponseCodeEnume.FAIL.getMsg());
+            return resp;
+        }
+    }
+
+
+    @ApiOperation("查询申请表详情")
+    @ResponseBody
+    @GetMapping("/getApplicationDetail/{applicationId}")
+    public AppResponse<ApplicationResponseVO> getApplicationDetail(@PathVariable("applicationId") Integer applicationId) {
+        try {
+            ApplicationResponseVO resList = applicationService.getApplicationDetail(applicationId);
+            AppResponse<ApplicationResponseVO> resp = AppResponse.ok(resList);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<ApplicationResponseVO> resp = AppResponse.fail(null);
             resp.setMsg(ResponseCodeEnume.FAIL.getMsg());
             return resp;
         }
