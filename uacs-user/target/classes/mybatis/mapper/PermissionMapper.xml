@@ -20,7 +20,7 @@
               WHERE trp.role_id
               in (SELECT tur.role_id
                     FROM user_role tur
-                    WHERE tur.user_id = ${userId}))
+                    WHERE tur.user_id = #{userId}))
     </select>
 
     <!--MBG  -->

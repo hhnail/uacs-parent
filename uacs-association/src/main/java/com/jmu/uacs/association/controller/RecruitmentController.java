@@ -74,7 +74,7 @@ public class RecruitmentController {
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
-            fail.setMsg("查询失败，id：" + recruitmentId);
+            fail.setMsg("查询失败！id：" + recruitmentId);
             return fail;
         }
     }
@@ -87,12 +87,12 @@ public class RecruitmentController {
             log.debug("==C1 更新社团纳新信息状态 == recruitmentId={}", recruitmentId);
             Boolean success = recruitmentService.updateRecruitmentState(recruitmentId, state);
             AppResponse<Boolean> resp = AppResponse.ok(success);
-            resp.setMsg("社团纳新信息更新成功！");
+            resp.setMsg("更新成功！");
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<Boolean> fail = AppResponse.fail(false);
-            fail.setMsg("社团纳新信息更新失败！");
+            fail.setMsg("更新失败！");
             return fail;
         }
     }
@@ -105,12 +105,12 @@ public class RecruitmentController {
         try {
             RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(associationId,size);
             AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
-            resp.setMsg("获取最近的社团纳新通知成功！");
+            resp.setMsg("查询成功！");
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
-            fail.setMsg("获取最近的社团纳新通知失败！");
+            fail.setMsg("查询失败！");
             return fail;
         }
     }

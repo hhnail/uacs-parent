@@ -18,6 +18,11 @@ public class ApplicationResponseVO {
     private String userId;
     private String name;
     private String gender;
+    private String phone;
+    private String email;
+    private String className; // 班级
+    private String major; // 专业
+    private String college; // 学院
 
     // 申请表描述信息
     private Integer applicationId;
@@ -33,11 +38,12 @@ public class ApplicationResponseVO {
     private String interviewAddress;
     private Integer state;
 
-
+    // ==== 其他关联
+    // 对应社团信息
     private Integer associationId;
     private String associationName;
 
-    // 入团来源
+    // 对应纳新通知 入团来源
     private Integer recruitmentId;
 
     public String getApplicationTime() {
