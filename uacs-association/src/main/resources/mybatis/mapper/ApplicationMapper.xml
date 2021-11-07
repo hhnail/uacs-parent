@@ -4,43 +4,48 @@
   <resultMap id="BaseResultMap" type="com.jmu.uacs.association.bean.Application">
     <id column="application_id" jdbcType="INTEGER" property="applicationId" />
     <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
-    <result column="intention_department_name" jdbcType="VARCHAR" property="intentionDepartmentName" />
+    <result column="intention_department" jdbcType="VARCHAR" property="intentionDepartment" />
     <result column="self_profile" jdbcType="VARCHAR" property="selfProfile" />
     <result column="join_purpose" jdbcType="VARCHAR" property="joinPurpose" />
     <result column="view_of_association" jdbcType="VARCHAR" property="viewOfAssociation" />
-    <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="application_time" jdbcType="TIMESTAMP" property="applicationTime" />
+    <result column="interview_time" jdbcType="TIMESTAMP" property="interviewTime" />
+    <result column="interview_address" jdbcType="VARCHAR" property="interviewAddress" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="recruitment_id" jdbcType="INTEGER" property="recruitmentId" />
   </resultMap>
-<!--  List<ApplicationResponseVO> getApplicationList(Integer associationId);-->
+
+  <!--  List<ApplicationResponseVO> getApplicationList(Integer associationId);-->
   <select id="getApplicationList" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
     SELECT
-      a.application_id applicationId,
-      a.intention_department intentionDepartment,
-      a.self_profile selfProfile,
-      a.join_purpose joinPurpose,
-      a.view_of_association viewOfAssociation,
-      a.application_time applicationTime,
-      a.state,
-      a.interview_time interviewTime,
-      a.interview_address interviewAddress,
-      a.user_id userId,
-      u.name,
-      r.association_id associationId,
-      ass.association_name associationName
+    a.application_id applicationId,
+    a.intention_department intentionDepartment,
+    a.self_profile selfProfile,
+    a.join_purpose joinPurpose,
+    a.view_of_association viewOfAssociation,
+    a.application_time applicationTime,
+    a.state,
+    a.interview_time interviewTime,
+    a.interview_address interviewAddress,
+    a.user_id userId,
+    u.name,
+    r.association_id associationId,
+    ass.association_name associationName
     FROM
-      application a
-        INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
-        INNER JOIN `user` u ON r.user_id = u.user_id
-        INNER JOIN association ass ON ass.association_id = r.association_id
+    application a
+    INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
+    INNER JOIN `user` u ON r.user_id = u.user_id
+    INNER JOIN association ass ON ass.association_id = r.association_id
     WHERE
-      1 =1
-      AND r.association_id IN
+    1 =1
+    AND r.association_id IN
     <foreach collection="associationIds" item="associationId" open="(" separator="," close=")">
       #{associationId}
     </foreach>
   </select>
 
-<!--  ApplicationResponseVO getApplicationDetail(@Param("applicationId") Integer applicationId);-->
+  <!--  ApplicationResponseVO getApplicationDetail(@Param("applicationId") Integer applicationId);-->
   <select id="getApplicationDetail" parameterType="java.lang.Integer" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
     SELECT
       a.application_id applicationId,
@@ -55,15 +60,14 @@
       r.association_id associationId,
       ass.association_name associationName
     FROM
-        application a
-    INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
-    INNER JOIN `user` u ON r.user_id = u.user_id
-    INNER JOIN association ass ON ass.association_id = r.association_id
+      application a
+        INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
+        INNER JOIN `user` u ON r.user_id = u.user_id
+        INNER JOIN association ass ON ass.association_id = r.association_id
     WHERE
-        1 =1
-    AND a.application_id = #{applicationId}
+      1 =1
+      AND a.application_id = #{applicationId}
   </select>
-
 
   <sql id="Example_Where_Clause">
     <where>
@@ -124,8 +128,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    application_id, photo_url, intention_department_name, self_profile, join_purpose, 
-    view_of_association, state, user_id
+    application_id, photo_url, intention_department, self_profile, join_purpose, view_of_association,
+    state, application_time, interview_time, interview_address, user_id, recruitment_id
   </sql>
   <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.ApplicationExample" resultMap="BaseResultMap">
     select
@@ -142,7 +146,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from application
     where application_id = #{applicationId,jdbcType=INTEGER}
@@ -158,12 +162,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jmu.uacs.association.bean.Application">
-    insert into application (application_id, photo_url, intention_department_name, 
-      self_profile, join_purpose, view_of_association, 
-      state, user_id)
-    values (#{applicationId,jdbcType=INTEGER}, #{photoUrl,jdbcType=VARCHAR}, #{intentionDepartmentName,jdbcType=VARCHAR}, 
-      #{selfProfile,jdbcType=VARCHAR}, #{joinPurpose,jdbcType=VARCHAR}, #{viewOfAssociation,jdbcType=VARCHAR}, 
-      #{state,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+    insert into application (application_id, photo_url, intention_department,
+      self_profile, join_purpose, view_of_association,
+      state, application_time, interview_time,
+      interview_address, user_id, recruitment_id
+      )
+    values (#{applicationId,jdbcType=INTEGER}, #{photoUrl,jdbcType=VARCHAR}, #{intentionDepartment,jdbcType=VARCHAR},
+      #{selfProfile,jdbcType=VARCHAR}, #{joinPurpose,jdbcType=VARCHAR}, #{viewOfAssociation,jdbcType=VARCHAR},
+      #{state,jdbcType=VARCHAR}, #{applicationTime,jdbcType=TIMESTAMP}, #{interviewTime,jdbcType=TIMESTAMP},
+      #{interviewAddress,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{recruitmentId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Application">
     insert into application
@@ -174,8 +182,8 @@
       <if test="photoUrl != null">
         photo_url,
       </if>
-      <if test="intentionDepartmentName != null">
-        intention_department_name,
+      <if test="intentionDepartment != null">
+        intention_department,
       </if>
       <if test="selfProfile != null">
         self_profile,
@@ -189,8 +197,20 @@
       <if test="state != null">
         state,
       </if>
+      <if test="applicationTime != null">
+        application_time,
+      </if>
+      <if test="interviewTime != null">
+        interview_time,
+      </if>
+      <if test="interviewAddress != null">
+        interview_address,
+      </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="recruitmentId != null">
+        recruitment_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -200,8 +220,8 @@
       <if test="photoUrl != null">
         #{photoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="intentionDepartmentName != null">
-        #{intentionDepartmentName,jdbcType=VARCHAR},
+      <if test="intentionDepartment != null">
+        #{intentionDepartment,jdbcType=VARCHAR},
       </if>
       <if test="selfProfile != null">
         #{selfProfile,jdbcType=VARCHAR},
@@ -213,10 +233,22 @@
         #{viewOfAssociation,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        #{state,jdbcType=INTEGER},
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationTime != null">
+        #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewTime != null">
+        #{interviewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewAddress != null">
+        #{interviewAddress,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitmentId != null">
+        #{recruitmentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -235,8 +267,8 @@
       <if test="record.photoUrl != null">
         photo_url = #{record.photoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.intentionDepartmentName != null">
-        intention_department_name = #{record.intentionDepartmentName,jdbcType=VARCHAR},
+      <if test="record.intentionDepartment != null">
+        intention_department = #{record.intentionDepartment,jdbcType=VARCHAR},
       </if>
       <if test="record.selfProfile != null">
         self_profile = #{record.selfProfile,jdbcType=VARCHAR},
@@ -248,10 +280,22 @@
         view_of_association = #{record.viewOfAssociation,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationTime != null">
+        application_time = #{record.applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.interviewTime != null">
+        interview_time = #{record.interviewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.interviewAddress != null">
+        interview_address = #{record.interviewAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitmentId != null">
+        recruitment_id = #{record.recruitmentId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -262,12 +306,16 @@
     update application
     set application_id = #{record.applicationId,jdbcType=INTEGER},
       photo_url = #{record.photoUrl,jdbcType=VARCHAR},
-      intention_department_name = #{record.intentionDepartmentName,jdbcType=VARCHAR},
+      intention_department = #{record.intentionDepartment,jdbcType=VARCHAR},
       self_profile = #{record.selfProfile,jdbcType=VARCHAR},
       join_purpose = #{record.joinPurpose,jdbcType=VARCHAR},
       view_of_association = #{record.viewOfAssociation,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      state = #{record.state,jdbcType=VARCHAR},
+      application_time = #{record.applicationTime,jdbcType=TIMESTAMP},
+      interview_time = #{record.interviewTime,jdbcType=TIMESTAMP},
+      interview_address = #{record.interviewAddress,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      recruitment_id = #{record.recruitmentId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -278,8 +326,8 @@
       <if test="photoUrl != null">
         photo_url = #{photoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="intentionDepartmentName != null">
-        intention_department_name = #{intentionDepartmentName,jdbcType=VARCHAR},
+      <if test="intentionDepartment != null">
+        intention_department = #{intentionDepartment,jdbcType=VARCHAR},
       </if>
       <if test="selfProfile != null">
         self_profile = #{selfProfile,jdbcType=VARCHAR},
@@ -291,10 +339,22 @@
         view_of_association = #{viewOfAssociation,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationTime != null">
+        application_time = #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewTime != null">
+        interview_time = #{interviewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewAddress != null">
+        interview_address = #{interviewAddress,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitmentId != null">
+        recruitment_id = #{recruitmentId,jdbcType=INTEGER},
       </if>
     </set>
     where application_id = #{applicationId,jdbcType=INTEGER}
@@ -302,12 +362,16 @@
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.association.bean.Application">
     update application
     set photo_url = #{photoUrl,jdbcType=VARCHAR},
-      intention_department_name = #{intentionDepartmentName,jdbcType=VARCHAR},
+      intention_department = #{intentionDepartment,jdbcType=VARCHAR},
       self_profile = #{selfProfile,jdbcType=VARCHAR},
       join_purpose = #{joinPurpose,jdbcType=VARCHAR},
       view_of_association = #{viewOfAssociation,jdbcType=VARCHAR},
-      state = #{state,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+      state = #{state,jdbcType=VARCHAR},
+      application_time = #{applicationTime,jdbcType=TIMESTAMP},
+      interview_time = #{interviewTime,jdbcType=TIMESTAMP},
+      interview_address = #{interviewAddress,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      recruitment_id = #{recruitmentId,jdbcType=INTEGER}
     where application_id = #{applicationId,jdbcType=INTEGER}
   </update>
 </mapper>

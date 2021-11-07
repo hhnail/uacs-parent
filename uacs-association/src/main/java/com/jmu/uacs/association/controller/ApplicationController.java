@@ -48,9 +48,10 @@ public class ApplicationController {
     @ApiOperation("保存申请表")
     @ResponseBody
     @PostMapping("/saveApplication")
-    public AppResponse<String> saveApplication(ApplicationRequestVo vo) {
+    public AppResponse<String> saveApplication(@RequestBody ApplicationRequestVo reqVO) {
         try {
-            applicationService.saveApplication(vo);
+            log.debug("申请表提交内容：【{}】", reqVO);
+            applicationService.saveApplication(reqVO);
             AppResponse<String> resp = AppResponse.ok("ok");
             return resp;
         } catch (Exception e) {
@@ -77,5 +78,4 @@ public class ApplicationController {
             return resp;
         }
     }
-
 }
