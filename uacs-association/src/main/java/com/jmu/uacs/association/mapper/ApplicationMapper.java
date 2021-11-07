@@ -34,4 +34,6 @@ public interface ApplicationMapper {
     List<ApplicationResponseVO> getApplicationList(@Param("associationIds") Integer[] associationIds);
 
     ApplicationResponseVO getApplicationDetail(@Param("applicationId") Integer applicationId);
+
+    List<ApplicationResponseVO> getApplicationByUserId(@Param("userId")String userId);
 }

@@ -58,6 +58,9 @@ public class StringUtils {
     }
 
     public static String formatDate2String(Date date, DateTemplate template) {
+        if(date == null){
+            return "";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(template.getTemplateString());
         try {
             String dateString = sdf.format(date);

@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.service;
 
+import com.jmu.uacs.enums.ApplicationStateEnum;
 import com.jmu.uacs.vo.request.ApplicationRequestVo;
 import com.jmu.uacs.vo.response.ApplicationResponseVO;
 
@@ -12,4 +13,8 @@ public interface ApplicationService {
     List<ApplicationResponseVO> getApplicationList(Integer[] associationIds);
 
     ApplicationResponseVO getApplicationDetail(Integer applicationId);
+
+    List<ApplicationResponseVO> getApplicationByUserId(String userId);
+
+    void updateApplicationState(Integer applicationId, String state);
 }

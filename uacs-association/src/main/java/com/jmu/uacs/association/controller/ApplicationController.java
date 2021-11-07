@@ -1,6 +1,7 @@
 package com.jmu.uacs.association.controller;
 
 import com.jmu.uacs.association.service.ApplicationService;
+import com.jmu.uacs.enums.ApplicationStateEnum;
 import com.jmu.uacs.enums.ResponseCodeEnume;
 import com.jmu.uacs.vo.request.ApplicationRequestVo;
 import com.jmu.uacs.vo.response.AppResponse;
@@ -78,4 +79,41 @@ public class ApplicationController {
             return resp;
         }
     }
+
+    @ApiOperation("查询某用户的申请列表")
+    @ResponseBody
+    @GetMapping("/getApplicationByUserId/{userId}")
+    public AppResponse<List<ApplicationResponseVO>> getApplicationByUserId(@PathVariable("userId") String userId) {
+        try {
+            List<ApplicationResponseVO> resList = applicationService.getApplicationByUserId(userId);
+            AppResponse<List<ApplicationResponseVO>> resp = AppResponse.ok(resList);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<List<ApplicationResponseVO>> resp = AppResponse.fail(null);
+            resp.setMsg(ResponseCodeEnume.FAIL.getMsg());
+            return resp;
+        }
+    }
+
+    @ApiOperation("更新申请状态")
+    @ResponseBody
+    @PostMapping("/updateApplicationState")
+    public AppResponse<String> updateApplicationState(
+            @RequestParam Integer applicationId,
+            @RequestParam String state
+    ) {
+        try {
+            applicationService.updateApplicationState(applicationId, ApplicationStateEnum.valueOf(state).toString());
+            AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("更新状态成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<String> resp = AppResponse.fail(null);
+            resp.setMsg(ResponseCodeEnume.FAIL.getMsg());
+            return resp;
+        }
+    }
+
 }

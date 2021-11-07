@@ -36,7 +36,7 @@ public class ApplicationResponseVO {
     private Date applicationTime;
     private Date interviewTime;
     private String interviewAddress;
-    private Integer state;
+    private String state;
 
     // ==== 其他关联
     // 对应社团信息
