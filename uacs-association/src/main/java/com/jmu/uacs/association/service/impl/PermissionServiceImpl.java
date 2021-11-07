@@ -40,6 +40,7 @@ public class PermissionServiceImpl implements PermissionService {
             firstVoList.add(firstVo);
             // 2 根据一级菜单的id获取其子菜单
             List<Permission> secondDoList = permissionMapper.getChildrenByPUserId(userId, pms.getPermissionId());
+            log.debug("==300 父菜单：{} 的子菜单列表：={}", pms.getPermissionId(), secondDoList);
             for (Permission secondPsm : secondDoList) {
                 PermissionVo secondVo = new PermissionVo();
                 BeanUtils.copyProperties(secondPsm, secondVo);

@@ -69,6 +69,11 @@ public class UserController {
         return AppResponse.ok("ok");
     }
 
+
+    // TODO 用户一旦注册，需要到user_permission表中，注册角色（社团ID为-1，角色为普通学生！）
+    /**
+     * 用户注册
+     */
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
     public AppResponse<Object> register(@RequestBody UserRegistVo vo) {

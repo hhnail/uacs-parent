@@ -19,26 +19,25 @@
   <!--  List<ApplicationResponseVO> getApplicationList(Integer associationId);-->
   <select id="getApplicationList" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
     SELECT
-    a.application_id applicationId,
-    a.intention_department intentionDepartment,
-    a.self_profile selfProfile,
-    a.join_purpose joinPurpose,
-    a.view_of_association viewOfAssociation,
-    a.application_time applicationTime,
-    a.state,
-    a.interview_time interviewTime,
-    a.interview_address interviewAddress,
-    a.user_id userId,
-    u.name,
-    r.association_id associationId,
-    ass.association_name associationName
+      a.application_id applicationId,
+      a.intention_department intentionDepartment,
+      a.self_profile selfProfile,
+      a.join_purpose joinPurpose,
+      a.view_of_association viewOfAssociation,
+      a.application_time applicationTime,
+      a.state,
+      a.interview_time interviewTime,
+      a.interview_address interviewAddress,
+      a.user_id userId,
+      u.name,
+      r.association_id associationId,
+      ass.association_name associationName
     FROM
-    application a
+        application a
     INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
     INNER JOIN `user` u ON r.user_id = u.user_id
     INNER JOIN association ass ON ass.association_id = r.association_id
-    WHERE
-    1 =1
+    WHERE 1 =1
     AND r.association_id IN
     <foreach collection="associationIds" item="associationId" open="(" separator="," close=")">
       #{associationId}
@@ -68,6 +67,30 @@
       1 =1
       AND a.application_id = #{applicationId}
   </select>
+
+<!--  List<ApplicationResponseVO> getApplicationByUserId(@Param("userId")String userId);-->
+  <select id="getApplicationByUserId" parameterType="java.lang.String" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
+    SELECT
+      a.application_id applicationId,
+      a.intention_department intentionDepartment,
+      a.self_profile selfProfile,
+      a.join_purpose joinPurpose,
+      a.view_of_association viewOfAssociation,
+      a.application_time applicationTime,
+      a.state,
+      a.user_id userId,
+      u.name,
+      r.association_id associationId,
+      ass.association_name associationName
+    FROM
+      application a
+        INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
+        INNER JOIN `user` u ON r.user_id = u.user_id
+        INNER JOIN association ass ON ass.association_id = r.association_id
+    WHERE 1 =1
+      AND a.user_id = #{userId}
+  </select>
+
 
   <sql id="Example_Where_Clause">
     <where>
