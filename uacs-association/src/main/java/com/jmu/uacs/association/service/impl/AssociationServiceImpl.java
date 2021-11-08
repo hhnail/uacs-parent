@@ -133,7 +133,7 @@ public class AssociationServiceImpl implements AssociationService {
     }
 
     @Override
-    public List<UserAssociationVo> getAssociationByUserId(Integer userId, Integer[] roleIds) {
+    public List<UserAssociationVo> getAssociationByUserId(String userId, Integer[] roleIds) {
 
 
         List<Association> associationDOList = associationMapper.getAssociationByUserId(userId, roleIds);
