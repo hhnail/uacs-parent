@@ -134,7 +134,7 @@ public class AssociationController {
     @ApiOperation(value = "查询某用户加入或管理的社团")
     @PostMapping("/getAssociationByUserId")
     AppResponse<List<UserAssociationVo>> getAssociationByUserId(
-            @RequestParam Integer userId,
+            @RequestParam String userId,
             @RequestParam Integer[] roleIds
     ) {
 

@@ -1,6 +1,7 @@
 package com.jmu.uacs.association.service.impl;
 
 import com.jmu.uacs.association.bean.Application;
+import com.jmu.uacs.association.bean.ApplicationExample;
 import com.jmu.uacs.association.mapper.ApplicationMapper;
 import com.jmu.uacs.association.service.ApplicationService;
 import com.jmu.uacs.enums.ApplicationStateEnum;
