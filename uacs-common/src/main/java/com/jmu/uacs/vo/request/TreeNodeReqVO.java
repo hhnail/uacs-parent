@@ -1,6 +1,5 @@
 package com.jmu.uacs.vo.request;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,7 +11,7 @@ public class TreeNodeReqVO {
 
     private String type;
 
-//    private Integer pId;
+//    private Integer pId; 生成出来的接口是pid！！ 小写的i！！
     private int pId;
 
     private String description;

@@ -2,6 +2,7 @@ package com.jmu.uacs.association.controller;
 
 import com.jmu.uacs.association.feign.UserServiceFeign;
 import com.jmu.uacs.association.service.AssociationService;
+import com.jmu.uacs.association.service.ImageService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
 import com.jmu.uacs.vo.response.AppResponse;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.PathParam;
 import java.util.List;
@@ -30,7 +32,6 @@ public class AssociationController {
 
     @Autowired
     UserServiceFeign userServiceFeign;
-
 
     @ResponseBody
     @ApiOperation(value = "查询所有社团")
@@ -145,6 +146,4 @@ public class AssociationController {
         AppResponse<List<UserAssociationVo>> resp = AppResponse.ok(associationList);
         return resp;
     }
-
-
 }

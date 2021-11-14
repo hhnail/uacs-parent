@@ -3,6 +3,7 @@ package com.jmu.uacs.association.service;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
 import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import com.jmu.uacs.vo.response.UserAssociationVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

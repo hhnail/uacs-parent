@@ -61,6 +61,7 @@
         <!--        <table tableName="user"></table>-->
         <!--        <table tableName="user_association"></table>-->
         <!--                <table tableName="recruitment"></table>-->
-        <table tableName="tree_node"></table>
+        <!--        <table tableName="tree_node"></table>-->
+        <table tableName="image"></table>
     </context>
 </generatorConfiguration> 

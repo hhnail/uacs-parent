@@ -4,6 +4,7 @@ import com.jmu.uacs.association.bean.Association;
 import com.jmu.uacs.association.bean.UserRole;
 import com.jmu.uacs.association.bean.UserRoleExample;
 import com.jmu.uacs.association.mapper.AssociationMapper;
+import com.jmu.uacs.association.mapper.ImageMapper;
 import com.jmu.uacs.association.mapper.RoleMapper;
 import com.jmu.uacs.association.mapper.UserRoleMapper;
 import com.jmu.uacs.association.service.AssociationService;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,4 +161,5 @@ public class AssociationServiceImpl implements AssociationService {
         vo.setRequestTime(StringUtils.formatDate2String(associationDO.getRequestTime(), DateTemplate.yyyyMMdd));
         return vo;
     }
+
 }
