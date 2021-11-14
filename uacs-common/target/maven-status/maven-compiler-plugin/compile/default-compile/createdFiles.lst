@@ -20,6 +20,7 @@ com\jmu\uacs\vo\response\RecruitmentRespVo.class
 com\jmu\uacs\vo\response\TagRespVo.class
 com\jmu\uacs\vo\request\RecruitmentReqVo.class
 com\jmu\uacs\enums\DateTemplate.class
+com\jmu\uacs\util\TreeNodeUtil.class
 com\jmu\uacs\vo\request\ApplicationRequestVo.class
 com\jmu\uacs\vo\response\UserResponseVo.class
 com\jmu\uacs\vo\request\PermissionUpdateVo.class
@@ -30,8 +31,10 @@ com\jmu\uacs\vo\request\UserAddReqVo.class
 com\jmu\uacs\vo\response\UserManageVo.class
 com\jmu\uacs\vo\request\AddRecruitmentRequestVo.class
 com\jmu\uacs\vo\response\AssoicationResponseVo.class
+com\jmu\uacs\enums\TreeNodeEnum.class
 com\jmu\uacs\vo\request\UserSettingsUpdateReqVO.class
 com\jmu\uacs\enums\UserRoleEnum.class
+com\jmu\uacs\bean\ITreeNode.class
 com\jmu\uacs\vo\response\ApplicationResponseVO.class
 com\jmu\uacs\vo\response\PermissionVo.class
 com\jmu\uacs\enums\ApplicationStateEnum.class
