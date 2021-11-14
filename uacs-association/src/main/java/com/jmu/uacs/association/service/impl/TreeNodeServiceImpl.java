@@ -54,9 +54,21 @@ public class TreeNodeServiceImpl implements TreeNodeService {
                 treeNode.setLevel(1);
                 treeNode.setIsLeaf(0);
                 break;
+            case MAJOR:
+                treeNode.setLevel(2);
+                treeNode.setIsLeaf(0);
+                break;
+            case CLASS:
+                treeNode.setLevel(3);
+                treeNode.setIsLeaf(1);
             default:
                 break;
         }
         treeNodeMapper.insertSelective(treeNode);
+    }
+
+    @Override
+    public void deleteTreeNode(Integer treeId) {
+        treeNodeMapper.deleteByPrimaryKey(treeId);
     }
 }

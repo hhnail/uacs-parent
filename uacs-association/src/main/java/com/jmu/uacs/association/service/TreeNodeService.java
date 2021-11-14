@@ -11,4 +11,6 @@ public interface TreeNodeService {
     List<TreeNode> getClassTree();
 
     void addTreeNode(TreeNodeReqVO reqVO);
+
+    void deleteTreeNode(Integer treeId);
 }

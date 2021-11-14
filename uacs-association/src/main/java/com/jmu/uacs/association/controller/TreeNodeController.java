@@ -87,4 +87,21 @@ public class TreeNodeController {
         }
     }
 
+    @ApiOperation("删除树节点")
+    @DeleteMapping("/deleteTreeNode/{treeId}")
+    public AppResponse<String> deleteTreeNode(@PathVariable("treeId") Integer treeId) {
+        try {
+            log.debug("==101== treeId = {}", treeId);
+            treeNodeService.deleteTreeNode(treeId);
+            AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("删除成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("删除失败！");
+            return fail;
+        }
+    }
+
 }
