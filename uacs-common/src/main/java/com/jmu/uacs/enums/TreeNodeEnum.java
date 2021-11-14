@@ -25,4 +25,13 @@ public enum TreeNodeEnum {
     public String getLable() {
         return lable;
     }
+
+    public static TreeNodeEnum getEnumByValue(String value) {
+        for (TreeNodeEnum enums : TreeNodeEnum.values()) {
+            if (enums.getValue().equals(value)) {
+                return enums;
+            }
+        }
+        return null;
+    }
 }

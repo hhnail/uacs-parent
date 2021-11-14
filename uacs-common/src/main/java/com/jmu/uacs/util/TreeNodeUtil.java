@@ -21,7 +21,7 @@ public class TreeNodeUtil {
         for (ITreeNode treeNode : source) {
             if (treeNode.getLevel() == 1) {
                 for (ITreeNode node2 : source) {
-                    if ((node2.getLevel() == 2) && (node2.getPId() == treeNode.getTreeId())) {
+                    if ((node2.getLevel() == 2) && (node2.getPId() == treeNode.getTreeId()) && node2.getIsLeaf() == 0) {
                         for (ITreeNode node3 : source) {
                             if ((node3.getLevel() == 3) && (node3.getPId() == node2.getTreeId())) {
                                 node2.getChildren().add(node3);

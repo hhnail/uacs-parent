@@ -5,6 +5,8 @@ import com.jmu.uacs.association.bean.TreeNodeExample;
 import com.jmu.uacs.association.mapper.TreeNodeMapper;
 import com.jmu.uacs.association.service.TreeNodeService;
 import com.jmu.uacs.enums.TreeNodeEnum;
+import com.jmu.uacs.vo.request.TreeNodeReqVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,35 @@ public class TreeNodeServiceImpl implements TreeNodeService {
 
 
         return treeNodeMapper.selectByExample(treeNodeExample);
+    }
+
+    @Override
+    public List<TreeNode> getClassTree() {
+        TreeNodeExample treeNodeExample = new TreeNodeExample();
+        treeNodeExample.or().andTypeEqualTo(TreeNodeEnum.COLLEGE.getValue());
+        treeNodeExample.or().andTypeEqualTo(TreeNodeEnum.MAJOR.getValue());
+        treeNodeExample.or().andTypeEqualTo(TreeNodeEnum.CLASS.getValue());
+        return treeNodeMapper.selectByExample(treeNodeExample);
+    }
+
+    @Override
+    public void addTreeNode(TreeNodeReqVO reqVO) {
+        TreeNode treeNode = new TreeNode();
+        BeanUtils.copyProperties(reqVO, treeNode);
+        treeNode.setValue(reqVO.getLabel());
+        // 前端传过来的type是 COLLEGE(的String)
+//        switch (reqVO.getType()){
+//            case TreeNodeEnum.COLLEGE.getValue():
+//        }
+
+        switch (TreeNodeEnum.getEnumByValue(reqVO.getType())){
+            case COLLEGE:
+                treeNode.setLevel(1);
+                treeNode.setIsLeaf(0);
+                break;
+            default:
+                break;
+        }
+        treeNodeMapper.insertSelective(treeNode);
     }
 }

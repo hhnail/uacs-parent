@@ -1,3 +1,4 @@
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\TreeNodeReqVO.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\TagRespVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\MyDateUtil.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\ApplicationRequestVo.java
@@ -20,12 +21,14 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\ApplicationResponseVO.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\UserSettingsUpdateReqVO.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\UserTypeEnume.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\TreeNodeEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\UserRoleEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\BaseUserVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\ApplicationStateEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\UserInfoVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\RoleTypeEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\StringUtils.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\TreeNodeUtil.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\UserResponseVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\MyCollectionUtils.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\AssociationAdminResponseVo.java
@@ -34,4 +37,5 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\RoleRespVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\PermissionUpdateVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\UserRegistVo.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\bean\ITreeNode.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\bean\Permission.java

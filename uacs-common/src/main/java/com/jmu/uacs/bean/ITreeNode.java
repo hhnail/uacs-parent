@@ -23,7 +23,7 @@ public class ITreeNode {
 
     private Integer pId;
 
-    private String url;
+    private String description;
 
     private List<ITreeNode> children = new ArrayList<ITreeNode>();
 
