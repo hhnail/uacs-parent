@@ -9,6 +9,7 @@ import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserAddReqVo;
 import com.jmu.uacs.vo.response.RoleRespVo;
 import com.jmu.uacs.vo.response.UserManageVo;
+import com.jmu.uacs.vo.response.UserResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,5 +143,11 @@ public class UserServiceImpl implements UserService {
 //        userMapper.updateByExampleSelective(dbUserByUserId,userExp)
         int affectedRowNum = userMapper.deleteByExample(userExp);
         return affectedRowNum;
+    }
+
+    @Override
+    public List<UserResponseVo> getUserByAssociationId(Integer associationId) {
+        List<UserResponseVo> users = userMapper.getUserByAssociationId(associationId);
+        return users;
     }
 }

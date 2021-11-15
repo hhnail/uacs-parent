@@ -13,11 +13,39 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="self_profile" jdbcType="VARCHAR" property="selfProfile" />
+    <result column="personal_signature" jdbcType="VARCHAR" property="personalSignature" />
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="can_del" jdbcType="INTEGER" property="canDel" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jmu.uacs.association.bean.User">
+    <result column="comprehensive_quality" jdbcType="LONGVARCHAR" property="comprehensiveQuality" />
+  </resultMap>
+
+  <!--  List<UserResponseVo> getUserByAssociationId(Integer associationId);-->
+  <select id="getUserByAssociationId" parameterType="java.lang.Integer" resultType="com.jmu.uacs.vo.response.UserResponseVo">
+    SELECT
+      u.name,
+      u.gender,
+      u.birthday,
+      u.nation,
+      u.email,
+      u.phone,
+      u.wechat,
+      u.qq,
+      u.user_id userId,
+      u.self_profile selfProfile,
+      u.personal_signature personalSignature
+    FROM
+      `user` u
+        INNER JOIN user_association ua ON ua.user_id = u.user_id
+    WHERE
+      ua.association_id = #{associationId}
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -78,8 +106,27 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, password, name, gender, birthday, nation, email, phone, wechat, qq, 
-    head_url, state, can_del, class_id
+    self_profile, personal_signature, head_url, state, can_del, class_id, is_del
   </sql>
+  <sql id="Blob_Column_List">
+    comprehensive_quality
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jmu.uacs.association.bean.UserExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -94,9 +141,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -114,15 +163,17 @@
     insert into user (id, user_id, password, 
       name, gender, birthday, 
       nation, email, phone, 
-      wechat, qq, head_url, 
-      state, can_del, class_id
-      )
+      wechat, qq, self_profile, 
+      personal_signature, head_url, state, 
+      can_del, class_id, is_del, 
+      comprehensive_quality)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{nation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, 
-      #{state,jdbcType=VARCHAR}, #{canDel,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}
-      )
+      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{selfProfile,jdbcType=VARCHAR}, 
+      #{personalSignature,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{canDel,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
+      #{comprehensiveQuality,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.User">
     insert into user
@@ -160,6 +211,12 @@
       <if test="qq != null">
         qq,
       </if>
+      <if test="selfProfile != null">
+        self_profile,
+      </if>
+      <if test="personalSignature != null">
+        personal_signature,
+      </if>
       <if test="headUrl != null">
         head_url,
       </if>
@@ -171,6 +228,12 @@
       </if>
       <if test="classId != null">
         class_id,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="comprehensiveQuality != null">
+        comprehensive_quality,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -207,6 +270,12 @@
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
       </if>
+      <if test="selfProfile != null">
+        #{selfProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSignature != null">
+        #{personalSignature,jdbcType=VARCHAR},
+      </if>
       <if test="headUrl != null">
         #{headUrl,jdbcType=VARCHAR},
       </if>
@@ -218,6 +287,12 @@
       </if>
       <if test="classId != null">
         #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensiveQuality != null">
+        #{comprehensiveQuality,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -263,6 +338,12 @@
       <if test="record.qq != null">
         qq = #{record.qq,jdbcType=VARCHAR},
       </if>
+      <if test="record.selfProfile != null">
+        self_profile = #{record.selfProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalSignature != null">
+        personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
+      </if>
       <if test="record.headUrl != null">
         head_url = #{record.headUrl,jdbcType=VARCHAR},
       </if>
@@ -275,7 +356,38 @@
       <if test="record.classId != null">
         class_id = #{record.classId,jdbcType=INTEGER},
       </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.comprehensiveQuality != null">
+        comprehensive_quality = #{record.comprehensiveQuality,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      wechat = #{record.wechat,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      self_profile = #{record.selfProfile,jdbcType=VARCHAR},
+      personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
+      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      can_del = #{record.canDel,jdbcType=INTEGER},
+      class_id = #{record.classId,jdbcType=INTEGER},
+      is_del = #{record.isDel,jdbcType=INTEGER},
+      comprehensive_quality = #{record.comprehensiveQuality,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,10 +405,13 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       wechat = #{record.wechat,jdbcType=VARCHAR},
       qq = #{record.qq,jdbcType=VARCHAR},
+      self_profile = #{record.selfProfile,jdbcType=VARCHAR},
+      personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
       head_url = #{record.headUrl,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=VARCHAR},
       can_del = #{record.canDel,jdbcType=INTEGER},
-      class_id = #{record.classId,jdbcType=INTEGER}
+      class_id = #{record.classId,jdbcType=INTEGER},
+      is_del = #{record.isDel,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -334,6 +449,12 @@
       <if test="qq != null">
         qq = #{qq,jdbcType=VARCHAR},
       </if>
+      <if test="selfProfile != null">
+        self_profile = #{selfProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSignature != null">
+        personal_signature = #{personalSignature,jdbcType=VARCHAR},
+      </if>
       <if test="headUrl != null">
         head_url = #{headUrl,jdbcType=VARCHAR},
       </if>
@@ -346,7 +467,35 @@
       <if test="classId != null">
         class_id = #{classId,jdbcType=INTEGER},
       </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensiveQuality != null">
+        comprehensive_quality = #{comprehensiveQuality,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jmu.uacs.association.bean.User">
+    update user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      nation = #{nation,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      self_profile = #{selfProfile,jdbcType=VARCHAR},
+      personal_signature = #{personalSignature,jdbcType=VARCHAR},
+      head_url = #{headUrl,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      can_del = #{canDel,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=INTEGER},
+      comprehensive_quality = #{comprehensiveQuality,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.association.bean.User">
@@ -361,12 +510,13 @@
       phone = #{phone,jdbcType=VARCHAR},
       wechat = #{wechat,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
+      self_profile = #{selfProfile,jdbcType=VARCHAR},
+      personal_signature = #{personalSignature,jdbcType=VARCHAR},
       head_url = #{headUrl,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
       can_del = #{canDel,jdbcType=INTEGER},
-      class_id = #{classId,jdbcType=INTEGER}
+      class_id = #{classId,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!--听说会追加？-->
 </mapper>
-<!--听说会追加？-->

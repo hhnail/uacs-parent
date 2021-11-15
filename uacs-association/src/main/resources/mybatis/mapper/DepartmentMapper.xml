@@ -6,6 +6,7 @@
     <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
     <result column="job" jdbcType="VARCHAR" property="job" />
     <result column="association_id" jdbcType="INTEGER" property="associationId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    department_id, department_name, job, association_id
+    department_id, department_name, job, association_id, user_id
   </sql>
   <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.DepartmentExample" resultMap="BaseResultMap">
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.jmu.uacs.association.bean.Department">
     insert into department (department_id, department_name, job, 
-      association_id)
+      association_id, user_id)
     values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, 
-      #{associationId,jdbcType=INTEGER})
+      #{associationId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Department">
     insert into department
@@ -119,6 +120,9 @@
       <if test="associationId != null">
         association_id,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="departmentId != null">
@@ -132,6 +136,9 @@
       </if>
       <if test="associationId != null">
         #{associationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.associationId != null">
         association_id = #{record.associationId,jdbcType=INTEGER},
       </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set department_id = #{record.departmentId,jdbcType=INTEGER},
       department_name = #{record.departmentName,jdbcType=VARCHAR},
       job = #{record.job,jdbcType=VARCHAR},
-      association_id = #{record.associationId,jdbcType=INTEGER}
+      association_id = #{record.associationId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="associationId != null">
         association_id = #{associationId,jdbcType=INTEGER},
       </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
     </set>
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
@@ -190,7 +204,8 @@
     update department
     set department_name = #{departmentName,jdbcType=VARCHAR},
       job = #{job,jdbcType=VARCHAR},
-      association_id = #{associationId,jdbcType=INTEGER}
+      association_id = #{associationId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR}
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
 </mapper>

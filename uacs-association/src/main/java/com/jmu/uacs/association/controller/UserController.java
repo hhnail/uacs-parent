@@ -4,6 +4,7 @@ import com.jmu.uacs.association.service.UserService;
 import com.jmu.uacs.vo.request.UserAddReqVo;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserManageVo;
+import com.jmu.uacs.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -92,6 +93,19 @@ public class UserController {
         }
     }
 
-
-
+    @ResponseBody
+    @ApiOperation("获取某社团的成员")
+    @GetMapping("/getUserByAssociationId/{associationId}")
+    public AppResponse<List<UserResponseVo>> getUserByAssociationId(@PathVariable("associationId") Integer associationId) {
+        try {
+            List<UserResponseVo> users = userService.getUserByAssociationId(associationId);
+            AppResponse<List<UserResponseVo>> resp = AppResponse.ok(users);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<List<UserResponseVo>> fail = AppResponse.fail(null);
+            fail.setMsg("获取成员列表失败");
+            return fail;
+        }
+    }
 }

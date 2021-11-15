@@ -3,6 +3,8 @@ package com.jmu.uacs.association.mapper;
 import com.jmu.uacs.association.bean.User;
 import com.jmu.uacs.association.bean.UserExample;
 import java.util.List;
+
+import com.jmu.uacs.vo.response.UserResponseVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -27,4 +29,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<UserResponseVo> getUserByAssociationId(@Param("associationId")Integer associationId);
 }

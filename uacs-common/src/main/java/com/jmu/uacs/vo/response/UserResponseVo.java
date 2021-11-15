@@ -31,4 +31,12 @@ public class UserResponseVo implements Serializable {
     @ApiModelProperty(value = "电话号码")
     private String phone;
 
+    @ApiModelProperty(value = "自我评价")
+    private String selfProfile;
+
+    @ApiModelProperty(value = "个性签名")
+    private String personalSignature;
+
+
+
 }

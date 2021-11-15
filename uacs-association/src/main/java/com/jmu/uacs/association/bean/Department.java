@@ -13,4 +13,7 @@ public class Department {
     private String job;
 
     private Integer associationId;
+
+    private String userId;
+
 }
