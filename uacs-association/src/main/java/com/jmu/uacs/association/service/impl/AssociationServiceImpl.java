@@ -1,12 +1,7 @@
 package com.jmu.uacs.association.service.impl;
 
-import com.jmu.uacs.association.bean.Association;
-import com.jmu.uacs.association.bean.UserRole;
-import com.jmu.uacs.association.bean.UserRoleExample;
-import com.jmu.uacs.association.mapper.AssociationMapper;
-import com.jmu.uacs.association.mapper.ImageMapper;
-import com.jmu.uacs.association.mapper.RoleMapper;
-import com.jmu.uacs.association.mapper.UserRoleMapper;
+import com.jmu.uacs.association.bean.*;
+import com.jmu.uacs.association.mapper.*;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.enums.DateTemplate;
@@ -40,6 +35,9 @@ public class AssociationServiceImpl implements AssociationService {
 
     @Autowired
     UserRoleMapper userRoleMapper;
+
+    @Autowired
+    DepartmentMapper departmentMapper;
 
     @Override
     public List<AssoicationResponseVo> getAllAssociationList() {
@@ -129,7 +127,7 @@ public class AssociationServiceImpl implements AssociationService {
             adminIdList.add(userId);
         }
 
-        log.debug("==41 社团服务-service-查询{}社团管理员ID结果={}",associationId,adminIdList);
+        log.debug("==41 社团服务-service-查询{}社团管理员ID结果={}", associationId, adminIdList);
 
         return adminIdList;
     }
@@ -144,9 +142,9 @@ public class AssociationServiceImpl implements AssociationService {
 
         // do 2 vo
         Iterator<Association> iterator = associationDOList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             UserAssociationVo vo = new UserAssociationVo();
-            BeanUtils.copyProperties(iterator.next(),vo);
+            BeanUtils.copyProperties(iterator.next(), vo);
             voList.add(vo);
         }
         return voList;
@@ -156,9 +154,21 @@ public class AssociationServiceImpl implements AssociationService {
     public AssoicationResponseVo getAssociationInfo(Integer associationId) {
         AssoicationResponseVo vo = new AssoicationResponseVo();
         Association associationDO = associationMapper.selectByPrimaryKey(associationId);
-        BeanUtils.copyProperties(associationDO,vo);
+        BeanUtils.copyProperties(associationDO, vo);
         vo.setCreateTime(StringUtils.formatDate2String(associationDO.getCreateTime(), DateTemplate.yyyyMMdd));
         vo.setRequestTime(StringUtils.formatDate2String(associationDO.getRequestTime(), DateTemplate.yyyyMMdd));
+
+        // 注入社团部门信息
+        DepartmentExample dExp = new DepartmentExample();
+        dExp.createCriteria().andAssociationIdEqualTo(associationId);
+        List<Department> departments = departmentMapper.selectByExample(dExp);
+        List<com.jmu.uacs.bean.Department> departmentVOList = new ArrayList<>();
+        for (Department d : departments) {
+            com.jmu.uacs.bean.Department dVO = new com.jmu.uacs.bean.Department();
+            BeanUtils.copyProperties(d, dVO);
+            departmentVOList.add(dVO);
+        }
+        vo.setDepartments(departmentVOList);
         return vo;
     }
 

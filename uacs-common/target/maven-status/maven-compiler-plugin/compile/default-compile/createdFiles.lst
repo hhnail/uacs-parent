@@ -10,6 +10,7 @@ com\jmu\uacs\enums\AssociationStateEnum.class
 com\jmu\uacs\bean\Permission.class
 com\jmu\uacs\vo\response\CascaderClassVo.class
 com\jmu\uacs\util\MyCollectionUtils.class
+com\jmu\uacs\vo\request\DepartmentReqVO.class
 com\jmu\uacs\vo\request\AssociationRequestVo.class
 com\jmu\uacs\vo\response\AssociationAdminResponseVo.class
 com\jmu\uacs\vo\response\RoleRespVo.class
@@ -24,6 +25,7 @@ com\jmu\uacs\util\TreeNodeUtil.class
 com\jmu\uacs\vo\request\ApplicationRequestVo.class
 com\jmu\uacs\vo\response\UserResponseVo.class
 com\jmu\uacs\vo\request\PermissionUpdateVo.class
+com\jmu\uacs\bean\Department.class
 com\jmu\uacs\vo\response\ShareResponseVo.class
 com\jmu\uacs\vo\request\UserRegistVo.class
 com\jmu\uacs\util\StringUtils.class

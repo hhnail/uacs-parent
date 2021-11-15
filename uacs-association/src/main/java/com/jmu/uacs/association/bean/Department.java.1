@@ -1,0 +1,43 @@
+package com.jmu.uacs.association.bean;
+
+public class Department {
+    private Integer departmentId;
+
+    private String departmentName;
+
+    private String job;
+
+    private Integer associationId;
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName == null ? null : departmentName.trim();
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job == null ? null : job.trim();
+    }
+
+    public Integer getAssociationId() {
+        return associationId;
+    }
+
+    public void setAssociationId(Integer associationId) {
+        this.associationId = associationId;
+    }
+}
