@@ -1,20 +1,16 @@
 package com.jmu.uacs.association.bean;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
 
-@ToString
 @Data
-@ApiModel
+@ToString
 public class Application {
     private Integer applicationId;
 
     private String photoUrl;
-
-    private String intentionDepartment;
 
     private String selfProfile;
 
@@ -26,14 +22,21 @@ public class Application {
 
     private Date applicationTime;
 
+    private Integer canAdjust;
+
     private Date interviewTime;
 
     private String interviewAddress;
 
+    private String contacterId;
+
+    private String contacterPhone;
+
+    private String description;
+
+    private Integer departmentId;
+
     private String userId;
 
     private Integer recruitmentId;
-
-
-
 }

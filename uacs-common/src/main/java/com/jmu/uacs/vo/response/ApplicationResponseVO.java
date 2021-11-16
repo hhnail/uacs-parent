@@ -27,7 +27,9 @@ public class ApplicationResponseVO {
     // 申请表描述信息
     private Integer applicationId;
     private String photoUrl;
-    private String intentionDepartment;
+
+    private Integer departmentId;
+    private String departmentName;
     private String selfProfile;
     private String joinPurpose;
     private String viewOfAssociation;

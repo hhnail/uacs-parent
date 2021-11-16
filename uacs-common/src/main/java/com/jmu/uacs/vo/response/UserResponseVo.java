@@ -22,6 +22,9 @@ public class UserResponseVo implements Serializable {
     @ApiModelProperty(value = "用户姓名")
     private String name;
 
+    @ApiModelProperty(value = "性别")
+    private String gender;
+
     @ApiModelProperty(value = "角色列表")
     private List<RoleRespVo> roleList;
 

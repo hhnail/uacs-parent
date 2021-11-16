@@ -32,6 +32,7 @@ com\jmu\uacs\util\StringUtils.class
 com\jmu\uacs\vo\request\UserAddReqVo.class
 com\jmu\uacs\vo\response\UserManageVo.class
 com\jmu\uacs\vo\request\AddRecruitmentRequestVo.class
+com\jmu\uacs\vo\request\InterviewReqVO.class
 com\jmu\uacs\vo\response\AssoicationResponseVo.class
 com\jmu\uacs\enums\TreeNodeEnum.class
 com\jmu\uacs\vo\request\TreeNodeReqVO.class
