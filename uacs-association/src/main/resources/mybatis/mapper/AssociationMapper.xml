@@ -7,28 +7,51 @@
         <result column="admin_unit" jdbcType="VARCHAR" property="adminUnit"/>
         <result column="request_time" jdbcType="DATE" property="requestTime"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="state" jdbcType="VARCHAR" property="state"/>
         <result column="info" jdbcType="VARCHAR" property="info"/>
         <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="is_del" jdbcType="INTEGER" property="isDel"/>
     </resultMap>
+
     <!--     List<Association> getAssociationByUserId(@Param("userId") Integer userId, @Param("roleIds") Integer[] roleIds);  -->
     <select id="getAssociationByUserId" resultType="com.jmu.uacs.association.bean.Association">
-        SELECT ta.association_id   as associationId,
-               ta.association_name as associationName,
-               ta.admin_unit       as adminUnit,
-               ta.info             as info
+        SELECT ta.association_id as associationId,
+        ta.association_name as associationName,
+        ta.admin_unit as adminUnit,
+        ta.info as info
         FROM association ta
         WHERE ta.state = 1
-          and ta.association_id
-            in (
-                  select tur.association_id
-                  from user_role tur
-                  where tur.user_id = #{userId}
-                    AND tur.role_id IN
+        and ta.association_id
+        in (
+        select tur.association_id
+        from user_role tur
+        where tur.user_id = #{userId}
+        AND tur.role_id IN
         <foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
             #{roleId}
         </foreach>
-              )
+        )
+    </select>
+
+    <!--    List<AssoicationResponseVo> getAssociationAsMember(@Param("userId")String userId);-->
+    <select id="getAssociationAsMember" parameterType="java.lang.String"
+            resultType="com.jmu.uacs.vo.response.AssoicationResponseVo">
+        SELECT
+            u.user_id userId,
+            u.`name`,
+            r.role_name roleName,
+            a.association_id associationId,
+            a.association_name associationName,
+            a.admin_unit adminUnit,
+            a.create_time createTime,
+            a.*
+        FROM
+            association a
+                INNER JOIN user_role ur ON ur.association_id = a.association_id
+                INNER JOIN `user` u ON u.user_id = ur.user_id
+                INNER JOIN role r ON r.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
     </select>
 
 
@@ -94,8 +117,8 @@
     </sql>
     <sql id="Base_Column_List">
         association_id
-        , association_name, admin_unit, request_time, create_time, state, info,
-    img_url
+        , association_name, admin_unit, request_time, create_time, type, state,
+    info, img_url, is_del
     </sql>
     <select id="selectByExample" parameterType="com.jmu.uacs.association.bean.AssociationExample"
             resultMap="BaseResultMap">
@@ -131,11 +154,13 @@
     </delete>
     <insert id="insert" parameterType="com.jmu.uacs.association.bean.Association">
         insert into association (association_id, association_name, admin_unit,
-                                 request_time, create_time, state,
-                                 info, img_url)
+                                 request_time, create_time, type,
+                                 state, info, img_url,
+                                 is_del)
         values (#{associationId,jdbcType=INTEGER}, #{associationName,jdbcType=VARCHAR}, #{adminUnit,jdbcType=VARCHAR},
-                #{requestTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{state,jdbcType=VARCHAR},
-                #{info,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR})
+                #{requestTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{type,jdbcType=VARCHAR},
+                #{state,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
+                #{isDel,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Association">
         insert into association
@@ -155,6 +180,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="type != null">
+                type,
+            </if>
             <if test="state != null">
                 state,
             </if>
@@ -163,6 +191,9 @@
             </if>
             <if test="imgUrl != null">
                 img_url,
+            </if>
+            <if test="isDel != null">
+                is_del,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -181,6 +212,9 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=DATE},
             </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
             <if test="state != null">
                 #{state,jdbcType=VARCHAR},
             </if>
@@ -189,6 +223,9 @@
             </if>
             <if test="imgUrl != null">
                 #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                #{isDel,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -217,6 +254,9 @@
             <if test="record.createTime != null">
                 create_time = #{record.createTime,jdbcType=DATE},
             </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=VARCHAR},
+            </if>
             <if test="record.state != null">
                 state = #{record.state,jdbcType=VARCHAR},
             </if>
@@ -225,6 +265,9 @@
             </if>
             <if test="record.imgUrl != null">
                 img_url = #{record.imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isDel != null">
+                is_del = #{record.isDel,jdbcType=INTEGER},
             </if>
         </set>
         <if test="_parameter != null">
@@ -238,9 +281,11 @@
         admin_unit = #{record.adminUnit,jdbcType=VARCHAR},
         request_time = #{record.requestTime,jdbcType=DATE},
         create_time = #{record.createTime,jdbcType=DATE},
+        type = #{record.type,jdbcType=VARCHAR},
         state = #{record.state,jdbcType=VARCHAR},
         info = #{record.info,jdbcType=VARCHAR},
-        img_url = #{record.imgUrl,jdbcType=VARCHAR}
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+        is_del = #{record.isDel,jdbcType=INTEGER}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -260,6 +305,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=DATE},
             </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
             <if test="state != null">
                 state = #{state,jdbcType=VARCHAR},
             </if>
@@ -268,6 +316,9 @@
             </if>
             <if test="imgUrl != null">
                 img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=INTEGER},
             </if>
         </set>
         where association_id = #{associationId,jdbcType=INTEGER}
@@ -278,9 +329,11 @@
             admin_unit       = #{adminUnit,jdbcType=VARCHAR},
             request_time     = #{requestTime,jdbcType=DATE},
             create_time      = #{createTime,jdbcType=DATE},
+            type             = #{type,jdbcType=VARCHAR},
             state            = #{state,jdbcType=VARCHAR},
             info             = #{info,jdbcType=VARCHAR},
-            img_url          = #{imgUrl,jdbcType=VARCHAR}
+            img_url          = #{imgUrl,jdbcType=VARCHAR},
+            is_del           = #{isDel,jdbcType=INTEGER}
         where association_id = #{associationId,jdbcType=INTEGER}
     </update>
 </mapper>

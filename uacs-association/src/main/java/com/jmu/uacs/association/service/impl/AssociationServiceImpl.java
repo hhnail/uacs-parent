@@ -172,4 +172,11 @@ public class AssociationServiceImpl implements AssociationService {
         return vo;
     }
 
+
+    @Override
+    public List<AssoicationResponseVo> getAssociationAsMember(String userId) {
+        List<AssoicationResponseVo> res = associationMapper.getAssociationAsMember(userId);
+        return res;
+    }
+
 }

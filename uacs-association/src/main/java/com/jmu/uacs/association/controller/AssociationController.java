@@ -146,4 +146,13 @@ public class AssociationController {
         AppResponse<List<UserAssociationVo>> resp = AppResponse.ok(associationList);
         return resp;
     }
+
+    @ResponseBody
+    @ApiOperation(value = "查询某用户加入的社团及担任的角色")
+    @PostMapping("/getAssociationAsMember")
+    AppResponse<List<AssoicationResponseVo>> getAssociationAsMember(@RequestParam String userId ) {
+        List<AssoicationResponseVo> associationList = associationService.getAssociationAsMember(userId);
+        AppResponse<List<AssoicationResponseVo>> resp = AppResponse.ok(associationList);
+        return resp;
+    }
 }

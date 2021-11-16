@@ -20,4 +20,12 @@ public interface AssociationService {
     List<UserAssociationVo> getAssociationByUserId(String userId,Integer[] roleIds);
 
     AssoicationResponseVo getAssociationInfo(Integer associationId);
+
+    /**
+     * 【普通学生、社团管理员】的社团管理列表中VO
+     * 查询某用户所在的社团及其在社团中担任的角色
+     * @param userId
+     * @return
+     */
+    List<AssoicationResponseVo> getAssociationAsMember(String userId);
 }

@@ -1,10 +1,14 @@
 package com.jmu.uacs.association.service.impl;
 
 import com.jmu.uacs.association.bean.Application;
+import com.jmu.uacs.association.bean.UserRole;
+import com.jmu.uacs.association.bean.UserRoleExample;
 import com.jmu.uacs.association.mapper.ApplicationMapper;
+import com.jmu.uacs.association.mapper.UserRoleMapper;
 import com.jmu.uacs.association.service.ApplicationService;
 import com.jmu.uacs.enums.ApplicationStateEnum;
 import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.ApplicationRequestVo;
 import com.jmu.uacs.vo.request.InterviewReqVO;
@@ -12,6 +16,7 @@ import com.jmu.uacs.vo.response.ApplicationResponseVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +26,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Autowired
     ApplicationMapper applicationMapper;
+
+    @Autowired
+    UserRoleMapper userRoleMapper;
 
     @Override
     public void saveApplication(ApplicationRequestVo vo) {
@@ -49,13 +57,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public void updateApplicationState(Integer applicationId, String state) {
         Application application = new Application();
         application.setApplicationId(applicationId);
         application.setState(state);
-        // 如果正式加入
-        if(state.equals(ApplicationStateEnum.CONFIRM.getState())){
-
+        // 确认加入社团。同步user-association-role表逻辑
+        if (state.equals(ApplicationStateEnum.CONFIRM.getState())) {
+            UserRole ur = new UserRole();
+            ApplicationResponseVO applicationDetail = applicationMapper.getApplicationDetail(applicationId);
+            ur.setAssociationId(applicationDetail.getAssociationId());
+            ur.setDepartmentId(applicationDetail.getDepartmentId());
+            ur.setUserId(applicationDetail.getUserId());
+            ur.setRoleId(RoleTypeEnum.MEMBER.getCode());
+            userRoleMapper.insert(ur);
         }
         applicationMapper.updateByPrimaryKeySelective(application);
     }

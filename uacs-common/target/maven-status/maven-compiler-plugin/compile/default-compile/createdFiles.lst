@@ -1,3 +1,4 @@
+com\jmu\uacs\enums\AssociationTypeEnum.class
 com\jmu\uacs\vo\request\BaseUserVo.class
 com\jmu\uacs\vo\response\AppResponse.class
 com\jmu\uacs\vo\response\UserInfoVo.class
