@@ -38,6 +38,9 @@ public class ApplicationResponseVO {
     private Date applicationTime;
     private Date interviewTime;
     private String interviewAddress;
+    private String contacterName;
+    private String contacterPhone;
+    private String description;
     private String state;
 
     // ==== 其他关联

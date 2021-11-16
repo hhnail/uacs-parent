@@ -23,50 +23,56 @@
     <!--  List<ApplicationResponseVO> getApplicationList(Integer associationId);-->
     <select id="getApplicationList" resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
         SELECT
-            a.application_id applicationId,
-            a.department_id departmentId,
-            d.department_name departmentName,
-            a.self_profile selfProfile,
-            a.join_purpose joinPurpose,
-            a.view_of_association viewOfAssociation,
-            a.application_time applicationTime,
-            a.state,
-            a.interview_time interviewTime,
-            a.interview_address interviewAddress,
-            a.user_id userId,
-            u.NAME,
-            r.association_id associationId,
-            ass.association_name associationName
+        a.application_id applicationId,
+        a.department_id departmentId,
+        d.department_name departmentName,
+        a.self_profile selfProfile,
+        a.join_purpose joinPurpose,
+        a.view_of_association viewOfAssociation,
+        a.application_time applicationTime,
+        a.state,
+        a.interview_time interviewTime,
+        a.interview_address interviewAddress,
+        a.user_id userId,
+        u.NAME,
+        r.association_id associationId,
+        ass.association_name associationName
         FROM
-            application a
+        application a
         INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
         INNER JOIN `user` u ON a.user_id = u.user_id
         INNER JOIN association ass ON ass.association_id = r.association_id
         INNER JOIN department d ON a.department_id = d.department_id
         WHERE 1 = 1
-            AND a.state IN ( 'APPLYING', 'INTERVIEW_INVITING', 'UN_INTERVIEW' )
-            AND r.association_id IN
-            <foreach collection="associationIds" item="associationId" open="(" separator="," close=")">
-                #{associationId}
-            </foreach>
+        AND a.state IN ( 'APPLYING', 'INTERVIEW_INVITING', 'UN_INTERVIEW', 'INTERVIEW_PASS')
+        AND r.association_id IN
+        <foreach collection="associationIds" item="associationId" open="(" separator="," close=")">
+            #{associationId}
+        </foreach>
         ORDER BY a.application_time DESC
     </select>
 
     <!--  ApplicationResponseVO getApplicationDetail(@Param("applicationId") Integer applicationId);-->
     <select id="getApplicationDetail" parameterType="java.lang.Integer"
             resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
-        SELECT a.application_id       applicationId,
-               a.department_id        departmentId,
-               d.department_name      departmentName,
-               a.self_profile         selfProfile,
-               a.join_purpose         joinPurpose,
-               a.view_of_association  viewOfAssociation,
-               a.application_time     applicationTime,
+        SELECT a.application_id                                                         applicationId,
+               a.department_id                                                          departmentId,
+               d.department_name                                                        departmentName,
+               a.self_profile                                                           selfProfile,
+               a.join_purpose                                                           joinPurpose,
+               a.view_of_association                                                    viewOfAssociation,
+               a.application_time                                                       applicationTime,
+               a.interview_address                                                      interviewAddress,
+               a.interview_time                                                         interviewTime,
+               a.description,
                a.state,
-               a.user_id              userId,
+               a.user_id                                                                userId,
                u.name,
-               r.association_id       associationId,
-               ass.association_name   associationName
+               a.contacter_id,
+               (SELECT `name` contacterName FROM `user` WHERE user_id = a.contacter_id) contacterName,
+               (SELECT phone contacterName FROM `user` WHERE user_id = a.contacter_id)  contacterPhone,
+               r.association_id                                                         associationId,
+               ass.association_name                                                     associationName
         FROM application a
                  INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
                  INNER JOIN `user` u ON a.user_id = u.user_id
@@ -79,18 +85,24 @@
     <!--  List<ApplicationResponseVO> getApplicationByUserId(@Param("userId")String userId);-->
     <select id="getApplicationByUserId" parameterType="java.lang.String"
             resultType="com.jmu.uacs.vo.response.ApplicationResponseVO">
-        SELECT a.application_id       applicationId,
-               a.department_id        departmentId,
-               d.department_name      departmentName,
-               a.self_profile         selfProfile,
-               a.join_purpose         joinPurpose,
-               a.view_of_association  viewOfAssociation,
-               a.application_time     applicationTime,
+        SELECT a.application_id                                                         applicationId,
+               a.department_id                                                          departmentId,
+               d.department_name                                                        departmentName,
+               a.self_profile                                                           selfProfile,
+               a.join_purpose                                                           joinPurpose,
+               a.view_of_association                                                    viewOfAssociation,
+               a.application_time                                                       applicationTime,
+               a.interview_address                                                      interviewAddress,
+               a.interview_time                                                         interviewTime,
+               a.description,
                a.state,
-               a.user_id              userId,
-               u.name,
-               r.association_id       associationId,
-               ass.association_name   associationName
+               a.user_id                                                                userId,
+               u.NAME,
+               a.contacter_id,
+               (SELECT `name` contacterName FROM `user` WHERE user_id = a.contacter_id) contacterName,
+               (SELECT phone contacterName FROM `user` WHERE user_id = a.contacter_id)  contacterPhone,
+               r.association_id                                                         associationId,
+               ass.association_name                                                     associationName
         FROM application a
                  INNER JOIN recruitment r ON a.recruitment_id = r.recruitment_id
                  INNER JOIN `user` u ON a.user_id = u.user_id

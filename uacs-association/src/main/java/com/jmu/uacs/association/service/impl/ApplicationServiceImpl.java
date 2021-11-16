@@ -53,6 +53,10 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = new Application();
         application.setApplicationId(applicationId);
         application.setState(state);
+        // 如果正式加入
+        if(state.equals(ApplicationStateEnum.CONFIRM.getState())){
+
+        }
         applicationMapper.updateByPrimaryKeySelective(application);
     }
 
