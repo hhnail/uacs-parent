@@ -26,4 +26,6 @@ public class Association {
 
     private String imgUrl;
 
+    private Integer isDel;
+
 }

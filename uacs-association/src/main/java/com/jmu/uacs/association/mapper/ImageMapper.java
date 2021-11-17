@@ -10,7 +10,7 @@ public interface ImageMapper {
 
     int deleteByExample(ImageExample example);
 
-    int deleteByPrimaryKey(Integer imageId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Image record);
 
@@ -20,7 +20,7 @@ public interface ImageMapper {
 
     List<Image> selectByExample(ImageExample example);
 
-    Image selectByPrimaryKey(Integer imageId);
+    Image selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Image record, @Param("example") ImageExample example);
 

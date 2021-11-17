@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmu.uacs.association.mapper.ImageMapper">
   <resultMap id="BaseResultMap" type="com.jmu.uacs.association.bean.Image">
-    <id column="image_id" jdbcType="INTEGER" property="imageId" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="image_id" jdbcType="VARCHAR" property="imageId" />
     <result column="image_name" jdbcType="VARCHAR" property="imageName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jmu.uacs.association.bean.Image">
@@ -68,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    image_id, image_name, description
+    id, image_id, image_name, type, owner_id, url, description
   </sql>
   <sql id="Blob_Column_List">
     data
@@ -109,11 +113,11 @@
     ,
     <include refid="Blob_Column_List" />
     from image
-    where image_id = #{imageId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from image
-    where image_id = #{imageId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.jmu.uacs.association.bean.ImageExample">
     delete from image
@@ -122,19 +126,33 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jmu.uacs.association.bean.Image">
-    insert into image (image_id, image_name, description, 
-      data)
-    values (#{imageId,jdbcType=INTEGER}, #{imageName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{data,jdbcType=LONGVARBINARY})
+    insert into image (id, image_id, image_name, 
+      type, owner_id, url, 
+      description, data)
+    values (#{id,jdbcType=INTEGER}, #{imageId,jdbcType=VARCHAR}, #{imageName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{data,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Image">
     insert into image
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="imageId != null">
         image_id,
       </if>
       <if test="imageName != null">
         image_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="url != null">
+        url,
       </if>
       <if test="description != null">
         description,
@@ -144,11 +162,23 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="imageId != null">
-        #{imageId,jdbcType=INTEGER},
+        #{imageId,jdbcType=VARCHAR},
       </if>
       <if test="imageName != null">
         #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -167,11 +197,23 @@
   <update id="updateByExampleSelective" parameterType="map">
     update image
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.imageId != null">
-        image_id = #{record.imageId,jdbcType=INTEGER},
+        image_id = #{record.imageId,jdbcType=VARCHAR},
       </if>
       <if test="record.imageName != null">
         image_name = #{record.imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerId != null">
+        owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
@@ -186,8 +228,12 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update image
-    set image_id = #{record.imageId,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=INTEGER},
+      image_id = #{record.imageId,jdbcType=VARCHAR},
       image_name = #{record.imageName,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       data = #{record.data,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
@@ -196,8 +242,12 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update image
-    set image_id = #{record.imageId,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=INTEGER},
+      image_id = #{record.imageId,jdbcType=VARCHAR},
       image_name = #{record.imageName,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -206,8 +256,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jmu.uacs.association.bean.Image">
     update image
     <set>
+      <if test="imageId != null">
+        image_id = #{imageId,jdbcType=VARCHAR},
+      </if>
       <if test="imageName != null">
         image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
@@ -216,19 +278,27 @@
         data = #{data,jdbcType=LONGVARBINARY},
       </if>
     </set>
-    where image_id = #{imageId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jmu.uacs.association.bean.Image">
     update image
-    set image_name = #{imageName,jdbcType=VARCHAR},
+    set image_id = #{imageId,jdbcType=VARCHAR},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       data = #{data,jdbcType=LONGVARBINARY}
-    where image_id = #{imageId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.association.bean.Image">
     update image
-    set image_name = #{imageName,jdbcType=VARCHAR},
+    set image_id = #{imageId,jdbcType=VARCHAR},
+      image_name = #{imageName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR}
-    where image_id = #{imageId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

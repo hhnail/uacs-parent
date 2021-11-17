@@ -28,8 +28,10 @@ com\jmu\uacs\vo\response\UserResponseVo.class
 com\jmu\uacs\vo\request\PermissionUpdateVo.class
 com\jmu\uacs\bean\Department.class
 com\jmu\uacs\vo\response\ShareResponseVo.class
+com\jmu\uacs\enums\ImageTypeEnum.class
 com\jmu\uacs\vo\request\UserRegistVo.class
 com\jmu\uacs\util\StringUtils.class
+com\jmu\uacs\vo\response\ImageRespVO.class
 com\jmu\uacs\vo\request\UserAddReqVo.class
 com\jmu\uacs\vo\response\UserManageVo.class
 com\jmu\uacs\vo\request\AddRecruitmentRequestVo.class
