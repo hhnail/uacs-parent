@@ -87,4 +87,20 @@ public class ImageController {
         }
 
     }
+
+    @ResponseBody
+    @ApiOperation(value = "删除图片")
+    @DeleteMapping("/deleteImage/{imageId}")
+    AppResponse<String> deleteImage(@PathVariable("imageId") String imageId) {
+        try {
+            imageService.deleteImage(imageId);
+            AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("删除成功！");
+            return resp;
+        } catch (Exception e) {
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("删除失败！");
+            return fail;
+        }
+    }
 }

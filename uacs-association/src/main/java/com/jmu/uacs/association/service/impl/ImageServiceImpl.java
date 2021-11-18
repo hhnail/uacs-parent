@@ -80,8 +80,16 @@ public class ImageServiceImpl implements ImageService {
             BeanUtils.copyProperties(image, vo);
             vo.setUid(image.getImageId());
             vo.setStatus("done");
+            vo.setName(image.getImageName());
             voList.add(vo);
         }
         return voList;
+    }
+
+    @Override
+    public void deleteImage(String imageId) {
+        ImageExample imageExample = new ImageExample();
+        imageExample.createCriteria().andImageIdEqualTo(imageId);
+        imageMapper.deleteByExample(imageExample);
     }
 }

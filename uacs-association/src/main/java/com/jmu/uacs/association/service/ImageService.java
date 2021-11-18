@@ -13,4 +13,6 @@ public interface ImageService {
     Image getImageById(String imageId);
 
     List<ImageRespVO> getAssociationImageUrl(String ownerId, String type);
+
+    void deleteImage(String imageId);
 }

@@ -6,6 +6,7 @@ import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.enums.DateTemplate;
 import com.jmu.uacs.enums.RoleTypeEnum;
+import com.jmu.uacs.util.MyCollectionUtils;
 import com.jmu.uacs.util.MyDateUtil;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
@@ -29,13 +30,10 @@ public class AssociationServiceImpl implements AssociationService {
 
     @Autowired
     AssociationMapper associationMapper;
-
     @Autowired
     RoleMapper roleMapper;
-
     @Autowired
     UserRoleMapper userRoleMapper;
-
     @Autowired
     DepartmentMapper departmentMapper;
 
@@ -175,6 +173,26 @@ public class AssociationServiceImpl implements AssociationService {
 
     @Override
     public List<AssoicationResponseVo> getAssociationAsMember(String userId) {
+        if (userId != null) {
+            UserRoleExample exp = new UserRoleExample();
+            exp.createCriteria().andUserIdEqualTo(userId);
+            List<UserRole> userRoles = userRoleMapper.selectByExample(exp);
+            // 如果是超级管理员，则查询所有的社团
+            if (MyCollectionUtils.hasOneEle(userRoles) && userRoles.get(0).getRoleId() == RoleTypeEnum.SUPER_ADMIN.getCode()) {
+                List<Association> all = associationMapper.selectByExample(null);
+                List<AssoicationResponseVo> voList = new ArrayList<>();
+                for (Association association : all) {
+                    AssoicationResponseVo vo = new AssoicationResponseVo();
+                    BeanUtils.copyProperties(association, vo);
+                    vo.setRoleId(RoleTypeEnum.SUPER_ADMIN.getCode());
+                    vo.setRoleName(RoleTypeEnum.SUPER_ADMIN.getRole());
+                    voList.add(vo);
+                }
+                return voList;
+            }
+        }
+
+
         List<AssoicationResponseVo> res = associationMapper.getAssociationAsMember(userId);
         return res;
     }

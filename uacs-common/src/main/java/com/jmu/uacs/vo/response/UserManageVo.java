@@ -15,8 +15,6 @@ public class UserManageVo {
 
     private String userId;
 
-//    private String password;
-
     private String name;
 
     private String gender;
@@ -42,4 +40,6 @@ public class UserManageVo {
     private Integer classId;
 
     private List<RoleRespVo> roleList;
+
+    private String personalSignature;
 }
