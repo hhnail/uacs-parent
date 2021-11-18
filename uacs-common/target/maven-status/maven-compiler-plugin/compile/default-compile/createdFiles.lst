@@ -42,6 +42,7 @@ com\jmu\uacs\vo\request\TreeNodeReqVO.class
 com\jmu\uacs\vo\request\UserSettingsUpdateReqVO.class
 com\jmu\uacs\enums\UserRoleEnum.class
 com\jmu\uacs\bean\ITreeNode.class
+com\jmu\uacs\file\UserData.class
 com\jmu\uacs\vo\response\ApplicationResponseVO.class
 com\jmu\uacs\vo\response\PermissionVo.class
 com\jmu\uacs\enums\ApplicationStateEnum.class

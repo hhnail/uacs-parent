@@ -3,6 +3,7 @@ package com.jmu.uacs.association.service;
 import com.jmu.uacs.vo.request.UserAddReqVo;
 import com.jmu.uacs.vo.response.UserManageVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface UserService {
     int deleteUserById(String userId);
 
     List<UserResponseVo> getUserByAssociationId(Integer associationId);
+
+    void batchImportUser(MultipartFile file);
 }

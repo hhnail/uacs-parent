@@ -37,15 +37,30 @@ public class ImageServiceImpl implements ImageService {
         switch (enumByValue) {
             case USER_AVATAR:
                 record.setType(ImageTypeEnum.USER_AVATAR.getValue());
+                // userId
                 break;
             case USER_PHOTO_ALBUM:
                 record.setType(ImageTypeEnum.USER_PHOTO_ALBUM.getValue());
+                // user表
                 break;
             case ASSOCIATION_HOMEPAGE:
                 record.setType(ImageTypeEnum.ASSOCIATION_HOMEPAGE.getValue());
+                // associationId
                 break;
             case ASSOCIATION_PHOTO_ALBUM:
                 record.setType(ImageTypeEnum.ASSOCIATION_PHOTO_ALBUM.getValue());
+                // associationId
+                break;
+            case CAROUSEL:
+                record.setType(ImageTypeEnum.CAROUSEL.getValue());
+                break;
+            case SHARE_HEAD_PHOTO:
+                record.setType(ImageTypeEnum.SHARE_HEAD_PHOTO.getValue());
+                break;
+            case SYSTEM_BACKGROUND:
+                record.setType(ImageTypeEnum.SYSTEM_BACKGROUND.getValue());
+                break;
+            default:
                 break;
         }
         imageMapper.insert(record);

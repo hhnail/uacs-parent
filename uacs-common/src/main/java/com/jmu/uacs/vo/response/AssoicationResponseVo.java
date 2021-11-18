@@ -1,6 +1,8 @@
 package com.jmu.uacs.vo.response;
 
 import com.jmu.uacs.bean.Department;
+import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.util.StringUtils;
 import lombok.Data;
 import lombok.ToString;
 
@@ -17,8 +19,8 @@ public class AssoicationResponseVo implements Serializable {
     private Integer associationId;
     private String associationName;
     private String adminUnit;
-    private String requestTime;
-    private String createTime;
+    private Date requestTime;
+    private Date createTime;
     private String type;
     private String state;
     private String info;
@@ -33,4 +35,13 @@ public class AssoicationResponseVo implements Serializable {
     private String roleName;
 
     private List<Department> departments = new ArrayList<Department>();
+
+    public String getRequestTime() {
+        return StringUtils.formatDate2String(requestTime, DateTemplate.yyyyMMdd);
+    }
+
+    public String getCreateTime() {
+        return StringUtils.formatDate2String(createTime, DateTemplate.yyyyMMdd);
+
+    }
 }

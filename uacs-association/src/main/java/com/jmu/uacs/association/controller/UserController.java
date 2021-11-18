@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.jmu.uacs.association.service.UserService;
 import com.jmu.uacs.vo.request.UserAddReqVo;
 import com.jmu.uacs.vo.response.AppResponse;
@@ -11,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 @Controller
@@ -79,7 +83,7 @@ public class UserController {
     @DeleteMapping("/deleteUserById/{userId}")
     public AppResponse<String> deleteUserById(@PathVariable(name = "userId") String userId) {
 
-        log.debug("==删除成员 userId={}",userId);
+        log.debug("==删除成员 userId={}", userId);
 
         try {
             int affectedRowNum = userService.deleteUserById(userId);
@@ -105,6 +109,31 @@ public class UserController {
             e.printStackTrace();
             AppResponse<List<UserResponseVo>> fail = AppResponse.fail(null);
             fail.setMsg("获取成员列表失败");
+            return fail;
+        }
+    }
+
+    /**
+     * 批量导入社团成员
+     * 必选@列1 - 学号；格式：英文或数字组合，最长不超过20个字符
+     * 必选@列2 - 姓名：格式：中文或英文，最长不超过50个字符
+     * 必选@列3 - 角色：【普通学生、社团成员、社团管理员、社团会长、社团副会长】
+     * 必选@列4 - 所属社团：从先有社团中选择。若上述角色为普通学生，可不填。
+     * 可选@列5 - 密码：格式：字符和数字的组合，最短6个字符，最长不超过50个字符。系统默认密码为学号后6位
+     * 可选@列6 - 性别：格式：仅能选择【男、女或保密】，系统默认性别为保密
+     */
+    @ResponseBody
+    @ApiOperation("批量导入社团成员")
+    @PostMapping("/batchImportUser")
+    public AppResponse<String> batchImportUser(@RequestBody MultipartFile file) {
+        try {
+
+            AppResponse<String> resp = AppResponse.ok(null);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("批量导入失败！原因：" + e.getMessage());
             return fail;
         }
     }

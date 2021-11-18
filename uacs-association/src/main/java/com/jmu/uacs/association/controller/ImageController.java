@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Api(tags = "文件模块")
+@Api(tags = "图片模块")
 @RequestMapping("/association") // 父路径
 @Controller
 public class ImageController {

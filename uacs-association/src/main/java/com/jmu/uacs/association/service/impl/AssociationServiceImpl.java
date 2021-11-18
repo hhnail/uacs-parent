@@ -5,6 +5,7 @@ import com.jmu.uacs.association.mapper.*;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.enums.ImageTypeEnum;
 import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.MyCollectionUtils;
 import com.jmu.uacs.util.MyDateUtil;
@@ -36,6 +37,8 @@ public class AssociationServiceImpl implements AssociationService {
     UserRoleMapper userRoleMapper;
     @Autowired
     DepartmentMapper departmentMapper;
+    @Autowired
+    ImageMapper imageMapper;
 
     @Override
     public List<AssoicationResponseVo> getAllAssociationList() {
@@ -62,14 +65,14 @@ public class AssociationServiceImpl implements AssociationService {
 
             log.debug("==11 后台社团模块-ServiceImpl 获取社团状态码={}", intStateCode);
 
-            if (dateCreateTime != null) {
-                //非空则格式化
-                respVo.setCreateTime(MyDateUtil.parseToFormatTime(dateCreateTime));
-            } else {
-                //为空则使用当前时间
-                respVo.setCreateTime(MyDateUtil.parseToFormatTime(new Date()));
-            }
-            //文字化社团状态 ”1“代表社团审核通过
+//            if (dateCreateTime != null) {
+//                //非空则格式化
+//                respVo.setCreateTime(MyDateUtil.parseToFormatTime(dateCreateTime));
+//            } else {
+//                //为空则使用当前时间
+//                respVo.setCreateTime(MyDateUtil.parseToFormatTime(new Date()));
+//            }
+            // 文字化社团状态 ”1“代表社团审核通过
             if (intStateCode == AssociationStateEnum.APPROVED.getCode()) {
                 respVo.setState(AssociationStateEnum.APPROVED.getState());
             } else if (intStateCode == AssociationStateEnum.APPROVING.getCode()) {
@@ -80,7 +83,17 @@ public class AssociationServiceImpl implements AssociationService {
                 respVo.setState(AssociationStateEnum.LOCKED.getState());
             }
             log.debug("==12 后台社团模块-ServiceImpl 获取社团状态字符串={}", respVo.getState());
+
+            ImageExample exp = new ImageExample();
+            exp.createCriteria().andOwnerIdEqualTo(association.getAssociationId() + "").andTypeEqualTo(ImageTypeEnum.ASSOCIATION_HOMEPAGE.getValue());
+            List<Image> images = imageMapper.selectByExample(exp);
+            if (!MyCollectionUtils.isEmpty(images)) {
+                respVo.setImgUrl(images.get(0).getUrl());
+            }
+
             respList.add(respVo);
+
+
         }
         log.debug("==8 后台服务-返回社团list{}", respList);
         return respList;
@@ -153,8 +166,8 @@ public class AssociationServiceImpl implements AssociationService {
         AssoicationResponseVo vo = new AssoicationResponseVo();
         Association associationDO = associationMapper.selectByPrimaryKey(associationId);
         BeanUtils.copyProperties(associationDO, vo);
-        vo.setCreateTime(StringUtils.formatDate2String(associationDO.getCreateTime(), DateTemplate.yyyyMMdd));
-        vo.setRequestTime(StringUtils.formatDate2String(associationDO.getRequestTime(), DateTemplate.yyyyMMdd));
+//        vo.setCreateTime(StringUtils.formatDate2String(associationDO.getCreateTime(), DateTemplate.yyyyMMdd));
+//        vo.setRequestTime(StringUtils.formatDate2String(associationDO.getRequestTime(), DateTemplate.yyyyMMdd));
 
         // 注入社团部门信息
         DepartmentExample dExp = new DepartmentExample();

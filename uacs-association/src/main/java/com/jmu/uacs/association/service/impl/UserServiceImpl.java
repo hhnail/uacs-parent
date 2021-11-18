@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,5 +150,11 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseVo> getUserByAssociationId(Integer associationId) {
         List<UserResponseVo> users = userMapper.getUserByAssociationId(associationId);
         return users;
+    }
+
+    @Override
+    public void batchImportUser(MultipartFile file) {
+
+
     }
 }
