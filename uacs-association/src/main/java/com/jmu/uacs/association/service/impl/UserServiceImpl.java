@@ -3,6 +3,7 @@ package com.jmu.uacs.association.service.impl;
 import com.jmu.uacs.association.bean.*;
 import com.jmu.uacs.association.mapper.*;
 import com.jmu.uacs.association.service.RoleService;
+import com.jmu.uacs.association.service.TreeNodeService;
 import com.jmu.uacs.association.service.UserService;
 import com.jmu.uacs.util.MyCollectionUtils;
 import com.jmu.uacs.util.StringUtils;
@@ -27,21 +28,18 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
-
     @Autowired
     RoleService roleService;
-
     @Autowired
     UserRoleMapper userRoleMapper;
-
     @Autowired
     UserAssociationMapper userAssociationMapper;
-
     @Autowired
     AssociationMapper associationMapper;
-
     @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    TreeNodeService treeNodeService;
 
     @Override
     public List<UserManageVo> getAllUsers() {
@@ -120,6 +118,11 @@ public class UserServiceImpl implements UserService {
         // set角色列表
         List<RoleRespVo> roleListByUserId = roleMapper.getRoleListByUserId(user.getUserId(), 0);
         userVo.setRoleList(roleListByUserId);
+
+        // 班级信息
+        CascaderClass cascaderClass = treeNodeService.getClass4Cascader(user.getTreeId());
+        userVo.setCollegeMajorClass(cascaderClass.toString());
+
         return userVo;
     }
 

@@ -46,7 +46,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!-- %通配所有表，类名根据表名自动生成了。 -->
+        <!-- %通配所有表，类名根据表名自动生成。 -->
         <!--        <table schema="" tableName="%"></table>-->
         <!--        <table tableName="association"></table>-->
         <!--        <table tableName="application"></table>-->

@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.service.impl;
 
+import com.jmu.uacs.association.bean.CascaderClass;
 import com.jmu.uacs.association.bean.TreeNode;
 import com.jmu.uacs.association.bean.TreeNodeExample;
 import com.jmu.uacs.association.mapper.TreeNodeMapper;
@@ -70,5 +71,10 @@ public class TreeNodeServiceImpl implements TreeNodeService {
     @Override
     public void deleteTreeNode(Integer treeId) {
         treeNodeMapper.deleteByPrimaryKey(treeId);
+    }
+
+    @Override
+    public CascaderClass getClass4Cascader(Integer classId) {
+        return treeNodeMapper.getClass4Cascader(classId);
     }
 }

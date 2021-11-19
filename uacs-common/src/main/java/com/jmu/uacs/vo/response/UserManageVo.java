@@ -1,9 +1,12 @@
 package com.jmu.uacs.vo.response;
 
+import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.util.StringUtils;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class UserManageVo {
 
     private String qq;
 
-    private String headUrl;
+    private String like;
 
     private String state;
 
@@ -39,7 +42,16 @@ public class UserManageVo {
 
     private Integer classId;
 
-    private List<RoleRespVo> roleList;
+    private String collegeMajorClass;
+
+    private List<RoleRespVo> roleList = new ArrayList<RoleRespVo>();
 
     private String personalSignature;
+
+    public String getBirthday() {
+        if (birthday != null) {
+            return StringUtils.formatDate2String(birthday, DateTemplate.yyyyMMdd);
+        }
+        return "";
+    }
 }

@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.mapper;
 
+import com.jmu.uacs.association.bean.CascaderClass;
 import com.jmu.uacs.association.bean.TreeNode;
 import com.jmu.uacs.association.bean.TreeNodeExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface TreeNodeMapper {
     int updateByPrimaryKeySelective(TreeNode record);
 
     int updateByPrimaryKey(TreeNode record);
+
+    CascaderClass getClass4Cascader(@Param("classId")Integer classId);
 }

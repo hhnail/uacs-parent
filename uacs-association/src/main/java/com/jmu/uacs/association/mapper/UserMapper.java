@@ -2,11 +2,10 @@ package com.jmu.uacs.association.mapper;
 
 import com.jmu.uacs.association.bean.User;
 import com.jmu.uacs.association.bean.UserExample;
-import com.jmu.uacs.association.bean.UserWithBLOBs;
-import java.util.List;
-
 import com.jmu.uacs.vo.response.UserResponseVo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);
@@ -32,4 +31,5 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     List<UserResponseVo> getUserByAssociationId(@Param("associationId")Integer associationId);
+
 }

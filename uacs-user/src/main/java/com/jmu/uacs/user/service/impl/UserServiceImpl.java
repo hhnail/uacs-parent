@@ -46,13 +46,10 @@ public class UserServiceImpl implements UserService {
     // ============= 本模块接口 ============
     @Autowired
     UserMapper userMapper;
-
     @Autowired
     ClassMapper classMapper;
-
     @Autowired
     PermissionMapper permissionMapper;
-
     @Autowired
     UserAssociationMapper userAssociationMapper;
 
@@ -60,7 +57,6 @@ public class UserServiceImpl implements UserService {
     // ============= 远程服务接口 ============
     @Autowired
     AssociationServiceFeign associationServiceFeign;
-
 
     // ============= 其他接口（redis中间件） ============
     @Autowired
@@ -197,7 +193,7 @@ public class UserServiceImpl implements UserService {
             infoVo.setBirthday(MyDateUtil.parseToFormatTime(dateBirthday));
         }
         // 获取班级信息
-        Class classInfo = classMapper.selectByPrimaryKey(user.getClassId());
+        Class classInfo = classMapper.selectByPrimaryKey(user.getTreeId());
         if (classInfo != null) {
             BeanUtils.copyProperties(classInfo, infoVo);
         }

@@ -13,16 +13,14 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="self_like" jdbcType="VARCHAR" property="selfLike" />
     <result column="self_profile" jdbcType="VARCHAR" property="selfProfile" />
     <result column="personal_signature" jdbcType="VARCHAR" property="personalSignature" />
-    <result column="can_view" jdbcType="INTEGER" property="canView" />
     <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="can_view" jdbcType="INTEGER" property="canView" />
     <result column="can_del" jdbcType="INTEGER" property="canDel" />
-    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="tree_id" jdbcType="INTEGER" property="treeId" />
     <result column="is_del" jdbcType="INTEGER" property="isDel" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jmu.uacs.user.bean.User">
-    <result column="comprehensive_quality" jdbcType="LONGVARCHAR" property="comprehensiveQuality" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -84,27 +82,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, password, name, gender, birthday, nation, email, phone, wechat, qq, 
-    self_profile, personal_signature, can_view, state, can_del, class_id, is_del
+    self_like, self_profile, personal_signature, state, can_view, can_del, tree_id, is_del
   </sql>
-  <sql id="Blob_Column_List">
-    comprehensive_quality
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.jmu.uacs.user.bean.UserExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from user
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.jmu.uacs.user.bean.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -119,11 +98,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -141,17 +118,17 @@
     insert into user (id, user_id, password, 
       name, gender, birthday, 
       nation, email, phone, 
-      wechat, qq, self_profile, 
-      personal_signature, can_view, state, 
-      can_del, class_id, is_del, 
-      comprehensive_quality)
+      wechat, qq, self_like, 
+      self_profile, personal_signature, state, 
+      can_view, can_del, tree_id, 
+      is_del)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{nation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{selfProfile,jdbcType=VARCHAR}, 
-      #{personalSignature,jdbcType=VARCHAR}, #{canView,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
-      #{canDel,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
-      #{comprehensiveQuality,jdbcType=LONGVARCHAR})
+      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{selfLike,jdbcType=VARCHAR}, 
+      #{selfProfile,jdbcType=VARCHAR}, #{personalSignature,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{canView,jdbcType=INTEGER}, #{canDel,jdbcType=INTEGER}, #{treeId,jdbcType=INTEGER}, 
+      #{isDel,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jmu.uacs.user.bean.User">
     insert into user
@@ -189,29 +166,29 @@
       <if test="qq != null">
         qq,
       </if>
+      <if test="selfLike != null">
+        self_like,
+      </if>
       <if test="selfProfile != null">
         self_profile,
       </if>
       <if test="personalSignature != null">
         personal_signature,
       </if>
-      <if test="canView != null">
-        can_view,
-      </if>
       <if test="state != null">
         state,
+      </if>
+      <if test="canView != null">
+        can_view,
       </if>
       <if test="canDel != null">
         can_del,
       </if>
-      <if test="classId != null">
-        class_id,
+      <if test="treeId != null">
+        tree_id,
       </if>
       <if test="isDel != null">
         is_del,
-      </if>
-      <if test="comprehensiveQuality != null">
-        comprehensive_quality,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -248,29 +225,29 @@
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
       </if>
+      <if test="selfLike != null">
+        #{selfLike,jdbcType=VARCHAR},
+      </if>
       <if test="selfProfile != null">
         #{selfProfile,jdbcType=VARCHAR},
       </if>
       <if test="personalSignature != null">
         #{personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="canView != null">
-        #{canView,jdbcType=INTEGER},
-      </if>
       <if test="state != null">
         #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="canView != null">
+        #{canView,jdbcType=INTEGER},
       </if>
       <if test="canDel != null">
         #{canDel,jdbcType=INTEGER},
       </if>
-      <if test="classId != null">
-        #{classId,jdbcType=INTEGER},
+      <if test="treeId != null">
+        #{treeId,jdbcType=INTEGER},
       </if>
       <if test="isDel != null">
         #{isDel,jdbcType=INTEGER},
-      </if>
-      <if test="comprehensiveQuality != null">
-        #{comprehensiveQuality,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -316,56 +293,31 @@
       <if test="record.qq != null">
         qq = #{record.qq,jdbcType=VARCHAR},
       </if>
+      <if test="record.selfLike != null">
+        self_like = #{record.selfLike,jdbcType=VARCHAR},
+      </if>
       <if test="record.selfProfile != null">
         self_profile = #{record.selfProfile,jdbcType=VARCHAR},
       </if>
       <if test="record.personalSignature != null">
         personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="record.canView != null">
-        can_view = #{record.canView,jdbcType=INTEGER},
-      </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canView != null">
+        can_view = #{record.canView,jdbcType=INTEGER},
       </if>
       <if test="record.canDel != null">
         can_del = #{record.canDel,jdbcType=INTEGER},
       </if>
-      <if test="record.classId != null">
-        class_id = #{record.classId,jdbcType=INTEGER},
+      <if test="record.treeId != null">
+        tree_id = #{record.treeId,jdbcType=INTEGER},
       </if>
       <if test="record.isDel != null">
         is_del = #{record.isDel,jdbcType=INTEGER},
       </if>
-      <if test="record.comprehensiveQuality != null">
-        comprehensive_quality = #{record.comprehensiveQuality,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update user
-    set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      gender = #{record.gender,jdbcType=VARCHAR},
-      birthday = #{record.birthday,jdbcType=DATE},
-      nation = #{record.nation,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      wechat = #{record.wechat,jdbcType=VARCHAR},
-      qq = #{record.qq,jdbcType=VARCHAR},
-      self_profile = #{record.selfProfile,jdbcType=VARCHAR},
-      personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
-      can_view = #{record.canView,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=VARCHAR},
-      can_del = #{record.canDel,jdbcType=INTEGER},
-      class_id = #{record.classId,jdbcType=INTEGER},
-      is_del = #{record.isDel,jdbcType=INTEGER},
-      comprehensive_quality = #{record.comprehensiveQuality,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -383,12 +335,13 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       wechat = #{record.wechat,jdbcType=VARCHAR},
       qq = #{record.qq,jdbcType=VARCHAR},
+      self_like = #{record.selfLike,jdbcType=VARCHAR},
       self_profile = #{record.selfProfile,jdbcType=VARCHAR},
       personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
-      can_view = #{record.canView,jdbcType=INTEGER},
       state = #{record.state,jdbcType=VARCHAR},
+      can_view = #{record.canView,jdbcType=INTEGER},
       can_del = #{record.canDel,jdbcType=INTEGER},
-      class_id = #{record.classId,jdbcType=INTEGER},
+      tree_id = #{record.treeId,jdbcType=INTEGER},
       is_del = #{record.isDel,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -427,53 +380,31 @@
       <if test="qq != null">
         qq = #{qq,jdbcType=VARCHAR},
       </if>
+      <if test="selfLike != null">
+        self_like = #{selfLike,jdbcType=VARCHAR},
+      </if>
       <if test="selfProfile != null">
         self_profile = #{selfProfile,jdbcType=VARCHAR},
       </if>
       <if test="personalSignature != null">
         personal_signature = #{personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="canView != null">
-        can_view = #{canView,jdbcType=INTEGER},
-      </if>
       <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="canView != null">
+        can_view = #{canView,jdbcType=INTEGER},
       </if>
       <if test="canDel != null">
         can_del = #{canDel,jdbcType=INTEGER},
       </if>
-      <if test="classId != null">
-        class_id = #{classId,jdbcType=INTEGER},
+      <if test="treeId != null">
+        tree_id = #{treeId,jdbcType=INTEGER},
       </if>
       <if test="isDel != null">
         is_del = #{isDel,jdbcType=INTEGER},
       </if>
-      <if test="comprehensiveQuality != null">
-        comprehensive_quality = #{comprehensiveQuality,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jmu.uacs.user.bean.User">
-    update user
-    set user_id = #{userId,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      nation = #{nation,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      wechat = #{wechat,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      self_profile = #{selfProfile,jdbcType=VARCHAR},
-      personal_signature = #{personalSignature,jdbcType=VARCHAR},
-      can_view = #{canView,jdbcType=INTEGER},
-      state = #{state,jdbcType=VARCHAR},
-      can_del = #{canDel,jdbcType=INTEGER},
-      class_id = #{classId,jdbcType=INTEGER},
-      is_del = #{isDel,jdbcType=INTEGER},
-      comprehensive_quality = #{comprehensiveQuality,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jmu.uacs.user.bean.User">
@@ -488,12 +419,13 @@
       phone = #{phone,jdbcType=VARCHAR},
       wechat = #{wechat,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
+      self_like = #{selfLike,jdbcType=VARCHAR},
       self_profile = #{selfProfile,jdbcType=VARCHAR},
       personal_signature = #{personalSignature,jdbcType=VARCHAR},
-      can_view = #{canView,jdbcType=INTEGER},
       state = #{state,jdbcType=VARCHAR},
+      can_view = #{canView,jdbcType=INTEGER},
       can_del = #{canDel,jdbcType=INTEGER},
-      class_id = #{classId,jdbcType=INTEGER},
+      tree_id = #{treeId,jdbcType=INTEGER},
       is_del = #{isDel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
