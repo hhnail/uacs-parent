@@ -2,6 +2,7 @@ package com.jmu.uacs.association.mapper;
 
 import com.jmu.uacs.association.bean.User;
 import com.jmu.uacs.association.bean.UserExample;
+import com.jmu.uacs.association.bean.UserWithBLOBs;
 import java.util.List;
 
 import com.jmu.uacs.vo.response.UserResponseVo;

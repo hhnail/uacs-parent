@@ -47,13 +47,13 @@
 
         <!-- %通配所有表，类名根据表名自动生成了。 -->
         <!-- <table schema="" tableName="%"></table> -->
-        <!--        <table tableName="user"></table>-->
+        <table tableName="user"></table>
         <!--		<table tableName="class"></table>-->
         <!--		<table tableName="major"></table>-->
         <!--		<table tableName="college"></table>-->
 
         <!--		<table tableName="tag"></table>-->
-        <table tableName="user_tag"></table>
+        <!--        <table tableName="user_tag"></table>-->
 
         <!--        <table tableName="permission"></table>-->
         <!--		<table tableName="role"></table>-->

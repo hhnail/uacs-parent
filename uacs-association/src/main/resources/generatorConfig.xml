@@ -58,11 +58,11 @@
         <!--        <table tableName="permission"></table>-->
         <!--        <table tableName="role"></table>-->
         <!--        <table tableName="role_permission"></table>-->
-        <!--        <table tableName="user"></table>-->
+        <table tableName="user"></table>
         <!--        <table tableName="user_association"></table>-->
         <!--        <table tableName="recruitment"></table>-->
         <!--        <table tableName="tree_node"></table>-->
-        <table tableName="image"></table>
+        <!--        <table tableName="image"></table>-->
         <!--        <table tableName="aaaa"></table>-->
     </context>
 </generatorConfiguration> 

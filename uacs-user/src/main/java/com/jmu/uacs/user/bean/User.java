@@ -5,8 +5,8 @@ import lombok.ToString;
 
 import java.util.Date;
 
-@ToString
 @Data
+@ToString
 public class User {
     private Integer id;
 
@@ -30,7 +30,11 @@ public class User {
 
     private String qq;
 
-    private String headUrl;
+    private String selfProfile;
+
+    private String personalSignature;
+
+    private Integer canView;
 
     private String state;
 
@@ -40,4 +44,5 @@ public class User {
 
     private Integer isDel;
 
+    private String comprehensiveQuality;
 }

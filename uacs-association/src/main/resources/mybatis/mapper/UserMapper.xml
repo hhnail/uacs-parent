@@ -15,7 +15,7 @@
     <result column="qq" jdbcType="VARCHAR" property="qq" />
     <result column="self_profile" jdbcType="VARCHAR" property="selfProfile" />
     <result column="personal_signature" jdbcType="VARCHAR" property="personalSignature" />
-    <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
+    <result column="can_view" jdbcType="INTEGER" property="canView" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="can_del" jdbcType="INTEGER" property="canDel" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
@@ -106,7 +106,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, password, name, gender, birthday, nation, email, phone, wechat, qq, 
-    self_profile, personal_signature, head_url, state, can_del, class_id, is_del
+    self_profile, personal_signature, can_view, state, can_del, class_id, is_del
   </sql>
   <sql id="Blob_Column_List">
     comprehensive_quality
@@ -164,14 +164,14 @@
       name, gender, birthday, 
       nation, email, phone, 
       wechat, qq, self_profile, 
-      personal_signature, head_url, state, 
+      personal_signature, can_view, state, 
       can_del, class_id, is_del, 
       comprehensive_quality)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{nation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{selfProfile,jdbcType=VARCHAR}, 
-      #{personalSignature,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{personalSignature,jdbcType=VARCHAR}, #{canView,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
       #{canDel,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
       #{comprehensiveQuality,jdbcType=LONGVARCHAR})
   </insert>
@@ -217,8 +217,8 @@
       <if test="personalSignature != null">
         personal_signature,
       </if>
-      <if test="headUrl != null">
-        head_url,
+      <if test="canView != null">
+        can_view,
       </if>
       <if test="state != null">
         state,
@@ -276,8 +276,8 @@
       <if test="personalSignature != null">
         #{personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="headUrl != null">
-        #{headUrl,jdbcType=VARCHAR},
+      <if test="canView != null">
+        #{canView,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         #{state,jdbcType=VARCHAR},
@@ -344,8 +344,8 @@
       <if test="record.personalSignature != null">
         personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="record.headUrl != null">
-        head_url = #{record.headUrl,jdbcType=VARCHAR},
+      <if test="record.canView != null">
+        can_view = #{record.canView,jdbcType=INTEGER},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
@@ -382,7 +382,7 @@
       qq = #{record.qq,jdbcType=VARCHAR},
       self_profile = #{record.selfProfile,jdbcType=VARCHAR},
       personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
-      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      can_view = #{record.canView,jdbcType=INTEGER},
       state = #{record.state,jdbcType=VARCHAR},
       can_del = #{record.canDel,jdbcType=INTEGER},
       class_id = #{record.classId,jdbcType=INTEGER},
@@ -407,7 +407,7 @@
       qq = #{record.qq,jdbcType=VARCHAR},
       self_profile = #{record.selfProfile,jdbcType=VARCHAR},
       personal_signature = #{record.personalSignature,jdbcType=VARCHAR},
-      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      can_view = #{record.canView,jdbcType=INTEGER},
       state = #{record.state,jdbcType=VARCHAR},
       can_del = #{record.canDel,jdbcType=INTEGER},
       class_id = #{record.classId,jdbcType=INTEGER},
@@ -455,8 +455,8 @@
       <if test="personalSignature != null">
         personal_signature = #{personalSignature,jdbcType=VARCHAR},
       </if>
-      <if test="headUrl != null">
-        head_url = #{headUrl,jdbcType=VARCHAR},
+      <if test="canView != null">
+        can_view = #{canView,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
@@ -490,7 +490,7 @@
       qq = #{qq,jdbcType=VARCHAR},
       self_profile = #{selfProfile,jdbcType=VARCHAR},
       personal_signature = #{personalSignature,jdbcType=VARCHAR},
-      head_url = #{headUrl,jdbcType=VARCHAR},
+      can_view = #{canView,jdbcType=INTEGER},
       state = #{state,jdbcType=VARCHAR},
       can_del = #{canDel,jdbcType=INTEGER},
       class_id = #{classId,jdbcType=INTEGER},
@@ -512,7 +512,7 @@
       qq = #{qq,jdbcType=VARCHAR},
       self_profile = #{selfProfile,jdbcType=VARCHAR},
       personal_signature = #{personalSignature,jdbcType=VARCHAR},
-      head_url = #{headUrl,jdbcType=VARCHAR},
+      can_view = #{canView,jdbcType=INTEGER},
       state = #{state,jdbcType=VARCHAR},
       can_del = #{canDel,jdbcType=INTEGER},
       class_id = #{classId,jdbcType=INTEGER},

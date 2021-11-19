@@ -26,6 +26,7 @@ com\jmu\uacs\user\bean\Class.class
 com\jmu\uacs\user\mapper\UserMapper.class
 com\jmu\uacs\user\util\SmsTemplate.class
 com\jmu\uacs\user\bean\RoleExample$Criterion.class
+com\jmu\uacs\user\bean\UserWithBLOBs.class
 com\jmu\uacs\user\bean\CollegeExample.class
 com\jmu\uacs\user\bean\Tag.class
 com\jmu\uacs\user\bean\PermissionExample$Criteria.class

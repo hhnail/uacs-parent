@@ -188,7 +188,6 @@ public class UserServiceImpl implements UserService {
     public UserInfoVo getUserInfo(String accessToken) {
         //得到用户信息，拷贝到vo并返回
         User user = getDBUserByToken(accessToken);
-        log.debug("==dbUser newField-headUrl={}", user.getHeadUrl());
         UserInfoVo infoVo = new UserInfoVo();
         BeanUtils.copyProperties(user, infoVo);
         infoVo.setAccessToken(accessToken);
@@ -204,8 +203,8 @@ public class UserServiceImpl implements UserService {
         }
         // 获取权限路径列表
         List<String> pmsList = permissionMapper.getPermissionRoutePathListByUserId(user.getUserId());
-        log.debug("权限路径列表={}", pmsList);
-        log.debug("权限路径列表={}", pmsList.getClass());
+//        log.debug("权限路径列表={}", pmsList);
+//        log.debug("权限路径列表={}", pmsList.getClass());
         // set不进去，项目编译不通过，原因？
         infoVo.setPermissionRoutePathList(pmsList);
         return infoVo;

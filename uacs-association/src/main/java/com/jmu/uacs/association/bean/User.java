@@ -34,7 +34,7 @@ public class User {
 
     private String personalSignature;
 
-    private String headUrl;
+    private Integer canView;
 
     private String state;
 
