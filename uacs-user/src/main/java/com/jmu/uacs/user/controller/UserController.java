@@ -6,6 +6,7 @@ import com.jmu.uacs.user.util.SmsTemplate;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserResumeReqVO;
 import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
@@ -68,6 +69,7 @@ public class UserController {
 
 
     // TODO 用户一旦注册，需要到user_permission表中，注册角色（社团ID为-1，角色为普通学生！）
+
     /**
      * 用户注册
      */
@@ -203,6 +205,7 @@ public class UserController {
         return resp;
     }
 
+
     @ApiOperation(value = "更新个人设置")
     @PostMapping("/reset")
     public AppResponse<String> reset(@RequestBody UserSettingsUpdateReqVO reqVO) {
@@ -232,4 +235,25 @@ public class UserController {
         userService.reset(reqVO);
         return AppResponse.ok("更新成功！");
     }
+
+    @ApiOperation(value = "更新个人简历")
+    @PostMapping("/updateResume")
+    public AppResponse<String> updateResume(@RequestBody UserResumeReqVO reqVO) {
+        try {
+            log.debug("vo={}", reqVO);
+            userService.updateResume(reqVO);
+            AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("更新成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("更新失败！");
+            return fail;
+        }
+    }
+
+
 }
+
+

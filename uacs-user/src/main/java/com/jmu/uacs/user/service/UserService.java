@@ -3,6 +3,7 @@ package com.jmu.uacs.user.service;
 import com.jmu.uacs.user.bean.User;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserResumeReqVO;
 import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.UserInfoVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
@@ -27,4 +28,5 @@ public interface UserService {
 
     User getUserById(String userId);
 
+    void updateResume(UserResumeReqVO reqVO);
 }

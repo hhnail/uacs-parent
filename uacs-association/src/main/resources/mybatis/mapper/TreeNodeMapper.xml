@@ -17,7 +17,7 @@
         SELECT
             t3.`value` college,
             t2.`value` major,
-            t1.`value` class
+            t1.`value` `className`
         FROM
             tree_node t1
                 INNER JOIN tree_node t2 ON t1.p_id = t2.tree_id

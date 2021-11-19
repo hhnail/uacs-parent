@@ -3,7 +3,9 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\MyDateUtil.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\ApplicationRequestVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\AssociationStateEnum.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\AssociationTypeEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\AssoicationResponseVo.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\ImageTypeEnum.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\enums\DateTemplate.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\RecruitmentRespVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\ReGrantPermissions2RoleReqVo.java
@@ -31,10 +33,13 @@ D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\StringUtils.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\TreeNodeUtil.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\UserResponseVo.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\file\UserData.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\util\MyCollectionUtils.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\InterviewReqVO.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\AssociationAdminResponseVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\AssociationRequestVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\AddRecruitmentRequestVo.java
+D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\ImageRespVO.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\response\RoleRespVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\PermissionUpdateVo.java
 D:\workspace\mySrc\workspace_IDEA\uacs\uacs-parent\uacs-common\src\main\java\com\jmu\uacs\vo\request\UserRegistVo.java

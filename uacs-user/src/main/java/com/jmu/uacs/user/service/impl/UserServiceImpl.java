@@ -1,22 +1,19 @@
 package com.jmu.uacs.user.service.impl;
 
+import com.jmu.uacs.user.bean.*;
 import com.jmu.uacs.user.bean.Class;
-import com.jmu.uacs.user.bean.User;
-import com.jmu.uacs.user.bean.UserExample;
 import com.jmu.uacs.user.enums.UserExceptionEnum;
 import com.jmu.uacs.user.enums.UserStateEnum;
 import com.jmu.uacs.user.exception.UserException;
 import com.jmu.uacs.user.feign.AssociationServiceFeign;
-import com.jmu.uacs.user.mapper.ClassMapper;
-import com.jmu.uacs.user.mapper.PermissionMapper;
-import com.jmu.uacs.user.mapper.UserAssociationMapper;
-import com.jmu.uacs.user.mapper.UserMapper;
+import com.jmu.uacs.user.mapper.*;
 import com.jmu.uacs.user.service.UserService;
 import com.jmu.uacs.util.MyCollectionUtils;
 import com.jmu.uacs.util.MyDateUtil;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserInfoReqVo;
 import com.jmu.uacs.vo.request.UserRegistVo;
+import com.jmu.uacs.vo.request.UserResumeReqVO;
 import com.jmu.uacs.vo.request.UserSettingsUpdateReqVO;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserInfoVo;
@@ -40,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true) // 整个类的数据库操作——只读
 public class UserServiceImpl implements UserService {
 
     // ============= 本模块接口 ============
@@ -52,6 +48,8 @@ public class UserServiceImpl implements UserService {
     PermissionMapper permissionMapper;
     @Autowired
     UserAssociationMapper userAssociationMapper;
+    @Autowired
+    TreeNodeMapper treeNodeMapper;
 
 
     // ============= 远程服务接口 ============
@@ -69,7 +67,6 @@ public class UserServiceImpl implements UserService {
         uExp.createCriteria().andUserIdEqualTo(userId);
         return userMapper.selectByExample(uExp).get(0);
     }
-
 
     /**
      * 用户注册时，保存用户信息
@@ -301,5 +298,29 @@ public class UserServiceImpl implements UserService {
         uExp.createCriteria().andUserIdEqualTo(user.getUserId());
 
         userMapper.updateByExampleSelective(user, uExp);
+    }
+
+
+    @Override
+    public void updateResume(UserResumeReqVO reqVO) {
+        UserExample exp = new UserExample();
+        exp.createCriteria().andUserIdEqualTo(reqVO.getUserId());
+
+        User user = new User();
+        BeanUtils.copyProperties(reqVO, user);
+
+        // 修改所属班级
+        if (reqVO.getClassName() != null) {
+            String[] arr = reqVO.getClassName().split("/");
+            TreeNodeExample treeExp = new TreeNodeExample();
+            if (arr.length == 3) {
+                treeExp.createCriteria().andValueEqualTo(arr[2]).andLabelEqualTo(arr[2]);
+                List<TreeNode> treeNodes = treeNodeMapper.selectByExample(treeExp);
+                if (MyCollectionUtils.hasOneEle(treeNodes)) {
+                    user.setTreeId(treeNodes.get(0).getTreeId());
+                }
+            }
+        }
+        userMapper.updateByExampleSelective(user, exp);
     }
 }

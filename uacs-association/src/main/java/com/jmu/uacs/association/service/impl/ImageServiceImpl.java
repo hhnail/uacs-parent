@@ -43,6 +43,9 @@ public class ImageServiceImpl implements ImageService {
                 record.setType(ImageTypeEnum.USER_PHOTO_ALBUM.getValue());
                 // user表
                 break;
+            case USER_ID_PHOTO:
+                record.setType(ImageTypeEnum.USER_ID_PHOTO.getValue());
+                break;
             case ASSOCIATION_HOMEPAGE:
                 record.setType(ImageTypeEnum.ASSOCIATION_HOMEPAGE.getValue());
                 // associationId

@@ -32,7 +32,7 @@ public class UserInfoVo implements Serializable {
 
     private String qq;
 
-    private String headUrl;
+    private String selfLike;
 
     private String className;
 

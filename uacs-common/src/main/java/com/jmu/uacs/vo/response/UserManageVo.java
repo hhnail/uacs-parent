@@ -34,13 +34,17 @@ public class UserManageVo {
 
     private String qq;
 
-    private String like;
+    private String selfLike;
+
+    private String selfProfile;
 
     private String state;
 
     private Integer canDel;
 
-    private Integer classId;
+    private Integer canView;
+
+    private Integer treeId;
 
     private String collegeMajorClass;
 
