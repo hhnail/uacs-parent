@@ -22,7 +22,6 @@ com\jmu\uacs\vo\request\AddRecruitmentRequestVo.class
 com\jmu\uacs\enums\TreeNodeEnum.class
 com\jmu\uacs\vo\request\TreeNodeReqVO.class
 com\jmu\uacs\bean\ITreeNode.class
-com\jmu\uacs\file\UserData.class
 com\jmu\uacs\vo\response\PermissionVo.class
 com\jmu\uacs\enums\ApplicationStateEnum.class
 com\jmu\uacs\enums\AssociationTypeEnum.class
@@ -40,6 +39,7 @@ com\jmu\uacs\vo\response\RecruitmentRespVo.class
 com\jmu\uacs\vo\response\TagRespVo.class
 com\jmu\uacs\vo\request\ApplicationRequestVo.class
 com\jmu\uacs\enums\ImageTypeEnum.class
+com\jmu\uacs\enums\GenderEnum.class
 com\jmu\uacs\util\StringUtils.class
 com\jmu\uacs\vo\request\InterviewReqVO.class
 com\jmu\uacs\vo\response\AssoicationResponseVo.class

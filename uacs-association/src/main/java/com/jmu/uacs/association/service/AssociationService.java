@@ -5,7 +5,9 @@ import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import com.jmu.uacs.vo.response.UserAssociationVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface AssociationService {
 
@@ -28,4 +30,10 @@ public interface AssociationService {
      * @return
      */
     List<AssoicationResponseVo> getAssociationAsMember(String userId);
+
+    /**
+     * 获取社团 Name 和 Id 的映射关系
+     * @return
+     */
+    HashMap<String, Integer> getNameIdMap();
 }

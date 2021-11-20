@@ -1,21 +1,23 @@
 package com.jmu.uacs.association.controller;
 
-import com.alibaba.excel.EasyExcel;
+import com.jmu.uacs.association.bean.User;
 import com.jmu.uacs.association.service.UserService;
 import com.jmu.uacs.vo.request.UserAddReqVo;
+import com.jmu.uacs.vo.request.UserRegistVo;
 import com.jmu.uacs.vo.response.AppResponse;
 import com.jmu.uacs.vo.response.UserManageVo;
 import com.jmu.uacs.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jxl.Sheet;
+import jxl.Workbook;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -127,8 +129,25 @@ public class UserController {
     @PostMapping("/batchImportUser")
     public AppResponse<String> batchImportUser(@RequestBody MultipartFile file) {
         try {
-
+            // 读excel文件流
+            Workbook workbook = Workbook.getWorkbook(file.getInputStream());
+            // 获取工作簿sheet
+            Sheet sheet = workbook.getSheet(0);
+            // 遍历获取内容
+            List<UserAddReqVo> users = new ArrayList<>();
+            for (int i = 0; i < sheet.getRows(); i++) {
+                UserAddReqVo user = new UserAddReqVo();
+                user.setUserId(sheet.getCell(0, i).getContents());
+                user.setName(sheet.getCell(1, i).getContents());
+                user.setRoleName(sheet.getCell(2, i).getContents());
+                user.setRoleName(sheet.getCell(3, i).getContents());
+                user.setPassword(sheet.getCell(4, i).getContents());
+                user.setGender(sheet.getCell(5, i).getContents());
+                users.add(user);
+            }
+            userService.batchImportUser(users);
             AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("批量导入成功！");
             return resp;
         } catch (Exception e) {
             e.printStackTrace();

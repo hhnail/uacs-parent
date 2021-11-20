@@ -18,5 +18,5 @@ public interface UserService {
 
     List<UserResponseVo> getUserByAssociationId(Integer associationId);
 
-    void batchImportUser(MultipartFile file);
+    void batchImportUser(List<UserAddReqVo> users);
 }

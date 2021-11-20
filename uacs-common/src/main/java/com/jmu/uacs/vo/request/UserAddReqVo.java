@@ -15,7 +15,13 @@ public class UserAddReqVo implements Serializable {
 
     private String name;
 
+    private Integer roleId;
     private String roleName;
 
+    private Integer associationId;
     private String associationName;
+
+    private String password;
+
+    private String gender;
 }

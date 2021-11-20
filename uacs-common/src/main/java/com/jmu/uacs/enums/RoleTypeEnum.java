@@ -2,7 +2,7 @@ package com.jmu.uacs.enums;
 
 public enum RoleTypeEnum {
 
-    STUDENT(1, "学生"),
+    STUDENT(1, "普通学生"),
     MEMBER(4, "社团成员"),
     LEADER(6, "社长"),
     VICE_LEADER(5, "副社长"),
@@ -33,4 +33,14 @@ public enum RoleTypeEnum {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public static Integer getCodeByName(String name) {
+        for (RoleTypeEnum item : RoleTypeEnum.values()) {
+            if (item.getRole().equals(name)) {
+                return item.getCode();
+            }
+        }
+        return RoleTypeEnum.STUDENT.getCode();
+    }
+
 }

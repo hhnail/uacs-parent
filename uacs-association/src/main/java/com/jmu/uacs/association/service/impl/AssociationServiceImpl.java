@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -210,4 +207,13 @@ public class AssociationServiceImpl implements AssociationService {
         return res;
     }
 
+    @Override
+    public HashMap<String, Integer> getNameIdMap() {
+        List<AssoicationResponseVo> all = getAllAssociationList();
+        HashMap<String, Integer> map = new HashMap<>();
+        for (AssoicationResponseVo vo : all) {
+            map.put(vo.getAssociationName(), vo.getAssociationId());
+        }
+        return map;
+    }
 }

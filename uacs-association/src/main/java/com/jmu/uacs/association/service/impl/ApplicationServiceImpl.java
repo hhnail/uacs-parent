@@ -84,6 +84,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         String interviewDateStr = StringUtils.formatDate2String(interviewDate, DateTemplate.yyyyMMddhhmmss);
         Date interviewTime = reqVO.getInterviewTime();
         String interviewTimeStr = StringUtils.formatDate2String(interviewTime, DateTemplate.yyyyMMddhhmmss);
+        // 空格前是日期，空格后是时间
         String finalDate = interviewDateStr.split(" ")[0];
         String finalTime = interviewTimeStr.split(" ")[1];
         String finalInterviewTimeStr = finalDate + " " + finalTime;

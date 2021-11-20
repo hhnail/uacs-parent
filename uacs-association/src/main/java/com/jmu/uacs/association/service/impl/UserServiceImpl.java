@@ -2,9 +2,12 @@ package com.jmu.uacs.association.service.impl;
 
 import com.jmu.uacs.association.bean.*;
 import com.jmu.uacs.association.mapper.*;
+import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.association.service.RoleService;
 import com.jmu.uacs.association.service.TreeNodeService;
 import com.jmu.uacs.association.service.UserService;
+import com.jmu.uacs.enums.GenderEnum;
+import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.MyCollectionUtils;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.UserAddReqVo;
@@ -20,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -28,8 +33,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    RoleService roleService;
     @Autowired
     UserRoleMapper userRoleMapper;
     @Autowired
@@ -40,6 +43,10 @@ public class UserServiceImpl implements UserService {
     RoleMapper roleMapper;
     @Autowired
     TreeNodeService treeNodeService;
+    @Autowired
+    RoleService roleService;
+    @Autowired
+    AssociationService associationService;
 
     @Override
     public List<UserManageVo> getAllUsers() {
@@ -120,9 +127,10 @@ public class UserServiceImpl implements UserService {
         userVo.setRoleList(roleListByUserId);
 
         // 班级信息
-        CascaderClass cascaderClass = treeNodeService.getClass4Cascader(user.getTreeId());
-        userVo.setCollegeMajorClass(cascaderClass.toString());
-
+        if (user.getTreeId() != null) {
+            CascaderClass cascaderClass = treeNodeService.getClass4Cascader(user.getTreeId());
+            userVo.setCollegeMajorClass(cascaderClass.toString());
+        }
         return userVo;
     }
 
@@ -156,7 +164,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void batchImportUser(MultipartFile file) {
+    @Transactional
+    public void batchImportUser(List<UserAddReqVo> users) {
+        HashMap<String, Integer> nameIdmap = associationService.getNameIdMap();
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        for (UserAddReqVo addUserVO : users) {
+            // 社团可选。默认-1，没有社团
+            if (addUserVO.getAssociationName() == null) {
+                addUserVO.setAssociationId(-1);
+            } else {
+                Integer associationId = nameIdmap.get(addUserVO.getAssociationName());
+                addUserVO.setAssociationId(associationId);
+            }
+            // 角色可选。默认普通学生
+            if (addUserVO.getRoleName() == null) {
+                addUserVO.setRoleId(4);
+            } else {
+                Integer roleId = RoleTypeEnum.getCodeByName(addUserVO.getRoleName());
+                addUserVO.setRoleId(roleId);
+            }
+            // 密码默认123456。并进行加密
+            if (addUserVO.getPassword() == null) {
+                addUserVO.setPassword(encoder.encode("123456"));
+            } else {
+                addUserVO.setPassword(encoder.encode(addUserVO.getPassword()));
+            }
+            // 性别格式化。出错则为 未知
+            if (addUserVO.getGender() != null) {
+                addUserVO.setGender(GenderEnum.getGender(addUserVO.getGender()));
+            }
+        }
+        // 批量insert User
+        userMapper.batchImportUser(users);
+        // 批量insert User_Role
 
 
     }
