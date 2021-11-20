@@ -167,7 +167,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void batchImportUser(List<UserAddReqVo> users) {
         HashMap<String, Integer> nameIdmap = associationService.getNameIdMap();
-
+        for (Map.Entry<String, Integer> entry : nameIdmap.entrySet()) {
+            log.debug("nameIdmap !   Key = {}, Value = {}", entry.getKey(), entry.getValue());
+        }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         for (UserAddReqVo addUserVO : users) {
             // 社团可选。默认-1，没有社团
@@ -197,8 +199,7 @@ public class UserServiceImpl implements UserService {
         }
         // 批量insert User
         userMapper.batchImportUser(users);
-        // 批量insert User_Role
-
-
+        // 批量insert User_Role 。初始化角色信息
+        userRoleMapper.initUserRole(users);
     }
 }

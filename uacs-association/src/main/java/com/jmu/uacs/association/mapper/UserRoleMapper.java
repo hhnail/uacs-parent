@@ -3,6 +3,8 @@ package com.jmu.uacs.association.mapper;
 import com.jmu.uacs.association.bean.UserRole;
 import com.jmu.uacs.association.bean.UserRoleExample;
 import java.util.List;
+
+import com.jmu.uacs.vo.request.UserAddReqVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserRoleMapper {
@@ -27,4 +29,6 @@ public interface UserRoleMapper {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    void initUserRole(@Param("users")List<UserAddReqVo> users);
 }

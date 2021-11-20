@@ -140,7 +140,7 @@ public class UserController {
                 user.setUserId(sheet.getCell(0, i).getContents());
                 user.setName(sheet.getCell(1, i).getContents());
                 user.setRoleName(sheet.getCell(2, i).getContents());
-                user.setRoleName(sheet.getCell(3, i).getContents());
+                user.setAssociationName(sheet.getCell(3, i).getContents());
                 user.setPassword(sheet.getCell(4, i).getContents());
                 user.setGender(sheet.getCell(5, i).getContents());
                 users.add(user);

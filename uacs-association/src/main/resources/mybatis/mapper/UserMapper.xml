@@ -38,8 +38,8 @@
                u.self_profile       selfProfile,
                u.personal_signature personalSignature
         FROM `user` u
-                 INNER JOIN user_association ua ON ua.user_id = u.user_id
-        WHERE ua.association_id = #{associationId}
+                 INNER JOIN user_role ur ON ur.user_id = u.user_id
+        WHERE ur.association_id = 1
     </select>
 
     <!--  void batchImportUser(List<UserAddReqVo> users);-->
