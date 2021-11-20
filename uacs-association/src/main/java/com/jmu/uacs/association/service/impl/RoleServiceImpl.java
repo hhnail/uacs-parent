@@ -24,7 +24,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     RoleMapper roleMapper;
-
     @Autowired
     RolePermissionMapper rolePermissionMapper;
 
@@ -65,6 +64,19 @@ public class RoleServiceImpl implements RoleService {
         Integer roleId = reGrantPermissions2RoleReqVo.getRoleId();
         List<Integer> permissionIds = reGrantPermissions2RoleReqVo.getPermissionIds();
 
+        // 后端校验
+        boolean errorFlag = true;
+        for (int i = 0; i < permissionIds.size(); i++) {
+//            log.debug("current permissionId={},比较结果{}", permissionIds.get(i),permissionIds.get(i) == 13);
+            // 如果新权限列表有13。即有角色管理权限，才能更新
+            if (permissionIds.get(i) == 13) {
+                errorFlag = false;
+            }
+        }
+        if (errorFlag) {
+            throw new RuntimeException("操作非法！");
+        }
+
         // 1、把该角色的全部permission都删掉
         RolePermissionExample rolePermissionExp = new RolePermissionExample();
         rolePermissionExp.createCriteria().andRoleIdEqualTo(roleId);
@@ -74,6 +86,7 @@ public class RoleServiceImpl implements RoleService {
         log.debug("==205 permissionIds", permissionIds);
         int affectedRowNums = roleMapper.insertRolePermissionIds(roleId, permissionIds);
 
+//        return 1;
         return affectedRowNums;
     }
 

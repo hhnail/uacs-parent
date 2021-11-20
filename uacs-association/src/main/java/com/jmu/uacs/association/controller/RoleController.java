@@ -47,7 +47,9 @@ public class RoleController {
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("ILLEGAL_ACTION");
+            return fail;
         }
     }
 }
