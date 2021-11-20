@@ -323,4 +323,22 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.updateByExampleSelective(user, exp);
     }
+
+    @Override
+    public void updateUserLineState(String userId, String oldState) {
+        UserExample exp = new UserExample();
+        exp.createCriteria().andUserIdEqualTo(userId);
+
+        User user = new User();
+        if (oldState == null) {
+            throw new RuntimeException("参数非法！");
+        }
+
+        if (oldState.equals(UserStateEnum.OPEN.getState())) {
+            user.setState(UserStateEnum.CLOSE.getState());
+        } else {
+            user.setState(UserStateEnum.OPEN.getState());
+        }
+        userMapper.updateByExampleSelective(user, exp);
+    }
 }

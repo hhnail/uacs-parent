@@ -253,7 +253,24 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "更新用户上下线状态")
+    @GetMapping("/updateUserLineState/{userId}/{state}")
+    public AppResponse<String> updateUserLineState(
+            @PathVariable("userId") String userId,
+            @PathVariable("state") String state) {
+        try {
+            String oldState = state;
+            userService.updateUserLineState(userId, oldState);
+            AppResponse<String> resp = AppResponse.ok(null);
+            resp.setMsg("更新成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<String> fail = AppResponse.fail(null);
+            fail.setMsg("更新失败！");
+            return fail;
+        }
 
+    }
 }
-
 

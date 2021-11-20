@@ -29,4 +29,6 @@ public interface UserService {
     User getUserById(String userId);
 
     void updateResume(UserResumeReqVO reqVO);
+
+    void updateUserLineState(String userId, String oldState);
 }
