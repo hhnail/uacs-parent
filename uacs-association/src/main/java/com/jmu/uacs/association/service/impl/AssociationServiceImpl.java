@@ -235,4 +235,15 @@ public class AssociationServiceImpl implements AssociationService {
         exp.createCriteria().andTypeEqualTo(TreeNodeEnum.ASSOCIATION_TYPE.getValue());
         return treeNodeMapper.selectByExample(exp);
     }
+
+    @Override
+    public Boolean checkAssociationExist(String associationName) {
+        AssociationExample exp = new AssociationExample();
+        exp.createCriteria().andAssociationNameEqualTo(associationName).andIsDelEqualTo(0);
+        List<Association> associations = associationMapper.selectByExample(exp);
+        if (associations.size() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

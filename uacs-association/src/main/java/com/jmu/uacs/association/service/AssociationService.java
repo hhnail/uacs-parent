@@ -43,4 +43,12 @@ public interface AssociationService {
      * @return
      */
     List<TreeNode> getAssociationType();
+
+    /**
+     * 查询当前name社团是否已经存在
+     * 社团名称不允许同名
+     * @param associationName
+     * @return
+     */
+    Boolean checkAssociationExist(String associationName);
 }

@@ -4,12 +4,10 @@ import com.jmu.uacs.association.bean.TreeNode;
 import com.jmu.uacs.association.feign.UserServiceFeign;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.association.service.ImageService;
+import com.jmu.uacs.association.service.UserService;
 import com.jmu.uacs.enums.AssociationStateEnum;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
-import com.jmu.uacs.vo.response.AppResponse;
-import com.jmu.uacs.vo.response.AssoicationResponseVo;
-import com.jmu.uacs.vo.response.UserAssociationVo;
-import com.jmu.uacs.vo.response.UserInfoVo;
+import com.jmu.uacs.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +28,8 @@ public class AssociationController {
 
     @Autowired
     AssociationService associationService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserServiceFeign userServiceFeign;
@@ -76,8 +76,15 @@ public class AssociationController {
     @PostMapping("/saveAssociation")
     public AppResponse<String> saveAssociation(@RequestBody AssociationRequestVo vo) {
         try {
-
             log.debug("==14 后端服务-创建社团-vo={}", vo);
+
+            // 校验社团是否存在
+            Boolean isExist = associationService.checkAssociationExist(vo.getAssociationName());
+            if (isExist) {
+                throw new RuntimeException("同名社团已经存在！");
+            }
+            // 校验用户是否可用
+            userService.getUserById(vo.getUserId());
 
             associationService.saveAssociation(vo);
             AppResponse<String> resp = AppResponse.ok("ok");
@@ -168,6 +175,22 @@ public class AssociationController {
         } catch (Exception e) {
             e.printStackTrace();
             AppResponse<List<TreeNode>> resp = AppResponse.fail(null);
+            resp.setMsg("查询失败！");
+            return resp;
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "查询社团类型")
+    @GetMapping("/checkAssociationExist/{associationName}")
+    AppResponse<Boolean> checkAssociationExist(@PathVariable("associationName") String associationName) {
+        try {
+            Boolean isExist = associationService.checkAssociationExist(associationName);
+            AppResponse<Boolean> resp = AppResponse.ok(isExist);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<Boolean> resp = AppResponse.fail(true);
             resp.setMsg("查询失败！");
             return resp;
         }
