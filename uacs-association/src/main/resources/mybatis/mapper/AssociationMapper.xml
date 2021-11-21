@@ -162,7 +162,8 @@
                 #{state,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
                 #{isDel,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Association">
+    <insert id="insertSelective" parameterType="com.jmu.uacs.association.bean.Association"
+            useGeneratedKeys="true" keyProperty="associationId">
         insert into association
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="associationId != null">

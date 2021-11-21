@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.controller;
 
+import com.jmu.uacs.association.bean.TreeNode;
 import com.jmu.uacs.association.feign.UserServiceFeign;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.association.service.ImageService;
@@ -150,9 +151,25 @@ public class AssociationController {
     @ResponseBody
     @ApiOperation(value = "查询某用户加入的社团及担任的角色")
     @PostMapping("/getAssociationAsMember")
-    AppResponse<List<AssoicationResponseVo>> getAssociationAsMember(@RequestParam String userId ) {
+    AppResponse<List<AssoicationResponseVo>> getAssociationAsMember(@RequestParam String userId) {
         List<AssoicationResponseVo> associationList = associationService.getAssociationAsMember(userId);
         AppResponse<List<AssoicationResponseVo>> resp = AppResponse.ok(associationList);
         return resp;
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "查询社团类型")
+    @PostMapping("/getAssociationType")
+    AppResponse<List<TreeNode>> getAssociationType() {
+        try {
+            List<TreeNode> associationList = associationService.getAssociationType();
+            AppResponse<List<TreeNode>> resp = AppResponse.ok(associationList);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<List<TreeNode>> resp = AppResponse.fail(null);
+            resp.setMsg("查询失败！");
+            return resp;
+        }
     }
 }

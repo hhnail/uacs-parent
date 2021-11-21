@@ -1,5 +1,6 @@
 package com.jmu.uacs.association.service;
 
+import com.jmu.uacs.association.bean.TreeNode;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
 import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import com.jmu.uacs.vo.response.UserAssociationVo;
@@ -36,4 +37,10 @@ public interface AssociationService {
      * @return
      */
     HashMap<String, Integer> getNameIdMap();
+
+    /**
+     * 获取社团类型
+     * @return
+     */
+    List<TreeNode> getAssociationType();
 }

@@ -16,11 +16,10 @@ public class AssociationRequestVo implements Serializable {
 
     private String adminUnit;
 
-    private String info;
+    private String type;
 
-    private String imgUrl;
-
+    private String userId;
     //默认创建的时候状态都是 ”审核中“
-    private String state = AssociationStateEnum.APPROVING.getCode()+"";
-	
+//    private String state = AssociationStateEnum.APPROVING.getCode()+"";
+
 }

@@ -4,21 +4,18 @@ import com.jmu.uacs.association.bean.*;
 import com.jmu.uacs.association.mapper.*;
 import com.jmu.uacs.association.service.AssociationService;
 import com.jmu.uacs.enums.AssociationStateEnum;
-import com.jmu.uacs.enums.DateTemplate;
 import com.jmu.uacs.enums.ImageTypeEnum;
 import com.jmu.uacs.enums.RoleTypeEnum;
+import com.jmu.uacs.enums.TreeNodeEnum;
 import com.jmu.uacs.util.MyCollectionUtils;
-import com.jmu.uacs.util.MyDateUtil;
-import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AssociationRequestVo;
 import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import com.jmu.uacs.vo.response.UserAssociationVo;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -36,6 +33,8 @@ public class AssociationServiceImpl implements AssociationService {
     DepartmentMapper departmentMapper;
     @Autowired
     ImageMapper imageMapper;
+    @Autowired
+    TreeNodeMapper treeNodeMapper;
 
     @Override
     public List<AssoicationResponseVo> getAllAssociationList() {
@@ -97,13 +96,26 @@ public class AssociationServiceImpl implements AssociationService {
     }
 
     @Override
+    @Transactional
     public void saveAssociation(AssociationRequestVo vo) {
-
+        // 1 保存社团信息
         Association association = new Association();
         BeanUtils.copyProperties(vo, association);
         association.setCreateTime(new Date());
+        association.setState(AssociationStateEnum.APPROVED.getCode() + "");
         log.debug("==17 后台服务-创建社团 DO={}", association);
         associationMapper.insertSelective(association);
+
+
+        // 保存管理员信息
+        log.debug("==17 后台服务-创建社团 自增主键={}", association.getAssociationId());
+        UserRole userRole = new UserRole();
+        userRole.setUserId(vo.getUserId());
+        userRole.setAssociationId(association.getAssociationId());
+        userRole.setRoleId(RoleTypeEnum.ASSOCIATION_ADMIN.getCode());
+        userRole.setDepartmentId(-1);
+        userRoleMapper.insertSelective(userRole);
+
     }
 
     @Override
@@ -215,5 +227,12 @@ public class AssociationServiceImpl implements AssociationService {
             map.put(vo.getAssociationName(), vo.getAssociationId());
         }
         return map;
+    }
+
+    @Override
+    public List<TreeNode> getAssociationType() {
+        TreeNodeExample exp = new TreeNodeExample();
+        exp.createCriteria().andTypeEqualTo(TreeNodeEnum.ASSOCIATION_TYPE.getValue());
+        return treeNodeMapper.selectByExample(exp);
     }
 }

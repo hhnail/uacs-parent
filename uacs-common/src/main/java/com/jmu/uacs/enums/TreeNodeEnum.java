@@ -8,7 +8,8 @@ public enum TreeNodeEnum {
     CAMPUS("CAMPUS", "校区"),
     BUILDING("BUILDING", "教学楼"),
     CLASSROOM("CLASSROOM", "教室"),
-    TAG("TAG", "标签");
+    TAG("TAG", "标签"),
+    ASSOCIATION_TYPE("ASSOCIATION_TYPE", "社团类型");
 
     private String value;
     private String lable;
