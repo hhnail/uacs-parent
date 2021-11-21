@@ -13,5 +13,12 @@ public interface RecruitmentService {
 
     Boolean updateRecruitmentState(Integer recruitmentId, String state);
 
+    /**
+     * 获取create_time最近的一条纳新通知
+     *
+     * @param associationId
+     * @param size
+     * @return
+     */
     RecruitmentRespVo getRecentRecruitment(Integer associationId, Integer size);
 }

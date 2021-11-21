@@ -62,6 +62,18 @@
         </if>
     </select>
 
+<!--    List<RingGauge> countAssociationRecruitment(Integer associationId);-->
+    <select id="countAssociationRecruitment" parameterType="java.lang.Integer" resultType="com.jmu.uacs.association.bean.RingGauge">
+        SELECT
+            a.state as `name`,
+            cast(count(a.application_id) / r.new_num as  decimal(18,3)) as `value`
+        FROM
+            application a
+                INNER JOIN recruitment r ON r.recruitment_id = a.recruitment_id
+        WHERE r.recruitment_id = #{recruitmentId}
+        GROUP BY a.state
+    </select>
+
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">

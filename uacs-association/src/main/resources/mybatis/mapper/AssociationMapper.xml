@@ -37,23 +37,32 @@
     <!--    List<AssoicationResponseVo> getAssociationAsMember(@Param("userId")String userId);-->
     <select id="getAssociationAsMember" parameterType="java.lang.String"
             resultType="com.jmu.uacs.vo.response.AssoicationResponseVo">
-        SELECT
-            u.user_id userId,
-            u.`name`,
-            r.role_name roleName,
-            a.association_id associationId,
-            a.association_name associationName,
-            a.admin_unit adminUnit,
-            a.create_time createTime,
-            a.*
-        FROM
-            association a
-                INNER JOIN user_role ur ON ur.association_id = a.association_id
-                INNER JOIN `user` u ON u.user_id = ur.user_id
-                INNER JOIN role r ON r.role_id = ur.role_id
+        SELECT u.user_id          userId,
+               u.`name`,
+               r.role_name        roleName,
+               a.association_id   associationId,
+               a.association_name associationName,
+               a.admin_unit       adminUnit,
+               a.create_time      createTime,
+               a.*
+        FROM association a
+                 INNER JOIN user_role ur ON ur.association_id = a.association_id
+                 INNER JOIN `user` u ON u.user_id = ur.user_id
+                 INNER JOIN role r ON r.role_id = ur.role_id
         WHERE ur.user_id = #{userId}
     </select>
 
+
+    <!--    List<PieData> countAssociationGender(@Param("associationId") Integer associationId);-->
+    <select id="countAssociationGender" parameterType="java.lang.Integer"
+            resultType="com.jmu.uacs.association.bean.PieData">
+        SELECT u.gender           `name`,
+               COUNT(u.gender) as `value`
+        FROM `user` u
+                 INNER JOIN user_role ur ON u.user_id = ur.user_id
+        WHERE ur.association_id = #{associationId}
+        GROUP BY u.gender
+    </select>
 
     <sql id="Example_Where_Clause">
         <where>
