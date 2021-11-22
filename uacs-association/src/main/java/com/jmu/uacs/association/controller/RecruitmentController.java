@@ -100,16 +100,16 @@ public class RecruitmentController {
 
     @ApiOperation("获取某社团最近的社团纳新通知")
     @GetMapping("/getRecentRecruitment/{associationId}/{size}")
-    public AppResponse<RecruitmentRespVo> getRecentRecruitment(@PathVariable("associationId") Integer associationId,
-                                                               @PathVariable("size") Integer size) {
+    public AppResponse<List<RecruitmentRespVo>> getRecentRecruitment(@PathVariable("associationId") Integer associationId,
+                                                                     @PathVariable("size") Integer size) {
         try {
-            RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(associationId,size);
-            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
+            List<RecruitmentRespVo> vo = recruitmentService.getRecentRecruitment(associationId, size);
+            AppResponse<List<RecruitmentRespVo>> resp = AppResponse.ok(vo);
             resp.setMsg("查询成功！");
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
-            AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
+            AppResponse<List<RecruitmentRespVo>> fail = AppResponse.fail(null);
             fail.setMsg("查询失败！");
             return fail;
         }
@@ -117,15 +117,15 @@ public class RecruitmentController {
 
     @ApiOperation("查询最新发布的纳新通知")
     @GetMapping("/getRecruitmentListCard/{size}")
-    public AppResponse<RecruitmentRespVo> getRecruitmentListCard(@PathVariable("size") Integer size) {
+    public AppResponse<List<RecruitmentRespVo>> getRecruitmentListCard(@PathVariable("size") Integer size) {
         try {
-            RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(null,size);
-            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
+            List<RecruitmentRespVo> voList = recruitmentService.getRecentRecruitment(null, size);
+            AppResponse<List<RecruitmentRespVo>> resp = AppResponse.ok(voList);
             resp.setMsg("查询成功！");
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
-            AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
+            AppResponse<List<RecruitmentRespVo>> fail = AppResponse.fail(null);
             fail.setMsg("查询失败！");
             return fail;
         }

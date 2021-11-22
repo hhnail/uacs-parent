@@ -35,7 +35,7 @@ public interface RecruitmentMapper {
 
     List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);
 
-    RecruitmentRespVo getRecentRecruitment(@Param("associationId") Integer associationId, @Param("size") Integer size);
+    List<RecruitmentRespVo> getRecentRecruitment(@Param("associationId") Integer associationId, @Param("size") Integer size);
 
     List<RingGauge> countAssociationRecruitment(@Param("recruitmentId") Integer recruitmentId);
 }

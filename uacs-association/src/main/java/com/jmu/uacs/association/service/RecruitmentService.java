@@ -20,5 +20,5 @@ public interface RecruitmentService {
      * @param size
      * @return
      */
-    RecruitmentRespVo getRecentRecruitment(Integer associationId, Integer size);
+    List<RecruitmentRespVo> getRecentRecruitment(Integer associationId, Integer size);
 }
