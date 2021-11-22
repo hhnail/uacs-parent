@@ -5,6 +5,7 @@ import com.jmu.uacs.association.bean.AssociationExample;
 
 import java.util.List;
 
+import com.jmu.uacs.association.bean.CountAssociationType;
 import com.jmu.uacs.association.bean.PieData;
 import com.jmu.uacs.vo.response.AssoicationResponseVo;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +38,6 @@ public interface AssociationMapper {
     List<AssoicationResponseVo> getAssociationAsMember(@Param("userId") String userId);
 
     List<PieData> countAssociationGender(@Param("associationId") Integer associationId);
+
+    List<CountAssociationType> countAssociationType();
 }

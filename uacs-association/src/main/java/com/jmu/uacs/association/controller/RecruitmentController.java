@@ -98,12 +98,28 @@ public class RecruitmentController {
     }
 
 
-    @ApiOperation("获取最近的社团纳新通知")
+    @ApiOperation("获取某社团最近的社团纳新通知")
     @GetMapping("/getRecentRecruitment/{associationId}/{size}")
     public AppResponse<RecruitmentRespVo> getRecentRecruitment(@PathVariable("associationId") Integer associationId,
                                                                @PathVariable("size") Integer size) {
         try {
             RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(associationId,size);
+            AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
+            resp.setMsg("查询成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<RecruitmentRespVo> fail = AppResponse.fail(null);
+            fail.setMsg("查询失败！");
+            return fail;
+        }
+    }
+
+    @ApiOperation("查询最新发布的纳新通知")
+    @GetMapping("/getRecruitmentListCard/{size}")
+    public AppResponse<RecruitmentRespVo> getRecruitmentListCard(@PathVariable("size") Integer size) {
+        try {
+            RecruitmentRespVo vo = recruitmentService.getRecentRecruitment(null,size);
             AppResponse<RecruitmentRespVo> resp = AppResponse.ok(vo);
             resp.setMsg("查询成功！");
             return resp;

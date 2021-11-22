@@ -40,6 +40,9 @@ public class UserResponseVo implements Serializable {
     @ApiModelProperty(value = "个性签名")
     private String personalSignature;
 
+    @ApiModelProperty(value = "头像路径")
+    private String avatarUrl;
+
 
 
 }

@@ -64,6 +64,18 @@
         GROUP BY u.gender
     </select>
 
+<!--    List<CountAssociationType> countAssociationType();-->
+    <select id="countAssociationType" resultType="com.jmu.uacs.association.bean.CountAssociationType">
+        SELECT
+            a.type,
+            COUNT(a.type) AS `value`
+        FROM
+            association a
+        WHERE a.is_del = 0
+        GROUP BY
+            a.type
+    </select>
+
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">

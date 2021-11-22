@@ -6,6 +6,7 @@ import com.jmu.uacs.association.mapper.RoleMapper;
 import com.jmu.uacs.association.mapper.RolePermissionMapper;
 import com.jmu.uacs.association.service.RoleService;
 import com.jmu.uacs.bean.Permission;
+import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.vo.request.ReGrantPermissions2RoleReqVo;
 import com.jmu.uacs.vo.response.PermissionVo;
 import com.jmu.uacs.vo.response.RoleRespVo;
@@ -64,17 +65,19 @@ public class RoleServiceImpl implements RoleService {
         Integer roleId = reGrantPermissions2RoleReqVo.getRoleId();
         List<Integer> permissionIds = reGrantPermissions2RoleReqVo.getPermissionIds();
 
-        // 后端校验
-        boolean errorFlag = true;
-        for (int i = 0; i < permissionIds.size(); i++) {
+        // 后端校验（超级管理员不得排除角色管理权限）
+        if(roleId != null && roleId == RoleTypeEnum.SUPER_ADMIN.getCode()){
+            boolean errorFlag = true;
+            for (int i = 0; i < permissionIds.size(); i++) {
 //            log.debug("current permissionId={},比较结果{}", permissionIds.get(i),permissionIds.get(i) == 13);
-            // 如果新权限列表有13。即有角色管理权限，才能更新
-            if (permissionIds.get(i) == 13) {
-                errorFlag = false;
+                // 如果新权限列表有13。即有角色管理权限，才能更新
+                if (permissionIds.get(i) == 13) {
+                    errorFlag = false;
+                }
             }
-        }
-        if (errorFlag) {
-            throw new RuntimeException("操作非法！");
+            if (errorFlag) {
+                throw new RuntimeException("操作非法！");
+            }
         }
 
         // 1、把该角色的全部permission都删掉

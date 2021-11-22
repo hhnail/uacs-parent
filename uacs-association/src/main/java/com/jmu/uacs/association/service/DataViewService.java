@@ -11,4 +11,6 @@ public interface DataViewService {
     List<PieData> countAssociationGender(Integer associationId);
 
     HashMap<String, Double> countAssociationRecruitment(Integer associationId);
+
+    HashMap<String, Integer> countAssociationTypeAndNum();
 }

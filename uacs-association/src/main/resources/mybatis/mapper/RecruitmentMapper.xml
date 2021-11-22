@@ -17,7 +17,8 @@
         <result column="association_id" jdbcType="INTEGER" property="associationId"/>
     </resultMap>
 
-    <select id="getRecentRecruitment" parameterType="java.lang.Integer" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
+    <select id="getRecentRecruitment" parameterType="java.lang.Integer"
+            resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
         SELECT
             r.*,
             r.recruitment_id AS recruitmentId,
@@ -28,31 +29,34 @@
             r.update_time AS updateTime
         FROM
             recruitment r
-                INNER JOIN association a ON r.association_id = a.association_id
-                AND a.association_id = #{associationId}
+        INNER JOIN association a ON r.association_id = a.association_id
+        <if test="associationId != null">
+            AND a.association_id = #{associationId}
+        </if>
         ORDER BY
-            r.create_time DESC
-            LIMIT #{size}
+        r.create_time DESC
+        LIMIT #{size}
     </select>
 
     <!--      List<RecruitmentRespVo> getRecruitment(@Param("option") RecruitmentReqVo option);  -->
-    <select id="getRecruitment" parameterType="com.jmu.uacs.vo.request.RecruitmentReqVo" resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
+    <select id="getRecruitment" parameterType="com.jmu.uacs.vo.request.RecruitmentReqVo"
+            resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
         SELECT tr.*,
-               tr.recruitment_id as recruitmentId,
-               tr.new_num        as newNum,
-               tr.start_time     as startTime,
-               tr.end_time       as endTime,
-               tr.create_time    as createTime,
-               tr.update_time    as updateTime,
-               tr.user_id        as userId,
-               tu.name,
-               tr.association_id as associationId,
-               ta.association_name as associationName
+        tr.recruitment_id as recruitmentId,
+        tr.new_num as newNum,
+        tr.start_time as startTime,
+        tr.end_time as endTime,
+        tr.create_time as createTime,
+        tr.update_time as updateTime,
+        tr.user_id as userId,
+        tu.name,
+        tr.association_id as associationId,
+        ta.association_name as associationName
         FROM recruitment tr
-                 INNER JOIN `user` tu
-                            ON tu.user_id = tr.user_id
-                 INNER JOIN association ta
-                            ON ta.association_id = tr.association_id
+        INNER JOIN `user` tu
+        ON tu.user_id = tr.user_id
+        INNER JOIN association ta
+        ON ta.association_id = tr.association_id
         WHERE 1 = 1
         <if test="option.userId != null">
             AND tr.user_id = #{option.userId}
@@ -62,14 +66,13 @@
         </if>
     </select>
 
-<!--    List<RingGauge> countAssociationRecruitment(Integer associationId);-->
-    <select id="countAssociationRecruitment" parameterType="java.lang.Integer" resultType="com.jmu.uacs.association.bean.RingGauge">
-        SELECT
-            a.state as `name`,
-            cast(count(a.application_id) / r.new_num as  decimal(18,3)) as `value`
-        FROM
-            application a
-                INNER JOIN recruitment r ON r.recruitment_id = a.recruitment_id
+    <!--    List<RingGauge> countAssociationRecruitment(Integer associationId);-->
+    <select id="countAssociationRecruitment" parameterType="java.lang.Integer"
+            resultType="com.jmu.uacs.association.bean.RingGauge">
+        SELECT a.state                                                     as `name`,
+               cast(count(a.application_id) / r.new_num as decimal(18, 3)) as `value`
+        FROM application a
+                 INNER JOIN recruitment r ON r.recruitment_id = a.recruitment_id
         WHERE r.recruitment_id = #{recruitmentId}
         GROUP BY a.state
     </select>

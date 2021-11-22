@@ -26,7 +26,7 @@
     <!--  List<UserResponseVo> getUserByAssociationId(Integer associationId);-->
     <select id="getUserByAssociationId" parameterType="java.lang.Integer"
             resultType="com.jmu.uacs.vo.response.UserResponseVo">
-        SELECT u.name,
+        SELECT u.`name`,
                u.gender,
                u.birthday,
                u.nation,
@@ -36,10 +36,12 @@
                u.qq,
                u.user_id            userId,
                u.self_profile       selfProfile,
-               u.personal_signature personalSignature
+               u.personal_signature personalSignature,
+               (SELECT i.url FROM image i WHERE 1=1 and i.type = 'USER_AVATAR' and i.owner_id = u.user_id) avatarUrl
         FROM `user` u
                  INNER JOIN user_role ur ON ur.user_id = u.user_id
-        WHERE ur.association_id = 1
+        WHERE 1=1
+          AND ur.association_id = #{associationId}
     </select>
 
     <!--  void batchImportUser(List<UserAddReqVo> users);-->

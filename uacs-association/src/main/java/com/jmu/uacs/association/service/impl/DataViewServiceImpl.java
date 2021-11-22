@@ -1,11 +1,13 @@
 package com.jmu.uacs.association.service.impl;
 
-import com.jmu.uacs.association.bean.PieData;
-import com.jmu.uacs.association.bean.RingGauge;
+import com.jmu.uacs.association.bean.*;
 import com.jmu.uacs.association.mapper.AssociationMapper;
 import com.jmu.uacs.association.mapper.RecruitmentMapper;
+import com.jmu.uacs.association.mapper.TreeNodeMapper;
 import com.jmu.uacs.association.service.DataViewService;
 import com.jmu.uacs.enums.ApplicationStateEnum;
+import com.jmu.uacs.enums.TreeNodeEnum;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class DataViewServiceImpl implements DataViewService {
     AssociationMapper associationMapper;
     @Autowired
     RecruitmentMapper recruitmentMapper;
+    @Autowired
+    TreeNodeMapper treeNodeMapper;
 
     @Override
     public List<PieData> countAssociationGender(Integer associationId) {
@@ -50,6 +54,28 @@ public class DataViewServiceImpl implements DataViewService {
             applicationNum += stateAndNum.getValue();
         }
         resultMap.put("投递人数", applicationNum);
+        return resultMap;
+    }
+
+    @Override
+    public HashMap<String, Integer> countAssociationTypeAndNum() {
+        HashMap<String, Integer> resultMap = new HashMap<>();
+
+        // 查询目前所有类型，初始化数量为0
+        TreeNodeExample treeExp = new TreeNodeExample();
+        treeExp.createCriteria().andTypeEqualTo(TreeNodeEnum.ASSOCIATION_TYPE.getValue());
+        List<TreeNode> treeNodes = treeNodeMapper.selectByExample(treeExp);
+        for (TreeNode node : treeNodes) {
+            resultMap.put(node.getValue(), 0);
+        }
+
+        // 查询对应类型的数量
+        List<CountAssociationType> countResult = associationMapper.countAssociationType();
+        for (CountAssociationType countType : countResult) {
+            resultMap.remove(countType.getType());
+            resultMap.put(countType.getType(), countType.getValue());
+        }
+
         return resultMap;
     }
 }
