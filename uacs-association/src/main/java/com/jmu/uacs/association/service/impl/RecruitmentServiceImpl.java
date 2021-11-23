@@ -1,9 +1,14 @@
 package com.jmu.uacs.association.service.impl;
 
 import com.jmu.uacs.association.bean.Recruitment;
+import com.jmu.uacs.association.bean.RecruitmentExample;
+import com.jmu.uacs.association.bean.UserRole;
+import com.jmu.uacs.association.bean.UserRoleExample;
 import com.jmu.uacs.association.mapper.RecruitmentMapper;
+import com.jmu.uacs.association.mapper.UserRoleMapper;
 import com.jmu.uacs.association.service.RecruitmentService;
 import com.jmu.uacs.enums.DateTemplate;
+import com.jmu.uacs.enums.RoleTypeEnum;
 import com.jmu.uacs.util.StringUtils;
 import com.jmu.uacs.vo.request.AddRecruitmentRequestVo;
 import com.jmu.uacs.vo.request.RecruitmentReqVo;
@@ -22,6 +27,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Autowired
     RecruitmentMapper recruitmentMapper;
+    @Autowired
+    UserRoleMapper userRoleMapper;
 
 
     @Override
@@ -45,7 +52,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public List<RecruitmentRespVo> getRecruitment(RecruitmentReqVo requestVo) {
+        // 如果userId非空，并且其角色是超级管理员。排除userId的查询条件，查出所有的纳新通知
+        if (requestVo.getUserId() != null) {
+            UserRoleExample exp = new UserRoleExample();
+            exp.createCriteria().andUserIdEqualTo(requestVo.getUserId()).andRoleIdEqualTo(RoleTypeEnum.SUPER_ADMIN.getCode());
+            List<UserRole> userRoles = userRoleMapper.selectByExample(exp);
+            if (userRoles.size() > 0) {
+                requestVo.setUserId(null);
+            }
+        }
+
         List<RecruitmentRespVo> respList = recruitmentMapper.getRecruitment(requestVo);
+
         return respList;
     }
 
@@ -55,18 +73,21 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public Boolean updateRecruitmentState(Integer recruitmentId, String state) {
-        Recruitment recruitmentById = getRecruitmentById(recruitmentId);
+        RecruitmentExample exp = new RecruitmentExample();
+        exp.createCriteria().andRecruitmentIdEqualTo(recruitmentId);
+
         Recruitment rec = new Recruitment();
-        BeanUtils.copyProperties(recruitmentById, rec);
+        rec.setRecruitmentId(recruitmentId);
         rec.setState(state);
         rec.setUpdateTime(new Date());
-        int affectedRow = recruitmentMapper.updateByPrimaryKey(rec);
+
+        int affectedRow = recruitmentMapper.updateByExampleSelective(rec, exp);
         return affectedRow > 0;
     }
 
     @Override
     public List<RecruitmentRespVo> getRecentRecruitment(Integer associationId, Integer size) {
-        List<RecruitmentRespVo> voList = recruitmentMapper.getRecentRecruitment(associationId,size);
+        List<RecruitmentRespVo> voList = recruitmentMapper.getRecentRecruitment(associationId, size);
         return voList;
     }
 }

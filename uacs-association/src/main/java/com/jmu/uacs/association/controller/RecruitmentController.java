@@ -79,10 +79,10 @@ public class RecruitmentController {
         }
     }
 
-    @ApiOperation("更新社团纳新信息状态")
-    @GetMapping("/updateRecruitmentState")
-    public AppResponse<Boolean> updateRecruitmentState(@RequestParam("recruitmentId") Integer recruitmentId,
-                                                       @RequestParam("state") String state) {
+    @ApiOperation("更新社团纳新通知状态")
+    @GetMapping("/updateRecruitmentState/{recruitmentId}/{state}")
+    public AppResponse<Boolean> updateRecruitmentState(@PathVariable("recruitmentId") Integer recruitmentId,
+                                                       @PathVariable("state") String state) {
         try {
             log.debug("==C1 更新社团纳新信息状态 == recruitmentId={}", recruitmentId);
             Boolean success = recruitmentService.updateRecruitmentState(recruitmentId, state);

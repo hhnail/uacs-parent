@@ -36,6 +36,7 @@ public class RoleController {
         }
     }
 
+    // TODO 超管权限分配失败
     @ApiOperation("重新为角色授予权限")
     @PostMapping("/reGrantPermissions2Role")
     public AppResponse<String> reGrantPermissions2Role(@RequestBody ReGrantPermissions2RoleReqVo reGrantPermissions2RoleReqVo) {

@@ -30,6 +30,7 @@
         FROM
             recruitment r
         INNER JOIN association a ON r.association_id = a.association_id
+            AND r.state = 'PUBLISHED'
         <if test="associationId != null">
             AND a.association_id = #{associationId}
         </if>
