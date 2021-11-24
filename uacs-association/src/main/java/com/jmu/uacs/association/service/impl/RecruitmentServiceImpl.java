@@ -1,11 +1,10 @@
 package com.jmu.uacs.association.service.impl;
 
-import com.jmu.uacs.association.bean.Recruitment;
-import com.jmu.uacs.association.bean.RecruitmentExample;
-import com.jmu.uacs.association.bean.UserRole;
-import com.jmu.uacs.association.bean.UserRoleExample;
+import com.jmu.uacs.association.bean.*;
+import com.jmu.uacs.association.mapper.ApplicationMapper;
 import com.jmu.uacs.association.mapper.RecruitmentMapper;
 import com.jmu.uacs.association.mapper.UserRoleMapper;
+import com.jmu.uacs.association.service.ApplicationService;
 import com.jmu.uacs.association.service.RecruitmentService;
 import com.jmu.uacs.enums.DateTemplate;
 import com.jmu.uacs.enums.RoleTypeEnum;
@@ -29,6 +28,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     RecruitmentMapper recruitmentMapper;
     @Autowired
     UserRoleMapper userRoleMapper;
+    @Autowired
+    ApplicationMapper applicationMapper;
 
 
     @Override
@@ -40,10 +41,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         record.setEndTime(StringUtils.parseString2Date(reqVo.getEndTime(), DateTemplate.yyyyMMdd));
         record.setView(0); // 默认浏览量 0
 
-        log.debug("==24 纳新S 开始时间：{}", reqVo);
-        log.debug("==24 纳新S 开始时间：{}", StringUtils.formatDate2String(record.getStartTime(), DateTemplate.yyyyMMdd));
-        log.debug("==24 纳新S 结束时间：{}", StringUtils.formatDate2String(record.getEndTime(), DateTemplate.yyyyMMdd));
-        log.debug("==24 纳新S record ={}", record);
+//        log.debug("==24 纳新S 开始时间：{}", reqVo);
+//        log.debug("==24 纳新S 开始时间：{}", StringUtils.formatDate2String(record.getStartTime(), DateTemplate.yyyyMMdd));
+//        log.debug("==24 纳新S 结束时间：{}", StringUtils.formatDate2String(record.getEndTime(), DateTemplate.yyyyMMdd));
+//        log.debug("==24 纳新S record ={}", record);
 
 
         int affectedNum = recruitmentMapper.insertSelective(record);
@@ -89,5 +90,16 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<RecruitmentRespVo> getRecentRecruitment(Integer associationId, Integer size) {
         List<RecruitmentRespVo> voList = recruitmentMapper.getRecentRecruitment(associationId, size);
         return voList;
+    }
+
+    @Override
+    public Boolean checkCanRecruitment(String userId, Integer recruitmentId) {
+        ApplicationExample exp = new ApplicationExample();
+        exp.createCriteria().andUserIdEqualTo(userId).andRecruitmentIdEqualTo(recruitmentId);
+        List<Application> applications = applicationMapper.selectByExample(exp);
+        if (applications.size() > 0) {
+            return false;
+        }
+        return true;
     }
 }

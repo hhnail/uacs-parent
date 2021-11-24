@@ -131,5 +131,24 @@ public class RecruitmentController {
         }
     }
 
+    @ApiOperation("校验用户能否申请本次纳新")
+    @GetMapping("/checkCanRecruitment/{userId}/{recruitmentId}")
+    public AppResponse<Boolean> checkCanRecruitment(
+            @PathVariable("userId") String userId,
+            @PathVariable("recruitmentId") Integer recruitmentId
+    ) {
+        try {
+            Boolean canRecruitment = recruitmentService.checkCanRecruitment(userId, recruitmentId);
+            AppResponse<Boolean> resp = AppResponse.ok(canRecruitment);
+            resp.setMsg("查询成功！");
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            AppResponse<Boolean> fail = AppResponse.fail(null);
+            fail.setMsg("查询失败！");
+            return fail;
+        }
+    }
+
 
 }
