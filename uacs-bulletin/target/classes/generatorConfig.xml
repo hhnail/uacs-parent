@@ -47,7 +47,9 @@
         </javaClientGenerator>
 
         <!-- %通配所有表，类名根据表名自动生成了。 -->
-        <table tableName="share"></table>
+<!--        <table tableName="share"></table>-->
+<!--        <table tableName="user_role"></table>-->
+        <table tableName="user"></table>
 
     </context>
 </generatorConfiguration> 

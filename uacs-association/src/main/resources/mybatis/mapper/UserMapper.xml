@@ -37,6 +37,7 @@
                u.user_id            userId,
                u.self_profile       selfProfile,
                u.personal_signature personalSignature,
+               ur.role_id           roleId,
                (SELECT i.url FROM image i WHERE 1=1 and i.type = 'USER_AVATAR' and i.owner_id = u.user_id) avatarUrl
         FROM `user` u
                  INNER JOIN user_role ur ON ur.user_id = u.user_id

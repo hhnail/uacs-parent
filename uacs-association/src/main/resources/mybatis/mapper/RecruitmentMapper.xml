@@ -21,6 +21,7 @@
             resultType="com.jmu.uacs.vo.response.RecruitmentRespVo">
         SELECT
             r.*,
+            r.association_id AS associationId,
             r.recruitment_id AS recruitmentId,
             r.new_num AS newNum,
             r.start_time AS startTime,

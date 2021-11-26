@@ -43,6 +43,9 @@ public class UserResponseVo implements Serializable {
     @ApiModelProperty(value = "头像路径")
     private String avatarUrl;
 
+    @ApiModelProperty(value = "角色编号")
+    private Integer roleId;
+
 
 
 }

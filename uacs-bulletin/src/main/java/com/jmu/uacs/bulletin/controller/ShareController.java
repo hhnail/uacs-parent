@@ -23,9 +23,9 @@ public class ShareController {
     ShareService shareService;
 
     @ApiOperation("查询所有社团分享列表")
-    @GetMapping("/getShareList")
-    public AppResponse<List<ShareResponseVo>> getShareList() {
-        List<ShareResponseVo> voLists = shareService.getShareList();
+    @GetMapping("/getShareList/{userId}")
+    public AppResponse<List<ShareResponseVo>> getShareList(@PathVariable("userId") String userId) {
+        List<ShareResponseVo> voLists = shareService.getShareList(userId);
         AppResponse<List<ShareResponseVo>> resp = AppResponse.ok(voLists);
         return resp;
     }

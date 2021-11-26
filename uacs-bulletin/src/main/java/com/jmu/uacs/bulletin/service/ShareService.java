@@ -6,7 +6,8 @@ import com.jmu.uacs.vo.response.ShareResponseVo;
 import java.util.List;
 
 public interface ShareService {
-    List<ShareResponseVo> getShareList();
+    
+    List<ShareResponseVo> getShareList(String userId);
 
     void addShare(AddShareRequestVO reqVO);
 
